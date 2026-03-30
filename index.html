@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>007 | Rayn Scofield</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: { 500: '#f97316' },
+                        red: { 400: '#f87171', 600: '#dc2626' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection { background-color: #f97316; color: white; }
+    </style>
+</head>
+<body class="bg-black text-white antialiased font-sans min-h-screen">
+
+    <header class="py-20 px-6 text-center">
+        <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">007</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-light text-gray-400 mb-6">
+            Hi, I'm <span class="text-white font-semibold">Rayn Scofield</span>
+        </h2>
+        <p class="max-w-xl mx-auto text-gray-500">
+            Biến ý tưởng thành hiện thực thông qua thiết kế và hình ảnh.
+        </p>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 pb-24">
+        <div id="loading" class="flex justify-center items-center h-40">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+        </div>
+        
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+            </div>
+    </section>
+
+    <script>
+        // 1. Dán link CSV của Google Sheets vào đây
+        const SHEET_CSV_URL = "LINK_CSV_CỦA_BẠN_Ở_ĐÂY";
+
+        async function fetchProjects() {
+            try {
+                const response = await fetch(SHEET_CSV_URL);
+                const csvText = await response.text();
+                
+                // Tách dữ liệu
+                const rows = csvText.split('\n').filter(row => row.trim() !== '');
+                const headers = rows[0].split(',').map(h => h.trim());
+                
+                const projects = rows.slice(1).map((row, index) => {
+                    const matchValues = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g) || [];
+                    const projectData = {};
+                    headers.forEach((header, i) => {
+                        let value = matchValues[i] || '';
+                        value = value.trim();
+                        if (value.startsWith('"') && value.endsWith('"')) {
+                            value = value.substring(1, value.length - 1).replace(/""/g, '"');
+                        }
+                        projectData[header] = value;
+                    });
+                    return projectData;
+                });
+
+                renderProjects(projects);
+            } catch (error) {
+                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Không thể kết nối dữ liệu.</p>";
+            }
+        }
+
+        function renderProjects(projects) {
+            const grid = document.getElementById('portfolio-grid');
+            let htmlContent = '';
+            
+            projects.forEach(project => {
+                const img = project.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
+                
+                htmlContent += `
+                    <a href="${project.link || '#'}" target="_blank" class="group relative bg-zinc-900 rounded-2xl overflow-hidden hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(239,68,68,0.3)] transition-all duration-500 ease-out block">
+                        <div class="relative h-64 overflow-hidden">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
+                            <img src="${img}" alt="${project.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out" />
+                        </div>
+                        <div class="p-6 relative z-20 bg-zinc-900">
+                            <span class="text-xs font-bold uppercase tracking-wider text-orange-500 mb-2 block">${project.category || 'Danh mục'}</span>
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-red-400 transition-colors">${project.title || 'Tên dự án'}</h3>
+                            <p class="text-sm text-gray-400 line-clamp-2">${project.description || ''}</p>
+                        </div>
+                        <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-red-600 to-orange-500 group-hover:w-full transition-all duration-500 ease-out z-30"></div>
+                    </a>
+                `;
+            });
+
+            grid.innerHTML = htmlContent;
+            document.getElementById('loading').classList.add('hidden');
+            grid.classList.remove('hidden');
+        }
+
+        // Chạy hàm
+        if(SHEET_CSV_URL.includes("http")) { fetchProjects(); } 
+        else { document.getElementById('loading').innerHTML = "<p class='text-gray-500'>Vui lòng cập nhật link CSV vào mã nguồn.</p>"; }
+    </script>
+</body>
+</html>
