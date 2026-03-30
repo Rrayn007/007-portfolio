@@ -78,8 +78,27 @@
     </footer>
 
     <script>
+        // DÁN LINK CSV CỦA BẠN VÀO ĐÂY (Vẫn dùng link cũ)
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIpJq2oHAUsKDWglqDUFvL16J605IREPVi6_PxC55yxt302ueUSL3ylqi__NFut6A0cRAePJLyVuis/pub?output=csv";
+        
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Hàm đọc CSV mới: Xử lý hoàn hảo các ô trống và cột trống
+        function parseCSVRow(str) {
+            const result = [];
+            let cur = '', inQuote = false;
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === '"') inQuote = !inQuote;
+                else if (str[i] === ',' && !inQuote) { result.push(cur); cur = ''; }
+                else cur += str[i];
+            }
+            result.push(cur);
+            return result.map(val => {
+                val = val.trim();
+                if (val.startsWith('"') && val.endsWith('"')) return val.slice(1, -1).replace(/""/g, '"');
+                return val;
+            });
+        }
 
         async function initPortfolio() {
             try {
@@ -89,9 +108,9 @@
                 const rows = csvText.split('\n').filter(row => row.trim() !== '');
                 if (rows.length < 2) throw new Error("Dữ liệu trống");
 
-                const headers = rows[0].split(',').map(h => h.trim());
+                const headers = parseCSVRow(rows[0]);
                 
-                // Lấy vị trí cột dựa trên Header
+                // Lấy vị trí cột
                 const idxConfigKey = headers.indexOf('ConfigKey');
                 const idxConfigValue = headers.indexOf('ConfigValue');
                 const idxTitle = headers.indexOf('Title');
@@ -104,26 +123,19 @@
                 const projects = [];
 
                 rows.slice(1).forEach(row => {
-                    // Regex tách các cột, hỗ trợ nội dung có dấu phẩy nằm trong ngoặc kép
-                    const matchValues = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g) || [];
+                    const matchValues = parseCSVRow(row);
                     
                     const getValue = (index) => {
-                        if (index < 0 || !matchValues[index]) return '';
-                        let val = matchValues[index].trim();
-                        if (val.startsWith('"') && val.endsWith('"')) {
-                            val = val.substring(1, val.length - 1).replace(/""/g, '"');
-                        }
-                        return val;
+                        if (index < 0 || index >= matchValues.length) return '';
+                        return matchValues[index];
                     };
 
-                    // Trích xuất cấu hình từ 2 cột đầu
+                    // Cấu hình
                     const cKey = getValue(idxConfigKey);
                     const cVal = getValue(idxConfigValue);
-                    if (cKey && cKey !== '') {
-                        config[cKey] = cVal;
-                    }
+                    if (cKey && cKey !== '') config[cKey] = cVal;
 
-                    // Trích xuất dự án từ các cột sau
+                    // Dự án
                     const pTitle = getValue(idxTitle);
                     if (pTitle && pTitle !== '') {
                         projects.push({
@@ -157,12 +169,11 @@
                     }
                 }
 
-                // Kết xuất Dự án
                 renderProjects(projects);
 
             } catch (error) {
                 console.error("Lỗi dữ liệu:", error);
-                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Lỗi tải dữ liệu. Hãy kiểm tra lại định dạng Sheet.</p>";
+                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Lỗi tải dữ liệu. Hãy kiểm tra lại kết nối.</p>";
             }
         }
 
