@@ -32,7 +32,7 @@
 </head>
 <body class="text-brand-dark antialiased font-sans min-h-screen flex flex-col overflow-x-hidden" style="background-color: #ffffff;">
 
-    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/50">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="#" class="block h-10 md:h-12 w-auto transition-transform hover:scale-105">
                 <img id="site-logo" src="" alt="007 Logo" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500" />
@@ -50,7 +50,7 @@
                 Crafting digital <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-orange">visual</span> experiences.
             </h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto font-light">
-                Chào mừng đến với không gian sáng tạo. Nơi hội tụ những dự án Photo Editing, UI/UX và Graphic Design được thực hiện bởi Rayn Scofield.
+                Không gian sáng tạo. Nơi hội tụ các dự án Photo Editing, UI/UX và Graphic Design được thực hiện bởi Rayn Scofield.
             </p>
         </div>
     </section>
@@ -66,13 +66,10 @@
 
     <footer class="bg-brand-dark text-gray-400 mt-auto border-t-4 border-brand-orange">
         <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center text-center">
-            
             <div class="mb-10 h-16 md:h-20 w-auto">
                 <img id="footer-signature" src="" alt="Signature" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500 invert" />
             </div>
-
             <div class="w-24 h-px bg-zinc-700 mb-8"></div>
-
             <p class="text-sm tracking-wide mb-2">
                 &copy; <span id="current-year"></span> Rayn Scofield. All rights reserved.
                 <span class="text-brand-orange font-bold">/</span> 007
@@ -81,12 +78,7 @@
     </footer>
 
     <script>
-        // ==========================================================
-        // DÁN LINK CSV DUY NHẤT CỦA BẠN VÀO ĐÂY
-        // ==========================================================
-        const SHEET_CSV_URL = "DÁN_LINK_CSV_Ở_ĐÂY";
-        // ==========================================================
-
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIpJq2oHAUsKDWglqDUFvL16J605IREPVi6_PxC55yxt302ueUSL3ylqi__NFut6A0cRAePJLyVuis/pub?output=csv";
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         async function initPortfolio() {
@@ -94,65 +86,83 @@
                 const response = await fetch(SHEET_CSV_URL);
                 const csvText = await response.text();
                 
-                // Parse CSV
                 const rows = csvText.split('\n').filter(row => row.trim() !== '');
+                if (rows.length < 2) throw new Error("Dữ liệu trống");
+
                 const headers = rows[0].split(',').map(h => h.trim());
                 
-                const allData = rows.slice(1).map(row => {
+                // Lấy vị trí cột dựa trên Header
+                const idxConfigKey = headers.indexOf('ConfigKey');
+                const idxConfigValue = headers.indexOf('ConfigValue');
+                const idxTitle = headers.indexOf('Title');
+                const idxCategory = headers.indexOf('Category');
+                const idxImageUrl = headers.indexOf('ImageUrl');
+                const idxDesc = headers.indexOf('Description');
+                const idxLink = headers.indexOf('Link');
+
+                const config = {};
+                const projects = [];
+
+                rows.slice(1).forEach(row => {
+                    // Regex tách các cột, hỗ trợ nội dung có dấu phẩy nằm trong ngoặc kép
                     const matchValues = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g) || [];
-                    const data = {};
-                    headers.forEach((header, i) => {
-                        let value = matchValues[i] || '';
-                        value = value.trim();
-                        if (value.startsWith('"') && value.endsWith('"')) {
-                            value = value.substring(1, value.length - 1).replace(/""/g, '"');
+                    
+                    const getValue = (index) => {
+                        if (index < 0 || !matchValues[index]) return '';
+                        let val = matchValues[index].trim();
+                        if (val.startsWith('"') && val.endsWith('"')) {
+                            val = val.substring(1, val.length - 1).replace(/""/g, '"');
                         }
-                        data[header] = value;
-                    });
-                    return data;
+                        return val;
+                    };
+
+                    // Trích xuất cấu hình từ 2 cột đầu
+                    const cKey = getValue(idxConfigKey);
+                    const cVal = getValue(idxConfigValue);
+                    if (cKey && cKey !== '') {
+                        config[cKey] = cVal;
+                    }
+
+                    // Trích xuất dự án từ các cột sau
+                    const pTitle = getValue(idxTitle);
+                    if (pTitle && pTitle !== '') {
+                        projects.push({
+                            Title: pTitle,
+                            Category: getValue(idxCategory),
+                            ImageUrl: getValue(idxImageUrl),
+                            Description: getValue(idxDesc),
+                            Link: getValue(idxLink)
+                        });
+                    }
                 });
 
-                // Tách dữ liệu thành Config và Project dựa trên cột Type
-                const configData = allData.filter(item => item.Type && item.Type.toLowerCase() === 'config');
-                const projectData = allData.filter(item => item.Type && item.Type.toLowerCase() === 'project');
-
-                // 1. Xử lý Cấu hình (Config)
-                const config = {};
-                configData.forEach(item => { config[item.Title] = item.Image_or_Value; });
-
-                // Set Logo
+                // Áp dụng Cấu hình
                 if (config.siteLogo) {
                     const logo = document.getElementById('site-logo');
                     logo.src = config.siteLogo;
                     logo.classList.remove('opacity-0');
                 }
-                
-                // Set Chữ ký
                 if (config.siteSignature) {
                     const sig = document.getElementById('footer-signature');
                     sig.src = config.siteSignature;
                     sig.classList.remove('opacity-0');
                 }
-
-                // Set Nền (Background)
                 if (config.siteBackground) {
                     if (config.siteBackground.startsWith('http')) {
-                        // Nếu là link ảnh
                         document.body.style.backgroundImage = `url('${config.siteBackground}')`;
                         document.body.style.backgroundSize = 'cover';
                         document.body.style.backgroundAttachment = 'fixed';
                     } else {
-                        // Nếu là mã màu hex (vd: #f8fafc)
                         document.body.style.backgroundColor = config.siteBackground;
                     }
                 }
 
-                // 2. Xử lý Thẻ dự án (Projects)
-                renderProjects(projectData);
+                // Kết xuất Dự án
+                renderProjects(projects);
 
             } catch (error) {
-                console.error("Lỗi:", error);
-                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Không thể tải dữ liệu từ Google Sheets.</p>";
+                console.error("Lỗi dữ liệu:", error);
+                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Lỗi tải dữ liệu. Hãy kiểm tra lại định dạng Sheet.</p>";
             }
         }
 
@@ -161,7 +171,7 @@
             let htmlContent = '';
             
             projects.forEach((project, index) => {
-                const img = project.Image_or_Value || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
+                const img = project.ImageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
                 const delay = index * 100;
 
                 htmlContent += `
@@ -169,8 +179,8 @@
                        class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 ease-out border border-gray-100/50 animate-fade-in-up"
                        style="animation-delay: ${delay}ms; opacity: 0;"
                     >
-                        <div class="relative h-72 overflow-hidden bg-gray-100">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
+                        <div class="relative h-72 overflow-hidden bg-gray-50">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
                             <img src="${img}" alt="${project.Title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out" />
                             <span class="absolute top-4 right-4 z-20 text-xs font-bold uppercase tracking-wider bg-white/90 text-brand-orange px-3 py-1 rounded-full shadow-sm">
                                 ${project.Category || 'Portfolio'}
@@ -178,9 +188,9 @@
                         </div>
                         <div class="p-8 relative z-20">
                             <h3 class="text-2xl font-bold mb-3 text-brand-dark group-hover:text-brand-red transition-colors line-clamp-1">
-                                ${project.Title || 'Tên dự án'}
+                                ${project.Title || 'Dự án'}
                             </h3>
-                            <p class="text-gray-600 line-clamp-2 font-light leading-relaxed">
+                            <p class="text-gray-600 line-clamp-2 font-light leading-relaxed text-sm">
                                 ${project.Description || ''}
                             </p>
                         </div>
