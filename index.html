@@ -2,198 +2,16 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rayn Scofield // Elite Designer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+    <title>DEBUG DATA // RAYN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { 
-                        brand: { red: '#e11d48', dark: '#020203', surface: '#0a0a0c', border: '#1f1f2e' } 
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    animation: { 'fade-up': 'fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards' },
-                    keyframes: { fadeUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
-                }
-            }
-        }
-    </script>
-    <style>
-        ::selection { background-color: #e11d48; color: white; }
-        body { background-color: #020203; color: #ffffff; overflow-x: hidden; scroll-behavior: smooth; }
-
-        /* --- 1. YOUTUBE LOADER BAR --- */
-        #yt-loader { 
-            position: fixed; top: 0; left: 0; height: 2px; background: #e11d48; 
-            z-index: 9999; transition: width 0.4s ease; width: 0%; 
-            box-shadow: 0 0 10px #e11d48; 
-        }
-
-        /* --- 2. SPACE & MOON THEME --- */
-        .space-bg {
-            position: fixed; inset: 0; z-index: -3; background-color: #020203;
-            background-image: 
-                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 80px 80px, 40px 40px;
-            background-position: 0 0, 20px 20px;
-        }
-        .moon-glow {
-            position: fixed; top: -30vh; left: 50%; transform: translateX(-50%);
-            width: 140vw; height: 100vw; max-width: 1400px; max-height: 1400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 40%, transparent 65%);
-            border-radius: 50%; z-index: -2; pointer-events: none;
-            animation: moonPulse 8s infinite alternate ease-in-out;
-        }
-        @keyframes moonPulse { 0% { opacity: 0.7; transform: translateX(-50%) scale(0.95); } 100% { opacity: 1; transform: translateX(-50%) scale(1.05); } }
-
-        /* --- 3. PIXEL LED STICKER (SUNFLOWER) --- */
-        .pixel-board {
-            display: grid; grid-template-columns: repeat(14, 1fr); grid-template-rows: repeat(4, 1fr); 
-            gap: 1px; padding: 2px; background: #000; border: 1px solid #1f1f2e; width: 60px; height: 20px;
-        }
-        .pxl { background: #0a0a0c; border-radius: 0.5px; }
-        .pxl.w { background: #ffffff; box-shadow: 0 0 3px rgba(255,255,255,0.8); }
-        .pxl.r { background: #e11d48; box-shadow: 0 0 4px rgba(225,29,72,0.8); }
-        .pxl.scan { animation: ledScan 2s infinite alternate; }
-        @keyframes ledScan { 0%, 20% { opacity: 0.2; } 80%, 100% { opacity: 1; } }
-
-        /* --- 4. TRADING CARDS: MOTION BORDER & 3D ĐỒNG BỘ --- */
-        .card-scene { perspective: 1500px; }
-        
-        .card-3d-wrap {
-            position: relative; padding: 2px; border-radius: 1.5rem; overflow: hidden;
-            background: #111; 
-            transform-style: preserve-3d; will-change: transform; transition: transform 0.1s linear;
-        }
-        /* Viền chạy ánh sáng */
-        .card-3d-wrap::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, #e11d48, #ffffff, transparent);
-            animation: spinBorder 4s linear infinite; z-index: 0;
-        }
-        @keyframes spinBorder { 100% { transform: rotate(360deg); } }
-
-        .card-3d-inner { 
-            position: relative; width: 100%; height: 100%; border-radius: 1.4rem; overflow: hidden;
-            background: #050505; z-index: 1; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-        }
-
-        .glare { 
-            position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; 
-            will-change: opacity, background-position; transition: opacity 0.4s ease;
-        }
-        
-        /* Hiệu ứng Vật liệu Sang trọng */
-        .effect-holo { background: linear-gradient(110deg, transparent 20%, rgba(255,0,0,0.4) 30%, rgba(255,255,0,0.2) 40%, rgba(0,255,0,0.3) 50%, rgba(0,255,255,0.4) 60%, rgba(0,0,255,0.3) 70%, transparent 80%); background-size: 250% 250%; mix-blend-mode: color-dodge; }
-        .effect-mirror { background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0.7) 50%, transparent 60%); background-size: 250% 250%; mix-blend-mode: soft-light; }
-        .effect-gold { background: linear-gradient(135deg, rgba(191,149,63,0.6), rgba(252,246,186,0.6), rgba(179,135,40,0.6)); background-size: 200% 200%; mix-blend-mode: overlay; }
-        .effect-diamond { background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px); background-size: 10px 10px; mix-blend-mode: color-dodge; opacity: 0.4; }
-        .effect-metal { background: linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 3px 100%; mix-blend-mode: overlay; opacity: 0.5; }
-
-        .glass-nav { background: rgba(2, 2, 3, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .custom-scroll::-webkit-scrollbar { width: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #333; }
-    </style>
 </head>
-<body>
-    <div id="yt-loader"></div>
-
-    <div class="space-bg"></div>
-    <div class="moon-glow"></div>
-
-    <header class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-6">
-                <img id="site-logo" src="" alt="007" class="h-6 md:h-8 opacity-0 transition-opacity duration-1000 object-contain" />
-                <div class="pixel-board" id="led-matrix"></div>
-            </div>
-            <div class="text-[9px] tracking-[0.4em] text-gray-500 font-bold uppercase hidden md:block">
-                Rayn Scofield <span class="text-brand-red px-3">|</span> Visual Elite
-            </div>
-        </div>
-    </header>
-
-    <section class="pt-52 pb-24 px-6 max-w-7xl mx-auto text-center relative z-10">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm border border-brand-border bg-brand-surface text-[9px] font-bold tracking-[0.3em] text-gray-400 mb-12 uppercase">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span> Systems Online
-        </div>
-        
-        <h1 class="flex flex-wrap justify-center items-center gap-x-6 font-black tracking-tighter mb-14 leading-[0.8] text-[16vw] md:text-[9rem]">
-            <span class="text-white">VISUAL</span>
-            <span class="text-brand-red">ELITE</span>
-        </h1>
-        
-        <div id="p-skills" class="flex flex-wrap justify-center gap-3 relative z-10 max-w-4xl mx-auto"></div>
-    </section>
-
-    <main class="max-w-7xl mx-auto px-6 pb-32 relative z-10">
-        <div id="loading" class="flex justify-center py-20"><div class="animate-spin h-8 w-8 border-t-2 border-brand-red rounded-full"></div></div>
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden opacity-0 transition-all duration-1000"></div>
-    </main>
-
-    <section class="py-32 border-t border-brand-border bg-[#050508] relative z-10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-4">
-                <h2 class="text-4xl font-black tracking-tighter text-white">EXCLUSIVE COLLECTION</h2>
-                <p class="text-gray-500 text-[10px] tracking-[0.3em] font-bold uppercase">Limited Trading Cards</p>
-            </div>
-            
-            <div id="trading-cards-container" class="flex flex-wrap justify-center gap-16 md:gap-24"></div>
-        </div>
-    </section>
-
-    <footer class="bg-black border-t border-brand-border pt-32 pb-24 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
-            <img id="footer-signature" src="" alt="Rayn Scofield" class="h-28 md:h-40 mb-16 invert opacity-30 hover:opacity-100 hover:scale-105 transition-all duration-1000 object-contain grayscale hover:grayscale-0" />
-            <div class="w-16 h-px bg-brand-border mb-8"></div>
-            <p class="text-[9px] tracking-[0.6em] text-gray-600 font-bold uppercase">&copy; 2026 // Designed By Rayn Scofield</p>
-        </div>
-    </footer>
-
-    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
-        <div class="absolute inset-0 bg-black/98 backdrop-blur-md" onclick="closeModal()"></div>
-        <div id="modal-box" class="relative bg-[#050505] w-full max-w-[95vw] md:max-w-6xl h-[85vh] rounded-2xl flex flex-col md:flex-row overflow-hidden scale-95 transition-all duration-400 border border-brand-border shadow-2xl">
-            
-            <button onclick="closeModal()" class="absolute top-5 right-5 z-50 text-gray-500 hover:text-white transition-colors bg-black/50 p-2 rounded-full border border-white/5">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-
-            <div class="w-full md:w-[65%] h-[45vh] md:h-full bg-[#020202] flex items-center justify-center p-8 border-r border-brand-border">
-                <img id="modal-img" class="max-w-full max-h-full object-contain" />
-            </div>
-            
-            <div class="w-full md:w-[35%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto">
-                <span id="modal-cat" class="text-brand-red text-[10px] font-bold tracking-[0.3em] mb-4 uppercase"></span>
-                <h2 id="modal-title" class="text-3xl font-black mb-6 text-white tracking-tight leading-snug"></h2>
-                <div class="w-8 h-1 bg-brand-red mb-8"></div>
-                <p id="modal-desc" class="text-gray-400 text-sm leading-relaxed mb-12 font-light whitespace-pre-line"></p>
-                <a id="modal-link" href="#" target="_blank" class="mt-auto py-5 border border-brand-border bg-[#0a0a0c] text-center text-[10px] font-bold hover:bg-white hover:text-black transition-all tracking-[0.3em] hidden">LAUNCH PROJECT</a>
-            </div>
-        </div>
-    </div>
+<body class="bg-zinc-950 text-white p-10">
+    <h1 class="text-xs tracking-widest text-zinc-500 mb-10">DEBUG MODE: CHECKING ROW-BASED EFFECT</h1>
+    
+    <div id="test-container" class="flex flex-wrap gap-10"></div>
 
     <script>
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        let globalProjects = [];
-
-        function initLED() {
-            const matrix = document.getElementById('led-matrix');
-            const redPixels = [0, 13, 42, 55]; 
-            const whitePixels = [16,17, 20,21, 30,31, 34,35]; 
-            const scanPixels = [2, 11, 28, 41]; 
-            
-            for(let i=0; i<56; i++) {
-                const px = document.createElement('div');
-                px.className = 'pxl';
-                if(redPixels.includes(i)) px.classList.add('r');
-                if(whitePixels.includes(i)) px.classList.add('w');
-                if(scanPixels.includes(i)) px.classList.add('w', 'scan');
-                matrix.appendChild(px);
-            }
-        }
 
         function parseCSVRow(str) {
             const result = [];
@@ -208,177 +26,47 @@
         }
 
         async function init() {
-            const loader = document.getElementById('yt-loader');
-            loader.style.width = '20%'; 
-            
             try {
                 const res = await fetch(SHEET_CSV_URL);
-                loader.style.width = '60%';
                 const data = await res.text();
-                loader.style.width = '85%';
-                
                 const rows = data.split('\n').filter(r => r.trim() !== '');
                 const headers = parseCSVRow(rows[0]);
                 
-                // --- THUẬT TOÁN ĐỌC DỮ LIỆU BỌC THÉP ---
-                // Tìm chính xác tuyệt đối tên cột để tránh lỗi mất project
-                const getCol = (names) => {
-                    for (let name of names) {
-                        const idx = headers.findIndex(h => h && h.trim().toLowerCase() === name.toLowerCase());
-                        if (idx !== -1) return idx;
-                    }
-                    return -1;
-                };
+                // Tìm vị trí cột Effect (Không phân biệt hoa thường)
+                const idxKey = headers.findIndex(h => h.toLowerCase().includes('key'));
+                const idxEffect = headers.findIndex(h => h.toLowerCase().includes('eff'));
 
-                const idxKey = getCol(['ConfigKey']);
-                const idxVal = getCol(['ConfigValue']);
-                const idxEffect = getCol(['TradingCardEffect', 'TradingCard_Effect', 'Effect']); 
-                
-                const idxTitle = getCol(['Title']);
-                const idxCategory = getCol(['Category']);
-                const idxImageUrl = getCol(['ImageUrl', 'Image']);
-                const idxDesc = getCol(['Description', 'Desc']);
-                const idxLink = getCol(['Link']);
+                const container = document.getElementById('test-container');
 
-                const config = {};
-                const tradingCards = [];
-                const projects = [];
-
-                rows.slice(1).forEach(row => {
+                rows.slice(1).forEach((row, i) => {
                     const vals = parseCSVRow(row);
-                    const key = (idxKey !== -1 && vals[idxKey]) ? vals[idxKey].trim() : '';
-                    const val = (idxVal !== -1 && vals[idxVal]) ? vals[idxVal].trim() : '';
-                    
-                    const effect = (idxEffect !== -1 && vals[idxEffect]) ? vals[idxEffect].toLowerCase().trim() : 'metal';
+                    const key = vals[idxKey] || `Row_${i+1}`;
+                    const effect = (idxEffect !== -1 && vals[idxEffect]) ? vals[idxEffect] : "NULL";
 
-                    if (key) config[key] = val;
-                    
-                    if (key.toLowerCase().startsWith('tradingcard') && val.startsWith('http')) {
-                        tradingCards.push({ image: val, effect: effect });
-                    }
-
-                    // Điều kiện đẩy project cứng nhắc để không bao giờ mất dữ liệu
-                    if (idxTitle !== -1 && vals[idxTitle] && vals[idxTitle].trim() !== '') {
-                        projects.push({ 
-                            Title: vals[idxTitle].trim(), 
-                            Category: (idxCategory !== -1 && vals[idxCategory]) ? vals[idxCategory] : '', 
-                            ImageUrl: (idxImageUrl !== -1 && vals[idxImageUrl]) ? vals[idxImageUrl] : '', 
-                            Description: (idxDesc !== -1 && vals[idxDesc]) ? vals[idxDesc] : '', 
-                            Link: (idxLink !== -1 && vals[idxLink]) ? vals[idxLink] : '' 
-                        });
+                    // Chỉ hiện những hàng có liên quan đến tradingCard
+                    if (key.toLowerCase().includes('tradingcard')) {
+                        container.innerHTML += `
+                            <div class="border border-zinc-800 p-6 rounded bg-zinc-900 w-64">
+                                <p class="text-[10px] text-zinc-500 mb-2 uppercase">${key}</p>
+                                <div class="text-4xl font-black text-orange-500 underline">
+                                    ${effect}
+                                </div>
+                                <p class="text-[10px] text-zinc-600 mt-4 italic">Index cột Effect: ${idxEffect}</p>
+                            </div>
+                        `;
                     }
                 });
 
-                // Render UI
-                if(config.siteLogo) { document.getElementById('site-logo').src = config.siteLogo; document.getElementById('site-logo').classList.remove('opacity-0'); }
-                if(config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
-
-                if(config.skills) {
-                    const box = document.getElementById('p-skills');
-                    config.skills.split(',').forEach(s => {
-                        box.innerHTML += `<span class="px-4 py-2 border border-brand-border bg-brand-surface rounded text-[10px] font-bold text-gray-500 uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all cursor-default shadow-sm">${s.trim()}</span>`;
-                    });
+                if (container.innerHTML === "") {
+                    container.innerHTML = "Không tìm thấy hàng nào có Key chứa 'tradingCard'.";
                 }
 
-                const container = document.getElementById('trading-cards-container');
-                tradingCards.forEach(c => {
-                    container.innerHTML += `
-                        <div class="card-scene w-[300px] h-[420px] md:w-[320px] md:h-[448px] cursor-crosshair" onmousemove="handleMouseMove(event, this)" onmouseleave="handleMouseLeave(this)">
-                            <div class="card-3d-wrap w-full h-full shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
-                                <div class="card-3d-inner">
-                                    <div class="glare effect-${c.effect}"></div>
-                                    <img src="${c.image}" class="w-full h-full object-cover" loading="lazy" />
-                                </div>
-                            </div>
-                        </div>`;
-                });
-
-                globalProjects = projects;
-                renderProjects(projects);
-                
-                loader.style.width = '100%';
-                setTimeout(() => { loader.style.opacity = '0'; }, 600);
-
-            } catch (e) { 
-                console.error("Lỗi:", e); 
-                loader.style.background = 'orange'; 
+            } catch (e) {
+                document.body.innerHTML = "LỖI KẾT NỐI: " + e.message;
             }
         }
 
-        function renderProjects(projs) {
-            const grid = document.getElementById('portfolio-grid');
-            projs.forEach((p, i) => {
-                grid.innerHTML += `
-                    <div onclick="openModal(${i})" class="group bg-[#050505] border border-brand-border rounded-xl overflow-hidden cursor-pointer hover:border-white/20 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 animate-fade-up" style="animation-delay: ${i*100}ms; opacity:0;">
-                        <div class="h-72 overflow-hidden bg-black relative">
-                            <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10 duration-700"></div>
-                            <img src="${p.ImageUrl}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" loading="lazy" />
-                        </div>
-                        <div class="p-8">
-                            <h3 class="text-xl font-bold text-white truncate tracking-tight group-hover:text-brand-red transition-colors">${p.Title}</h3>
-                            <p class="text-gray-500 text-[10px] mt-3 uppercase tracking-[0.2em] font-bold">${p.Category}</p>
-                        </div>
-                    </div>`;
-            });
-            document.getElementById('loading').classList.add('hidden');
-            grid.classList.remove('hidden');
-        }
-
-        // --- RAF CHỐNG LAG: XOAY CẢ VIỀN LẪN ẢNH BÊN TRONG ---
-        let ticking = false;
-        function handleMouseMove(e, el) {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const wrap = el.querySelector('.card-3d-wrap'); 
-                    const glare = el.querySelector('.glare');
-                    const r = el.getBoundingClientRect();
-                    const x = (e.clientX - r.left) / r.width - 0.5;
-                    const y = (e.clientY - r.top) / r.height - 0.5;
-                    
-                    wrap.style.transform = `rotateX(${y * -25}deg) rotateY(${x * 25}deg)`;
-                    glare.style.opacity = '1';
-                    
-                    const bgX = (x + 0.5) * 100;
-                    const bgY = (y + 0.5) * 100;
-                    glare.style.backgroundPosition = `${bgX}% ${bgY}%`;
-                    
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-        
-        function handleMouseLeave(el) {
-            const wrap = el.querySelector('.card-3d-wrap');
-            const glare = el.querySelector('.glare');
-            wrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
-            glare.style.opacity = '0';
-        }
-
-        function openModal(i) {
-            const p = globalProjects[i];
-            document.getElementById('modal-img').src = p.ImageUrl;
-            document.getElementById('modal-title').textContent = p.Title;
-            document.getElementById('modal-cat').textContent = p.Category;
-            document.getElementById('modal-desc').textContent = p.Description;
-            
-            const linkBtn = document.getElementById('modal-link');
-            if(p.Link) { linkBtn.href = p.Link; linkBtn.classList.remove('hidden'); } 
-            else { linkBtn.classList.add('hidden'); }
-            
-            document.getElementById('project-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { document.getElementById('project-modal').classList.remove('opacity-0'); document.getElementById('modal-box').classList.remove('scale-95'); }, 10);
-        }
-        
-        function closeModal() {
-            document.getElementById('project-modal').classList.add('opacity-0');
-            document.getElementById('modal-box').classList.add('scale-95');
-            setTimeout(() => { document.getElementById('project-modal').classList.add('hidden'); document.body.style.overflow = ''; }, 400);
-        }
-
-        initLED();
-        if(SHEET_CSV_URL.includes("http")) init();
+        init();
     </script>
 </body>
 </html>
