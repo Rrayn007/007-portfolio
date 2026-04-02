@@ -29,62 +29,90 @@
             font-family: 'Inter', sans-serif; 
         }
         
-        /* Background giữ nguyên */
-        .stars-bg { position: fixed; inset: 0; z-index: -2; background-image: radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px); background-size: 55px 55px; }
+        /* Background - Moon + Sao nhấp nháy random, không lấn át */
+        .stars-bg { 
+            position: fixed; inset: 0; z-index: -2; 
+            background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px); 
+            background-size: 55px 55px; 
+        }
         .stars-layer {
             position: fixed; inset: 0; z-index: -3;
-            background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
-            background-size: 85px 85px, 170px 170px; background-position: 0 0, 35px 55px;
-            filter: blur(2px); animation: starTwinkle 25s infinite linear; opacity: 0.85;
+            background-image: 
+                radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                radial-gradient(rgba(255,255,255,0.025) 2px, transparent 2px);
+            background-size: 85px 85px, 170px 170px;
+            background-position: 0 0, 35px 55px;
+            filter: blur(2px);
+            animation: starTwinkle 25s infinite linear;
+            opacity: 0.65; /* giảm để không lấn át */
         }
-        @keyframes starTwinkle { 0%,100% { opacity: 0.55; } 50% { opacity: 0.95; } }
+        @keyframes starTwinkle { 
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.9; }
+        }
         .moon-glow {
             position: fixed; top: -42vh; left: 50%; transform: translateX(-50%);
             width: 135vw; height: 135vw; max-width: 1650px;
-            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.035) 38%, transparent 72%);
+            background: radial-gradient(circle, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.025) 38%, transparent 72%);
             border-radius: 50%; z-index: -1; pointer-events: none;
             filter: blur(68px); animation: moonBreath 20s infinite alternate ease-in-out;
         }
-        @keyframes moonBreath { from { opacity: 0.5; transform: translateX(-50%) scale(0.9); } to { opacity: 0.9; transform: translateX(-50%) scale(1.1); } }
-
-        /* Header */
-        #main-header { box-shadow: 0 4px 30px rgba(0,0,0,0.6); }
-        .header-led {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent 0%, #dc2626 15%, #fff 25%, #dc2626 35%, transparent 50%, #dc2626 65%, #fff 75%, #dc2626 85%, transparent 100%);
-            background-size: 300% 100%; animation: ledScan 4s linear infinite; opacity: 0.15;
+        @keyframes moonBreath { 
+            from { opacity: 0.45; transform: translateX(-50%) scale(0.9); } 
+            to { opacity: 0.75; transform: translateX(-50%) scale(1.1); } 
         }
-        @keyframes ledScan { 0% { background-position: 0% 0; } 100% { background-position: -300% 0; } }
 
-        .glass-panel { background: rgba(10,10,12,0.72); backdrop-filter: blur(26px); border: 1px solid rgba(255,255,255,0.08); }
-        .hero-badge { background: rgba(10,10,12,0.85); backdrop-filter: blur(24px); border: 1px solid rgba(220,38,38,0.2); }
-        .lux-text { font-weight: 900; letter-spacing: -0.04em; text-shadow: 0 10px 40px rgba(220,38,38,0.25); }
+        /* Header & Glass nhẹ nổi khối */
+        #main-header { 
+            box-shadow: 0 4px 30px rgba(0,0,0,0.6); 
+        }
+        .glass-panel { 
+            background: rgba(10,10,12,0.68); 
+            backdrop-filter: blur(26px); 
+            border: 1px solid rgba(255,255,255,0.07); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4),
+                        inset 0 1px 0 rgba(255,255,255,0.08); /* nổi khối nhẹ */
+        }
+        .hero-badge { 
+            background: rgba(10,10,12,0.82); 
+            backdrop-filter: blur(24px); 
+            border: 1px solid rgba(220,38,38,0.2); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+        }
 
-        /* CARD 3D - Giữ nguyên hiệu ứng gốc như bạn gửi */
+        .lux-text { 
+            font-weight: 900; 
+            letter-spacing: -0.04em; 
+            text-shadow: 0 10px 40px rgba(220,38,38,0.25); 
+        }
+
+        /* CARD 3D - Specular siêu mềm, không gắt */
         .card-scene { perspective: 1600px; touch-action: none; }
         .card-inner {
             position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505;
             transform-style: preserve-3d; will-change: transform;
             transition: transform 0.1s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 1px solid rgba(255,255,255,0.09); border-radius: 0 !important;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.95);
+            border: 1px solid rgba(255,255,255,0.09); 
+            border-radius: 0 !important;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.95),
+                        inset 0 1px 0 rgba(255,255,255,0.06); /* nổi khối nhẹ */
         }
         .glare {
             position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none;
             transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             background-size: 250% 250%; mix-blend-mode: color-dodge; filter: brightness(1.2);
         }
-        /* Layer ánh sáng môi trường mới - Mềm mại, tự nhiên, lan tỏa theo mọi góc xoay */
         .specular {
             position: absolute; inset: 0; z-index: 6; pointer-events: none;
             background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), 
-                        rgba(255,255,255,0.65) 12%, rgba(255,255,255,0.18) 32%, transparent 58%);
+                        rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.05) 42%, transparent 68%);
             mix-blend-mode: screen;
-            opacity: 0; transition: opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: blur(3px);
+            opacity: 0; transition: opacity 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: blur(6px);
         }
 
-        /* ================= HIỆU ỨNG CHÍNH - Đúng như bạn vừa gửi (không gắt) ================= */
+        /* Hiệu ứng gốc chính xác như bạn yêu cầu */
         .effect-holo { 
             background: linear-gradient(115deg, transparent 20%, rgba(255,0,0,0.5) 30%, rgba(255,255,0,0.5) 40%, rgba(0,255,0,0.5) 50%, rgba(0,255,255,0.5) 60%, rgba(0,0,255,0.5) 70%, transparent 80%); 
             background-size: 300% 300%; 
@@ -133,6 +161,24 @@
         @keyframes holoShift { 
             0% { background-position: 0% 0%; } 
             100% { background-position: 200% 200%; } 
+        }
+
+        /* Project Grid - Giữ sáng, không tối */
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Modal - Chi tiết & chuyên nghiệp hơn */
+        .modal-glass {
+            background: rgba(10,10,12,0.75);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 80px rgba(0,0,0,0.7),
+                        inset 0 2px 0 rgba(255,255,255,0.1);
         }
 
         @media (max-width: 640px) {
@@ -204,26 +250,34 @@
         <p class="text-[10px] tracking-[0.5em] text-gray-600 font-bold uppercase">&copy; <span id="current-year"></span> // RAYN SCOFIELD // ALL RIGHTS RESERVED</p>
     </footer>
 
+    <!-- MODAL - Chi tiết & chuyên nghiệp hơn -->
     <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-2xl cursor-pointer" onclick="closeModal()"></div>
-        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-7xl h-[90vh] md:h-[85vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 rounded-3xl shadow-[0_0_90px_rgba(0,0,0,0.85)]">
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red text-white p-3 transition-colors rounded-full backdrop-blur-md border border-white/10">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-2xl cursor-pointer" onclick="closeModal()"></div>
+        <div id="modal-content-box" class="modal-glass w-full max-w-[95vw] md:max-w-7xl h-[92vh] md:h-[88vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 rounded-3xl">
+            
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red text-white p-3 transition-colors rounded-2xl backdrop-blur-md border border-white/10">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <div class="w-full md:w-[60%] h-[45vh] md:h-full bg-black flex items-center justify-center p-8 border-r border-white/5 relative group">
-                <img id="modal-img" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl" />
+
+            <div class="w-full md:w-[58%] h-[42vh] md:h-full bg-black flex items-center justify-center p-8 border-r border-white/5 relative group">
+                <img id="modal-img" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl transition-all duration-700" />
                 <button onclick="toggleFullScreen()" class="absolute bottom-8 right-8 bg-white/10 hover:bg-brand-red p-3 text-white transition-all opacity-0 group-hover:opacity-100 border border-white/20 rounded-2xl backdrop-blur-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
             </div>
-            <div class="w-full md:w-[40%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
+
+            <div class="w-full md:w-[42%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
                 <span id="modal-category" class="text-brand-red text-[10px] font-bold tracking-[0.5em] mb-6 uppercase glass-panel border-brand-red/20 px-4 py-1.5 rounded-full self-start shadow-md"></span>
-                <h2 id="modal-title" class="lux-text text-3xl md:text-5xl mb-8 leading-[1.05] tracking-tighter"></h2>
+                <h2 id="modal-title" class="lux-text text-4xl md:text-5xl mb-6 leading-[1.05] tracking-tighter"></h2>
                 <div class="w-12 h-1 bg-gradient-to-r from-brand-red to-orange-500 mb-8 rounded-full"></div>
-                <p id="modal-desc" class="text-gray-400 text-sm leading-relaxed mb-12 whitespace-pre-line font-light"></p>
-                <div class="mt-auto border-t border-white/5 pt-8">
-                    <a id="modal-link" href="#" target="_blank" class="block py-4 glass-panel text-center text-[10px] font-bold text-white hover:bg-brand-red hover:border-brand-red transition-all tracking-[0.5em] uppercase hidden rounded-xl">
-                        LAUNCH PROJECT
+                <p id="modal-desc" class="text-gray-300 text-[15px] leading-relaxed mb-12 whitespace-pre-line font-light"></p>
+                
+                <div class="mt-auto border-t border-white/10 pt-8">
+                    <a id="modal-link" href="#" target="_blank" class="group flex items-center justify-center gap-3 py-4 glass-panel text-center text-[10px] font-bold text-white hover:bg-brand-red hover:border-brand-red transition-all tracking-[0.5em] uppercase rounded-2xl">
+                        <span>LAUNCH PROJECT</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7-7 7" />
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -265,7 +319,7 @@
                     if (specular) {
                         specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`);
                         specular.style.setProperty('--my', `${(y + 0.5) * 100}%`);
-                        specular.style.opacity = '0.75';   /* mềm mại, không gắt */
+                        specular.style.opacity = '0.55';   /* siêu mềm, không gắt */
                     }
                     ticking = false;
                 });
@@ -298,6 +352,7 @@
             });
         }
 
+        // Header trail
         const header = document.getElementById('main-header');
         const car = document.getElementById('cyber-car');
         let targetCarPos = -100, carPos = -100;
@@ -360,6 +415,7 @@
                     }
                 });
 
+                // Profile
                 if (config.siteLogo) { 
                     document.getElementById('site-logo').src = config.siteLogo; 
                     document.getElementById('site-logo').classList.remove('opacity-0'); 
@@ -379,6 +435,7 @@
                     ).join('');
                 }
 
+                // Trading Cards
                 const cardsContainer = document.getElementById('cards-container');
                 cards.forEach(c => {
                     cardsContainer.innerHTML += `
@@ -391,12 +448,13 @@
                         </div>`;
                 });
 
+                // Project Grid (giữ sáng)
                 const grid = document.getElementById('portfolio-grid');
                 projects.forEach((p, i) => {
                     grid.innerHTML += `
-                        <div onclick="openModal(${i})" class="group glass-panel overflow-hidden cursor-pointer hover:border-white/30 transition-all duration-500 rounded-3xl relative hover:-translate-y-3 shadow-2xl">
+                        <div onclick="openModal(${i})" class="project-card group glass-panel overflow-hidden cursor-pointer hover:border-white/30 transition-all duration-500 rounded-3xl relative">
                             <div class="h-72 overflow-hidden bg-black relative rounded-t-3xl">
-                                <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
                                 <img src="${p.ImageUrl}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-110" loading="lazy" alt="${p.Title}" />
                             </div>
                             <div class="p-8 pb-10 border-t border-white/5">
@@ -428,18 +486,21 @@
             document.getElementById('modal-img').src = p.ImageUrl || '';
             document.getElementById('modal-category').textContent = p.Category || '';
             document.getElementById('modal-title').textContent = p.Title || '';
-            document.getElementById('modal-desc').textContent = p.Description || '';
+            document.getElementById('modal-desc').textContent = p.Description || 'Không có mô tả chi tiết.';
             const linkBtn = document.getElementById('modal-link');
             if (p.Link) { linkBtn.href = p.Link; linkBtn.classList.remove('hidden'); } else linkBtn.classList.add('hidden');
+            
             const modal = document.getElementById('project-modal');
             const box = document.getElementById('modal-content-box');
-            modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
+            modal.classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden';
             setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.add('scale-100'); }, 10);
         }
         function closeModal() {
             const modal = document.getElementById('project-modal');
             const box = document.getElementById('modal-content-box');
-            modal.classList.add('opacity-0'); box.classList.remove('scale-100');
+            modal.classList.add('opacity-0'); 
+            box.classList.remove('scale-100');
             setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 420);
         }
         function toggleFullScreen() {
