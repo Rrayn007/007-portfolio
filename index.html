@@ -146,22 +146,19 @@
     </main>
 
     <section class="py-24 relative z-10 border-t border-gray-900 bg-black/30">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-16 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">Trading Card Showcase</h2>
-            
-            <div class="flex justify-center items-center perspective-1200">
-                <div class="card-3d-wrapper w-[300px] h-[420px] md:w-[400px] md:h-[560px] cursor-pointer" onmousemove="handleMouseMove(event, this)" onmouseleave="handleMouseLeave(this)">
-                    <div class="card-3d-inner w-full h-full relative rounded-2xl overflow-hidden border-2 border-gray-600 bg-gray-900">
-                        <div class="card-metallic-pattern"></div>
-                        <div class="card-holographic-glare"></div>
-                        
-                        <img id="special-card-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800" alt="Trading Card" class="w-full h-full object-cover relative z-0" />
-                    </div>
-                </div>
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-16 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">
+            Exclusive Collection
+        </h2>
+        
+        <div id="trading-cards-container" class="flex flex-wrap justify-center gap-16 perspective-1200">
             </div>
-            <p class="mt-8 text-sm text-gray-500 font-light">Di chuột lên thẻ để xem hiệu ứng Metalic Holographic</p>
-        </div>
-    </section>
+        
+        <p class="mt-12 text-sm text-gray-500 font-light italic">
+            * Di chuột lên từng thẻ để cảm nhận hiệu ứng Metallic Holographic
+        </p>
+    </div>
+</section>
 
     <footer class="bg-[#050505] relative z-10 border-t border-brand-orange/30">
         <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center text-center">
@@ -271,8 +268,26 @@
                     const sig = document.getElementById('footer-signature');
                     sig.src = config.siteSignature; sig.classList.remove('opacity-0');
                 }
-                if (config.tradingCardImg) {
-                    document.getElementById('special-card-img').src = config.tradingCardImg;
+                // --- Xử lý hiển thị nhiều thẻ Trading Card tự động ---
+                const cardsContainer = document.getElementById('trading-cards-container');
+                const cardKeys = Object.keys(config).filter(key => key.startsWith('tradingCard'));
+                
+                if (cardKeys.length > 0) {
+                    cardsContainer.innerHTML = ''; // Xóa nội dung cũ
+                    cardKeys.forEach(key => {
+                        const imageUrl = config[key];
+                        cardsContainer.innerHTML += `
+                            <div class="card-3d-wrapper w-[300px] h-[420px] md:w-[350px] md:h-[490px] cursor-pointer mb-8" 
+                                 onmousemove="handleMouseMove(event, this)" 
+                                 onmouseleave="handleMouseLeave(this)">
+                                <div class="card-3d-inner w-full h-full relative rounded-2xl overflow-hidden border-2 border-gray-600 bg-gray-900 shadow-2xl">
+                                    <div class="card-metallic-pattern"></div>
+                                    <div class="card-holographic-glare"></div>
+                                    <img src="${imageUrl}" alt="Trading Card" class="w-full h-full object-cover relative z-0" />
+                                </div>
+                            </div>
+                        `;
+                    });
                 }
 
                 // Profile
