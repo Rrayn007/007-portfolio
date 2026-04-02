@@ -20,10 +20,10 @@
         ::selection { background-color: #dc2626; color: white; }
         body { background-color: #020203; color: #fff; overflow-x: hidden; scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
 
-        /* Loading Bar */
+        /* 1. Youtube Loading Bar */
         #yt-loader { position: fixed; top: 0; left: 0; height: 3px; background: #dc2626; z-index: 1000; transition: width 0.3s ease; width: 0%; box-shadow: 0 0 10px #dc2626; }
 
-        /* Moon & Space Vibe */
+        /* 2. Moon & Space Atmosphere */
         .moon-glow {
             position: fixed; top: -35vh; left: 50%; transform: translateX(-50%);
             width: 120vw; height: 100vw; max-width: 1400px;
@@ -34,43 +34,42 @@
         @keyframes moonBreath { from { opacity: 0.6; transform: translateX(-50%) scale(0.95); } to { opacity: 1; transform: translateX(-50%) scale(1.05); } }
         .stars-bg { position: fixed; inset: 0; z-index: -2; background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 60px 60px; }
 
-        /* Pixel LED */
+        /* 3. Pixel LED Sticker */
         .pixel-board { display: grid; grid-template-columns: repeat(14, 1fr); gap: 1px; padding: 2px; background: #000; border: 1px solid #1f1f2e; width: 64px; height: 22px; }
         .pxl { background: #0a0a0c; border-radius: 0.5px; }
         .pxl.r { background: #dc2626; box-shadow: 0 0 5px #dc2626; animation: ledPulse 2s infinite; }
         .pxl.w { background: #fff; opacity: 0.8; }
         @keyframes ledPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-        /* Glass Panel - Dành cho phần cần mềm mại */
-        .glass-panel { background: rgba(10, 10, 12, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05); }
+        /* 4. Glassmorphism Style - Dùng cho Header, Projects, Modal */
+        .glass-panel { background: rgba(10, 10, 12, 0.65); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
 
-        /* Header Interactive */
+        /* 5. Header Motion (Cyber Trail) */
         .header-track { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: transparent; overflow: hidden; }
         .cyber-car { 
             position: absolute; bottom: 0; left: 0; width: 50px; height: 2px; 
             background: #dc2626; box-shadow: 0 0 15px 2px rgba(220, 38, 38, 0.9);
             transform: translateX(-100px);
-            transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+            transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1);
             will-change: transform;
         }
 
-        /* 3D Trading Card System - GÓC VUÔNG SẮC LẸM */
+        /* 6. 3D Card System - KHÔNG BO GÓC, KHÔNG VIỀN CHẠY */
         .card-scene { perspective: 1500px; }
         .card-inner { 
             position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; z-index: 1;
             transform-style: preserve-3d; will-change: transform; transition: transform 0.1s linear;
             border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 0px !important; /* Khóa cứng không bo góc */
-            box-shadow: 20px 20px 50px rgba(0,0,0,0.9);
+            border-radius: 0px !important; /* Vuông vức tuyệt đối */
         }
         .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; }
 
-        /* Textures Cao Cấp */
-        .effect-holo { background: linear-gradient(115deg, transparent 10%, rgba(255,0,0,0.3) 30%, rgba(0,255,0,0.2) 50%, rgba(0,0,255,0.3) 70%, transparent 90%); background-size: 200% 200%; mix-blend-mode: color-dodge; filter: brightness(1.2); }
+        /* ================= PREMIUM TEXTURES ================= */
+        .effect-holo { background: linear-gradient(115deg, transparent 10%, rgba(255,0,0,0.3) 30%, rgba(0,255,0,0.2) 50%, rgba(0,0,255,0.3) 70%, transparent 90%); background-size: 200% 200%; mix-blend-mode: color-dodge; }
         .effect-mirror { background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0.6) 55%, transparent 65%); background-size: 200% 200%; mix-blend-mode: overlay; }
         .effect-gold { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba); mix-blend-mode: overlay; opacity: 0.8 !important; }
         .effect-holo-dots { background: linear-gradient(115deg, transparent 20%, rgba(255,0,0,0.4) 30%, rgba(0,255,0,0.3) 50%, rgba(0,0,255,0.4) 70%, transparent 80%), radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 200% 200%, 8px 8px; mix-blend-mode: color-dodge; }
-        .effect-holo-scratch { background: linear-gradient(115deg, transparent 20%, rgba(255,0,0,0.4) 30%, rgba(0,255,0,0.3) 50%, rgba(0,0,255,0.4) 70%, transparent 80%), repeating-linear-gradient(65deg, transparent, transparent 1px, rgba(255,255,255,0.15) 2px, rgba(255,255,255,0.05) 3px); background-size: 200% 200%, 100% 100%; mix-blend-mode: color-dodge; }
+        .effect-holo-scratch { background: linear-gradient(115deg, transparent 20%, rgba(255,0,0,0.4) 30%, rgba(0,255,0,0.3) 50%, rgba(0,0,255,0.4) 70%, transparent 80%), repeating-linear-gradient(65deg, transparent, transparent 1px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 3px); background-size: 200% 200%, 100% 100%; mix-blend-mode: color-dodge; }
         .effect-liquid { background: radial-gradient(circle at 30% 40%, rgba(220,38,38,0.5), transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.4), transparent 50%); background-size: 200% 200%; filter: blur(5px) contrast(1.2); mix-blend-mode: color-dodge; opacity: 0.9 !important; }
         .effect-firework { background: radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 2px), radial-gradient(circle, rgba(220,38,38,0.6) 2px, transparent 3px); background-size: 40px 40px, 60px 60px; background-position: 0 0, 20px 20px; mix-blend-mode: color-dodge; opacity: 0.7 !important; }
         .effect-texture-3d { background: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 10px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 10px); mix-blend-mode: overlay; opacity: 0.9 !important; }
@@ -91,7 +90,7 @@
                 <img id="site-logo" src="" alt="007" class="h-8 opacity-0 transition-opacity duration-1000 object-contain" />
                 <div class="pixel-board" id="led-matrix"></div>
             </div>
-            <div class="text-[10px] tracking-[0.4em] text-gray-500 font-bold uppercase hidden md:block">
+            <div class="text-[10px] tracking-[0.4em] text-gray-400 font-bold uppercase hidden md:block">
                 RAYN SCOFIELD <span class="text-brand-red px-2">/</span> VISUAL ELITE
             </div>
         </div>
@@ -99,8 +98,8 @@
     </header>
 
     <section class="pt-52 pb-20 px-6 text-center relative z-10">
-        <div class="inline-flex items-center gap-2 px-5 py-2 border border-white/10 bg-white/5 text-[10px] font-bold tracking-[0.3em] text-brand-red mb-12 uppercase rounded-full shadow-inner backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span> AVAILABLE FOR FREELANCE
+        <div class="inline-flex items-center gap-2 px-5 py-2 glass-panel text-[10px] font-bold tracking-[0.3em] text-brand-red mb-12 uppercase rounded-full shadow-inner">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span> AVAILABLE FOR FREELANCE
         </div>
 
         <h1 class="font-black tracking-tighter uppercase leading-[0.85] text-[15vw] md:text-[9rem] flex flex-wrap justify-center gap-x-6 select-none pr-2">
@@ -108,9 +107,16 @@
             <span class="text-brand-red">ELITE</span>
         </h1>
         
-        <div class="flex items-center justify-center gap-2 text-gray-400 text-xs font-bold mt-12 mb-10 tracking-[0.4em] uppercase">
-            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            <span id="p-country-name" class="text-white">Vietnam</span>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-400 text-sm font-bold mt-12 mb-10 tracking-[0.3em] uppercase">
+            <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span id="p-country-name" class="text-white">Location</span>
+            </div>
+            <span class="hidden md:block w-1 h-1 rounded-full bg-gray-700"></span>
+            <div class="flex items-center gap-3">
+                <img id="p-school-logo" src="" alt="School" class="h-5 w-auto object-contain hidden" />
+                <span id="p-school-name" class="text-white">University</span>
+            </div>
         </div>
 
         <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto"></div>
@@ -126,33 +132,33 @@
         <div id="cards-container" class="flex flex-wrap justify-center gap-16 md:gap-24"></div>
     </section>
 
-    <footer class="py-32 bg-black border-t border-white/5 text-center relative z-10">
-        <img id="footer-signature" src="" alt="Signature" class="h-24 md:h-36 mx-auto mb-10 invert opacity-40 hover:opacity-100 transition-all duration-1000 grayscale hover:grayscale-0 object-contain cursor-none" />
-        <p class="text-[10px] tracking-[0.5em] text-gray-500 font-bold uppercase">&copy; <span id="current-year"></span> // RAYN SCOFIELD // ALL RIGHTS RESERVED</p>
+    <footer class="py-24 bg-black border-t border-white/5 text-center relative z-10">
+        <img id="footer-signature" src="" alt="Signature" class="h-20 md:h-28 mx-auto mb-10 invert opacity-40 hover:opacity-100 transition-all duration-1000 grayscale hover:grayscale-0 object-contain cursor-none" />
+        <p class="text-[10px] tracking-[0.4em] text-gray-600 font-bold uppercase">&copy; <span id="current-year"></span> // RAYN SCOFIELD // ALL RIGHTS RESERVED</p>
     </footer>
 
     <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl cursor-pointer" onclick="closeModal()"></div>
-        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-7xl h-[90vh] md:h-[85vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 border border-white/10 rounded-[2rem] shadow-2xl">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-xl cursor-pointer" onclick="closeModal()"></div>
+        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-7xl h-[90vh] md:h-[85vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 rounded-3xl shadow-[0_0_80px_rgba(0,0,0,0.8)]">
             
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red text-white p-3 transition-colors rounded-full backdrop-blur-md">
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red text-white p-3 transition-colors rounded-full backdrop-blur-md border border-white/10">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
-            <div class="w-full md:w-[65%] h-[45vh] md:h-full bg-[#020202] flex items-center justify-center p-8 border-r border-white/5 relative group">
+            <div class="w-full md:w-[60%] h-[45vh] md:h-full bg-black flex items-center justify-center p-8 border-r border-white/5 relative group">
                 <img id="modal-img" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl" />
-                <button onclick="toggleFullScreen()" class="absolute bottom-8 right-8 bg-white/10 hover:bg-brand-red p-3 text-white transition-all opacity-0 group-hover:opacity-100 border border-white/20 rounded-xl backdrop-blur-sm">
+                <button onclick="toggleFullScreen()" class="absolute bottom-8 right-8 bg-white/10 hover:bg-brand-red p-3 text-white transition-all opacity-0 group-hover:opacity-100 border border-white/20 rounded-2xl backdrop-blur-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
             </div>
             
-            <div class="w-full md:w-[35%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
-                <span id="modal-category" class="text-brand-red text-[10px] font-bold tracking-[0.4em] mb-6 uppercase border border-brand-red/30 bg-brand-red/5 px-3 py-1 rounded-full self-start"></span>
-                <h2 id="modal-title" class="text-4xl md:text-5xl font-black text-white mb-8 leading-[1.1] tracking-tighter"></h2>
+            <div class="w-full md:w-[40%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
+                <span id="modal-category" class="text-brand-red text-[10px] font-bold tracking-[0.4em] mb-6 uppercase glass-panel border-brand-red/20 px-4 py-1.5 rounded-full self-start shadow-md"></span>
+                <h2 id="modal-title" class="text-3xl md:text-5xl font-black text-white mb-8 leading-[1.1] tracking-tighter"></h2>
                 <div class="w-12 h-1 bg-gradient-to-r from-brand-red to-orange-500 mb-8 rounded-full"></div>
                 <p id="modal-desc" class="text-gray-400 text-sm leading-relaxed mb-12 whitespace-pre-line font-light"></p>
                 <div class="mt-auto border-t border-white/5 pt-8">
-                    <a id="modal-link" href="#" target="_blank" class="block py-4 border border-white/10 bg-white/5 text-center text-[10px] font-bold text-white hover:bg-brand-red hover:border-brand-red transition-all tracking-[0.4em] uppercase hidden rounded-xl">
+                    <a id="modal-link" href="#" target="_blank" class="block py-4 glass-panel text-center text-[10px] font-bold text-white hover:bg-brand-red hover:border-brand-red transition-all tracking-[0.4em] uppercase hidden rounded-xl">
                         LAUNCH PROJECT
                     </a>
                 </div>
@@ -176,7 +182,7 @@
             }
         }
 
-        // Mouse Tracker
+        // Mouse Tracker For Header Light Trail
         const header = document.getElementById('main-header');
         const car = document.getElementById('cyber-car');
         let targetCarPos = -100, carPos = -100;
@@ -206,6 +212,7 @@
                 const rows = csvText.split('\n').filter(row => row.trim() !== '');
                 const headers = parseCSVRow(rows[0]);
                 
+                // Thuật toán quét cột
                 const findCol = (name) => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g, '').includes(name.toLowerCase()));
                 const idxKey = findCol('configkey'), idxVal = findCol('configvalue'), idxEff = findCol('effect');
 
@@ -216,43 +223,52 @@
                     const eff = (idxEff !== -1 && vals[idxEff]) ? vals[idxEff].toLowerCase().trim() : 'metal';
 
                     if(k) config[k] = v;
-                    if(k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) { cards.push({ img: v, eff: eff }); }
                     
+                    // Gom Thẻ
+                    if(k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) {
+                        cards.push({ img: v, eff: eff });
+                    }
+                    
+                    // Gom Project
                     const tIdx = findCol('title');
                     if(tIdx !== -1 && vals[tIdx]) {
                         projects.push({ Title: vals[tIdx], Category: vals[findCol('category')] || '', ImageUrl: vals[findCol('imageurl')] || '', Description: vals[findCol('description')] || '', Link: vals[findCol('link')] || '' });
                     }
                 });
 
+                // Cập nhật Profile Info
                 if(config.siteLogo) { document.getElementById('site-logo').src = config.siteLogo; document.getElementById('site-logo').classList.remove('opacity-0'); }
                 if(config.siteSignature) { document.getElementById('footer-signature').src = config.siteSignature; }
+                
                 document.getElementById('p-country-name').textContent = config.country || 'Vietnam';
+                if(config.schoolName) { document.getElementById('p-school-name').textContent = config.schoolName; } else { document.getElementById('p-school-name').parentElement.classList.add('hidden'); }
+                if(config.schoolLogo) { document.getElementById('p-school-logo').src = config.schoolLogo; document.getElementById('p-school-logo').classList.remove('hidden'); }
 
-                // Thẻ Kỹ Năng (Bo tròn - Rounded-full)
+                // Kỹ năng (Rounded-full)
                 if(config.skills) {
                     config.skills.split(',').forEach(s => {
-                        document.getElementById('p-skills-tags').innerHTML += `<span class="px-5 py-2.5 border border-white/10 bg-white/5 text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-white hover:border-brand-red hover:bg-brand-red/10 transition-all cursor-default shadow-sm rounded-full backdrop-blur-md">${s.trim()}</span>`;
+                        document.getElementById('p-skills-tags').innerHTML += `<span class="px-5 py-2.5 glass-panel text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em] hover:text-white hover:border-brand-red hover:bg-brand-red/10 transition-all cursor-default shadow-sm rounded-full">${s.trim()}</span>`;
                     });
                 }
 
-                // TRADING CARDS (Khối hộp sắc lẹm tuyệt đối)
+                // TRADING CARDS - Khối Vuông Sắc Lẹm (rounded-none, chỉ có card-inner)
                 const cardsContainer = document.getElementById('cards-container');
                 cards.forEach(c => {
                     cardsContainer.innerHTML += `
                         <div class="card-scene w-[300px] h-[420px] md:w-[340px] md:h-[476px] cursor-crosshair" onmousemove="mv(event, this)" onmouseleave="ml(this)">
-                            <div class="card-inner">
+                            <div class="card-inner shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
                                 <div class="glare effect-${c.eff}"></div>
                                 <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" />
                             </div>
                         </div>`;
                 });
 
-                // PROJECTS GRID (Bo Góc + Line Đỏ + Ảnh Màu)
+                // PROJECTS GRID - Glass, Rounded-3xl, Red Line Hover, Ảnh Có Màu
                 const grid = document.getElementById('portfolio-grid');
                 projects.forEach((p, i) => {
                     grid.innerHTML += `
-                        <div onclick="openModal(${i})" class="group glass-panel overflow-hidden cursor-pointer hover:border-white/20 transition-all duration-500 rounded-3xl relative hover:-translate-y-2 shadow-lg">
-                            <div class="h-72 overflow-hidden bg-black relative">
+                        <div onclick="openModal(${i})" class="group glass-panel overflow-hidden cursor-pointer hover:border-white/20 transition-all duration-500 rounded-3xl relative hover:-translate-y-2 shadow-xl">
+                            <div class="h-72 overflow-hidden bg-black relative rounded-t-3xl">
                                 <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
                                 <img src="${p.ImageUrl}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105" loading="lazy" />
                             </div>
@@ -270,10 +286,13 @@
                 setTimeout(() => { grid.classList.remove('opacity-0'); }, 50);
                 yt.style.width = '100%'; setTimeout(() => yt.style.opacity = '0', 500);
 
-            } catch (e) { document.getElementById('loading').innerHTML = "<p class='text-brand-red font-bold uppercase'>Lỗi kết nối dữ liệu.</p>"; }
+            } catch (e) { 
+                console.error(e);
+                document.getElementById('loading').innerHTML = "<p class='text-brand-red font-bold uppercase'>Lỗi kết nối dữ liệu.</p>"; 
+            }
         }
 
-        // RAF 3D Engine
+        // RAF 3D Engine Cho Trading Card
         let ticking = false;
         function mv(e, el) {
             if(!ticking) {
@@ -281,7 +300,7 @@
                     const inner = el.querySelector('.card-inner'), glare = el.querySelector('.glare');
                     const r = el.getBoundingClientRect();
                     const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-                    inner.style.transform = `rotateX(${y * -30}deg) rotateY(${x * 30}deg)`;
+                    inner.style.transform = `rotateX(${y * -25}deg) rotateY(${x * 25}deg)`;
                     glare.style.opacity = '1';
                     glare.style.backgroundPosition = `${(x+0.5)*100}% ${(y+0.5)*100}%`;
                     ticking = false;
@@ -298,8 +317,10 @@
             document.getElementById('modal-category').textContent = p.Category || '';
             document.getElementById('modal-title').textContent = p.Title || '';
             document.getElementById('modal-desc').textContent = p.Description || '';
+            
             const linkBtn = document.getElementById('modal-link');
             if (p.Link) { linkBtn.href = p.Link; linkBtn.classList.remove('hidden'); } else { linkBtn.classList.add('hidden'); }
+
             const modal = document.getElementById('project-modal');
             const contentBox = document.getElementById('modal-content-box');
             modal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
