@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007 | Visual Experiences by Rayn Scofield</title>
+    <title>007 | Visual Elite by Rayn Scofield</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,203 +12,135 @@
                     colors: {
                         brand: { orange: '#f97316', red: '#dc2626', dark: '#0a0a0a', surface: '#111111' }
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
     </script>
     <style>
-        /* Tối ưu UI/UX Chuyên Gia */
         ::selection { background-color: #f97316; color: white; }
         body { scroll-behavior: smooth; background-color: #0a0a0a; color: #f3f4f6; overflow-x: hidden; }
         
-        /* Motion Background Cực Xịn (Fluid Gradient) */
+        /* Motion Background Cực Xịn */
         .bg-motion {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
             background: linear-gradient(-45deg, #0a0a0a, #140d0b, #1f0802, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            opacity: 0.8;
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite; opacity: 0.8;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Kính mờ (Glassmorphism) */
+        .glass-panel { background: rgba(17, 17, 17, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* --- HỆ THỐNG CHẤT LIỆU THẺ (MATERIALS) --- */
+        .card-3d-wrapper { perspective: 1200px; }
+        .card-3d-inner { transform-style: preserve-3d; transition: transform 0.1s ease-out; box-shadow: 0 30px 70px rgba(0,0,0,0.6); }
+        .glare-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s; z-index: 5; pointer-events: none; }
+
+        /* 1. Holo: Cầu vồng */
+        .effect-holo { background: linear-gradient(135deg, rgba(255,0,0,0.1), rgba(255,255,0,0.15), rgba(0,255,0,0.1), rgba(0,0,255,0.1)); mix-blend-mode: color-dodge; background-size: 200% 200%; }
+        /* 2. Gold: Mạ vàng rực rỡ */
+        .effect-gold { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c); mix-blend-mode: overlay; opacity: 0.6; }
+        /* 3. Mirror: Phản chiếu gương */
+        .effect-mirror { background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.4) 0%, transparent 60%); mix-blend-mode: screen; filter: brightness(1.1); }
+        /* 4. Diamond: Bụi kim cương lấp lánh */
+        .effect-diamond { background-image: radial-gradient(circle at center, white 1px, transparent 1px); background-size: 10px 10px; mix-blend-mode: overlay; opacity: 0.4; }
+        /* 5. Metal: Vân xước kim loại */
+        .effect-metal { background: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 3px 100%; mix-blend-mode: overlay; opacity: 0.3; }
 
         /* Tùy chỉnh Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
-        
-        /* Hiệu ứng kính (Glassmorphism) */
-        .glass-panel { background: rgba(17, 17, 17, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        
-        /* HIỆU ỨNG THẺ 3D METALIC & HOLOGRAPHIC (NÂNG CẤP) */
-        .card-3d-wrapper { perspective: 1200px; transition: filter 0.3s ease; }
-        .card-3d-wrapper:hover { filter: drop-shadow(0 0 30px rgba(249, 115, 22, 0.5)); }
-        
-        .card-3d-inner { 
-            transition: transform 0.1s ease-out; 
-            transform-style: preserve-3d; 
-            will-change: transform;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
-        }
-        
-        /* Lớp Pattern Metalic (Vân xước kim loại) */
-        .card-metallic-pattern {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAB4CAYAAAB1ov4+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QgXFic7j5D+YwAAD7pJREFUeNrtlX10VEcZxX8mN4RkS4RCS0CIECAhCQEJECAkJCGBkJCERAgJCQmEhCQEQkgIJASChEBCIEggJBASCAlJCISQkASChEAIJBASCAlJCHwIIVASkhAIISGZJBASCBEIISQkISEEgUByf3j5eXv4vPfS/vK+v4w8/9Tf7p47M6P3Xv418v/8n/799+r6r/5P//77Kqrf/77/6v9///v//v//v//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/+//v/Sl9YI2UvEAAAAASUVORK5CYII=');
-            background-size: 300px 300px;
-            opacity: 0.15; /* Cường độ vân xước */
-            pointer-events: none; z-index: 1; mix-blend-mode: overlay;
-        }
-        
-        /* Lớp Quang phổ Metalic & Holographic (Ánh cầu vồng) */
-        .card-holographic-glare {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* Gradient quang phổ tạo cảm giác kim loại phản chiếu cầu vồng */
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0) 25%,
-                rgba(255, 0, 0, 0.1) 35%,
-                rgba(255, 255, 0, 0.15) 45%,
-                rgba(0, 255, 0, 0.1) 55%,
-                rgba(0, 0, 255, 0.1) 65%,
-                rgba(255, 255, 255, 0) 75%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            background-size: 400% 400%; /* Kích thước lớn để di chuyển gradient */
-            opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 2; mix-blend-mode: color-dodge;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #f97316; }
     </style>
 </head>
 <body class="antialiased font-sans flex flex-col min-h-screen">
-
     <div class="bg-motion"></div>
 
     <header class="fixed top-0 w-full z-40 glass-panel border-b-0">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="#" class="block h-8 md:h-10 w-auto transition-transform hover:scale-105">
-                <img id="site-logo" src="" alt="007" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500" />
-            </a>
-            <div class="text-xs tracking-widest font-medium text-gray-400 uppercase">
+            <img id="site-logo" src="" alt="007" class="h-8 md:h-10 opacity-0 transition-opacity duration-500 object-contain" />
+            <div class="text-xs tracking-widest text-gray-500 uppercase font-medium">
                 <span class="text-brand-orange">007</span> &nbsp;//&nbsp; Portfolio
             </div>
         </div>
     </header>
 
-    <section class="pt-36 pb-20 px-6 relative z-10">
-        <div class="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in-up">
-            
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-800 bg-gray-900/50 text-xs font-semibold tracking-widest text-brand-orange mb-8 shadow-inner">
-                <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
-                AVAILABLE FOR FREELANCE
-            </div>
+    <section class="pt-36 pb-20 px-6 text-center relative z-10 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-800 bg-gray-900/50 text-xs font-semibold tracking-widest text-brand-orange mb-8 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+            AVAILABLE FOR FREELANCE
+        </div>
+        
+        <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4 leading-tight uppercase italic">
+            Visual <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-orange">Elite</span>
+        </h1>
+        
+        <div class="flex items-center justify-center gap-2 text-gray-400 font-light mb-10 text-lg">
+            <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span id="p-country-name" class="tracking-wider">Vietnam</span>
+        </div>
 
-            <h1 class="text-5xl md:text-8xl font-black tracking-tighter mb-6 leading-tight">
-                Crafting <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-orange">Visual</span><br/>Experiences.
-            </h1>
-            
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-400 font-light mb-10 text-lg">
-                <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span id="p-country-name">Vietnam</span>
-                </div>
-                <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-gray-700"></span>
-                <div class="flex items-center gap-3">
-                    <img id="p-school-logo" src="" alt="DNU" class="h-6 w-auto object-contain hidden" />
-                    <span id="p-school-name">Dong Nai University</span>
-                </div>
-            </div>
+        <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto"></div>
+    </section>
 
-            <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-3xl">
+    <main class="max-w-7xl mx-auto px-6 pb-24 w-full relative z-10 flex-grow">
+        <div id="loading" class="flex justify-center py-10"><div class="animate-spin h-10 w-10 border-t-2 border-b-2 border-brand-orange rounded-full"></div></div>
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden opacity-0 transition-all duration-1000"></div>
+    </main>
+
+    <section class="py-24 border-t border-gray-900 bg-black/30 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-16 uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500 italic">
+                Master Collection
+            </h2>
+            <div id="trading-cards-container" class="flex flex-wrap justify-center gap-16">
                 </div>
         </div>
     </section>
 
-    <main class="flex-grow max-w-7xl mx-auto px-6 w-full relative z-10 pb-24">
-        <div id="loading" class="flex justify-center items-center h-40">
-            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-brand-orange"></div>
-        </div>
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden opacity-0 transition-opacity duration-1000">
-            </div>
-    </main>
-
-    <section class="py-24 relative z-10 border-t border-gray-900 bg-black/30">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold mb-16 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">
-            Exclusive Collection
-        </h2>
-        
-        <div id="trading-cards-container" class="flex flex-wrap justify-center gap-16 perspective-1200">
-            </div>
-        
-        <p class="mt-12 text-sm text-gray-500 font-light italic">
-            * Di chuột lên từng thẻ để cảm nhận hiệu ứng Metallic Holographic
-        </p>
-    </div>
-</section>
-
-    <footer class="bg-[#050505] relative z-10 border-t border-brand-orange/30">
+    <footer class="bg-[#050505] border-t border-brand-orange/30 relative z-10">
         <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center text-center">
-            <div class="mb-8 h-16 w-auto opacity-70 hover:opacity-100 transition-opacity">
-                <img id="footer-signature" src="" alt="Signature" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500 invert" />
-            </div>
+            <img id="footer-signature" src="" alt="Signature" class="h-16 mb-8 invert opacity-70 hover:opacity-100 transition-opacity duration-500 object-contain" />
             <p class="text-xs tracking-widest text-gray-600 uppercase">
                 &copy; <span id="current-year"></span> Rayn Scofield <span class="text-brand-orange px-2">|</span> 007
             </p>
         </div>
     </footer>
 
-    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-400">
+    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md cursor-pointer" onclick="closeModal()"></div>
-        
-        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-6xl h-[90vh] md:h-[85vh] rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400">
+        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-6xl h-[90vh] md:h-[85vh] rounded-3xl flex flex-col md:flex-row overflow-hidden scale-95 transition-all duration-400 shadow-2xl">
             
             <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-black/50 hover:bg-brand-orange p-2 rounded-full text-white transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            
-            <div class="w-full md:w-2/3 h-[50vh] md:h-full relative group bg-[#0a0a0a] flex items-center justify-center p-4 border-r border-gray-800">
-                <img id="modal-img" src="" alt="Project" class="w-full h-full object-contain rounded-lg" />
-                
+
+            <div class="w-full md:w-2/3 h-[50vh] md:h-full bg-black flex items-center justify-center p-4 relative group border-r border-gray-800">
+                <img id="modal-img" src="" class="w-full h-full object-contain rounded-lg shadow-2xl" />
                 <button onclick="toggleFullScreen()" class="absolute bottom-6 right-6 bg-black/60 hover:bg-brand-orange p-3 rounded-xl text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 shadow-lg">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
             </div>
             
-            <div class="w-full md:w-1/3 p-8 flex flex-col custom-scrollbar overflow-y-auto h-[40vh] md:h-full bg-brand-surface">
-                <span id="modal-category" class="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2 block">Category</span>
-                <h2 id="modal-title" class="text-3xl font-bold mb-6 text-white leading-tight">Title</h2>
+            <div class="w-full md:w-1/3 p-8 md:p-10 flex flex-col bg-brand-surface custom-scrollbar overflow-y-auto h-[40vh] md:h-full">
+                <span id="modal-category" class="text-brand-orange text-xs font-bold uppercase tracking-widest mb-3"></span>
+                <h2 id="modal-title" class="text-3xl font-bold mb-6 text-white italic leading-tight"></h2>
                 <div class="w-10 h-1 bg-gradient-to-r from-brand-red to-brand-orange mb-6"></div>
-                <p id="modal-desc" class="text-gray-400 mb-8 leading-relaxed font-light whitespace-pre-line text-sm md:text-base">
-                    Description...
-                </p>
-                <div class="mt-auto pt-6 border-t border-gray-800">
-                    <a id="modal-link" href="#" target="_blank" class="flex items-center justify-between w-full px-6 py-4 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 transition-colors hidden group">
-                        <span>View Live Project</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
-                </div>
+                <p id="modal-desc" class="text-gray-400 font-light leading-relaxed mb-8 whitespace-pre-line text-sm"></p>
+                <a id="modal-link" href="#" target="_blank" class="mt-auto py-4 flex justify-center items-center gap-2 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white hover:bg-brand-orange transition-all tracking-widest hidden group">
+                    VIEW PROJECT
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        // ==========================================
+        // ========================================================
+        const SHEET_CSV_URL = "Dhttps://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
+        // ========================================================
         
         document.getElementById('current-year').textContent = new Date().getFullYear();
         let globalProjects = [];
@@ -222,235 +154,177 @@
                 else cur += str[i];
             }
             result.push(cur);
-            return result.map(val => {
-                val = val.trim();
-                if (val.startsWith('"') && val.endsWith('"')) return val.slice(1, -1).replace(/""/g, '"');
-                return val;
-            });
+            return result.map(v => v.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
         }
 
-        async function initPortfolio() {
+        async function init() {
             try {
-                const response = await fetch(SHEET_CSV_URL);
-                const csvText = await response.text();
-                const rows = csvText.split('\n').filter(row => row.trim() !== '');
-                if (rows.length < 2) throw new Error("Dữ liệu trống");
-
+                const res = await fetch(SHEET_CSV_URL);
+                const data = await res.text();
+                const rows = data.split('\n').filter(r => r.trim() !== '');
+                if (rows.length < 2) throw new Error("Sheet rỗng");
+                
                 const headers = parseCSVRow(rows[0]);
+                
+                // Tự động dò tìm vị trí cột
+                const idxKey = headers.indexOf('ConfigKey');
+                const idxVal = headers.indexOf('ConfigValue');
+                const idxEffect = headers.indexOf('TradingCard_Effect'); 
+
                 const config = {};
+                const tradingCards = [];
                 const projects = [];
 
                 rows.slice(1).forEach(row => {
-                    const matchValues = parseCSVRow(row);
-                    const getValue = (colName) => {
-                        const idx = headers.indexOf(colName);
-                        return (idx !== -1 && idx < matchValues.length) ? matchValues[idx] : '';
-                    };
+                    const vals = parseCSVRow(row);
+                    const key = (idxKey !== -1) ? vals[idxKey] : '';
+                    const val = (idxVal !== -1) ? vals[idxVal] : '';
+                    const effect = (idxEffect !== -1 && vals[idxEffect]) ? vals[idxEffect] : 'metal'; 
 
-                    const cKey = getValue('ConfigKey');
-                    if (cKey) config[cKey] = getValue('ConfigValue');
+                    // Lưu cấu hình hệ thống
+                    if (key) config[key] = val;
 
-                    const pTitle = getValue('Title');
-                    if (pTitle) {
-                        projects.push({
-                            Title: pTitle, Category: getValue('Category'),
-                            ImageUrl: getValue('ImageUrl'), Description: getValue('Description'), Link: getValue('Link')
+                    // Lọc Thẻ Bài Trading Card
+                    if (key.startsWith('tradingCard') && val.startsWith('http')) {
+                        tradingCards.push({ image: val, effect: effect.toLowerCase() });
+                    }
+
+                    // Lọc Dự Án Portfolio
+                    const idxTitle = headers.indexOf('Title');
+                    if (idxTitle !== -1 && vals[idxTitle]) {
+                        projects.push({ 
+                            Title: vals[idxTitle], 
+                            Category: vals[headers.indexOf('Category')] || '', 
+                            ImageUrl: vals[headers.indexOf('ImageUrl')] || '', 
+                            Description: vals[headers.indexOf('Description')] || '', 
+                            Link: vals[headers.indexOf('Link')] || '' 
                         });
                     }
                 });
 
-                // Cấu hình UI
-                if (config.siteLogo) {
-                    const logo = document.getElementById('site-logo');
-                    logo.src = config.siteLogo; logo.classList.remove('opacity-0');
-                }
-                if (config.siteSignature) {
-                    const sig = document.getElementById('footer-signature');
-                    sig.src = config.siteSignature; sig.classList.remove('opacity-0');
-                }
-                // --- Xử lý hiển thị nhiều thẻ Trading Card tự động ---
-                const cardsContainer = document.getElementById('trading-cards-container');
-                const cardKeys = Object.keys(config).filter(key => key.startsWith('tradingCard'));
+                // Cập nhật UI Hệ thống
+                if(config.siteLogo) document.getElementById('site-logo').src = config.siteLogo;
+                document.getElementById('site-logo').classList.remove('opacity-0');
                 
-                if (cardKeys.length > 0) {
-                    cardsContainer.innerHTML = ''; // Xóa nội dung cũ
-                    cardKeys.forEach(key => {
-                        const imageUrl = config[key];
-                        cardsContainer.innerHTML += `
-                            <div class="card-3d-wrapper w-[300px] h-[420px] md:w-[350px] md:h-[490px] cursor-pointer mb-8" 
-                                 onmousemove="handleMouseMove(event, this)" 
-                                 onmouseleave="handleMouseLeave(this)">
-                                <div class="card-3d-inner w-full h-full relative rounded-2xl overflow-hidden border-2 border-gray-600 bg-gray-900 shadow-2xl">
-                                    <div class="card-metallic-pattern"></div>
-                                    <div class="card-holographic-glare"></div>
-                                    <img src="${imageUrl}" alt="Trading Card" class="w-full h-full object-cover relative z-0" />
+                if(config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
+                if(config.country) document.getElementById('p-country-name').textContent = config.country;
+
+                // Cập nhật Skills
+                if(config.skills) {
+                    const skillBox = document.getElementById('p-skills-tags');
+                    config.skills.split(',').forEach(s => {
+                        skillBox.innerHTML += `<span class="px-4 py-1.5 rounded-md border border-gray-800 bg-[#0a0a0a] text-xs font-medium text-gray-400 hover:border-brand-orange hover:text-brand-orange transition-colors uppercase tracking-widest">${s.trim()}</span>`;
+                    });
+                }
+
+                // Render Bộ Sưu Tập Thẻ Bài (Trading Cards)
+                const cardsContainer = document.getElementById('trading-cards-container');
+                tradingCards.forEach(card => {
+                    cardsContainer.innerHTML += `
+                        <div class="card-3d-wrapper w-[300px] h-[420px] md:w-[350px] md:h-[490px] cursor-pointer mb-10" onmousemove="mv(event, this)" onmouseleave="ml(this)">
+                            <div class="card-3d-inner w-full h-full relative rounded-2xl overflow-hidden border border-gray-700 bg-zinc-900 shadow-2xl">
+                                <div class="glare-layer effect-${card.effect}"></div>
+                                <img src="${card.image}" class="w-full h-full object-cover relative z-0" loading="lazy" />
+                                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded bg-black/70 border border-white/20 text-[9px] uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                                    ${card.effect} Edition
                                 </div>
                             </div>
-                        `;
-                    });
-                }
+                        </div>
+                    `;
+                });
 
-                // Profile
-                document.getElementById('p-country-name').textContent = config.country || 'Vietnam';
-                document.getElementById('p-school-name').textContent = config.schoolName || 'University';
-                if (config.schoolLogo) {
-                    const sLogo = document.getElementById('p-school-logo');
-                    sLogo.src = config.schoolLogo; sLogo.classList.remove('hidden');
-                }
-
-                // Skills
-                if (config.skills) {
-                    const skillsTagsGrid = document.getElementById('p-skills-tags');
-                    const skillsArray = config.skills.split(',').map(s => s.trim()).filter(s => s !== '');
-                    skillsArray.forEach(skill => {
-                        skillsTagsGrid.innerHTML += `
-                            <span class="px-4 py-1.5 rounded-md border border-gray-800 bg-[#0a0a0a] text-xs font-medium text-gray-300 hover:border-brand-orange hover:text-brand-orange transition-colors">
-                                ${skill}
-                            </span>
-                        `;
-                    });
-                }
-
+                // Render Lưới Dự Án
                 globalProjects = projects;
                 renderProjects(projects);
 
             } catch (error) {
                 console.error(error);
-                document.getElementById('loading').innerHTML = "<p class='text-brand-red'>Lỗi tải dữ liệu.</p>";
+                document.getElementById('loading').innerHTML = "<p class='text-brand-red font-bold'>Lỗi kết nối dữ liệu. Vui lòng kiểm tra lại link CSV.</p>";
             }
         }
 
-        function renderProjects(projects) {
+        function renderProjects(projs) {
             const grid = document.getElementById('portfolio-grid');
-            let htmlContent = '';
-            
-            projects.forEach((project, index) => {
-                const img = project.ImageUrl || 'https://via.placeholder.com/800';
-                const delay = index * 50;
-
-                htmlContent += `
-                    <div onclick="openModal(${index})" 
-                       class="group relative glass-panel rounded-2xl overflow-hidden cursor-pointer animate-fade-in-up hover:-translate-y-2 transition-transform duration-300 border border-gray-800 hover:border-brand-orange/50 shadow-lg"
-                       style="animation-delay: ${delay}ms; opacity: 0;"
-                    >
+            projs.forEach((p, i) => {
+                const delay = i * 100;
+                grid.innerHTML += `
+                    <div onclick="openModal(${i})" class="group glass-panel rounded-2xl overflow-hidden cursor-pointer hover:-translate-y-2 hover:border-brand-orange/50 transition-all duration-500 animate-fade-in-up shadow-lg" style="animation-delay: ${delay}ms; opacity:0;">
                         <div class="relative h-64 overflow-hidden bg-black/50 border-b border-gray-800">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
-                            <img src="${img}" alt="${project.Title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                            <img src="${p.ImageUrl}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0" loading="lazy" />
                             <span class="absolute top-4 left-4 z-20 text-[10px] font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-sm border border-gray-700">
-                                ${project.Category}
+                                ${p.Category}
                             </span>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white group-hover:text-brand-orange transition-colors truncate">
-                                ${project.Title}
+                            <h3 class="text-xl font-bold mb-2 text-white group-hover:text-brand-orange transition-colors truncate italic">
+                                ${p.Title}
                             </h3>
-                            <p class="text-gray-500 line-clamp-2 text-sm font-light">
-                                ${project.Description}
-                            </p>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-brand-red to-brand-orange group-hover:w-full transition-all duration-500 z-30"></div>
                     </div>
                 `;
             });
-
-            grid.innerHTML = htmlContent;
             document.getElementById('loading').classList.add('hidden');
             grid.classList.remove('hidden');
             setTimeout(() => { grid.classList.remove('opacity-0'); }, 50);
         }
 
-        /* --- XỬ LÝ MODAL & FULLSCREEN --- */
-        function openModal(index) {
-            const project = globalProjects[index];
-            if(!project) return;
+        /* --- XỬ LÝ HIỆU ỨNG THẺ 3D CHUỘT --- */
+        function mv(e, el) {
+            const inner = el.querySelector('.card-3d-inner');
+            const glare = el.querySelector('.glare-layer');
+            const r = el.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
             
-            document.getElementById('modal-img').src = project.ImageUrl || '';
-            document.getElementById('modal-category').textContent = project.Category || '';
-            document.getElementById('modal-title').textContent = project.Title || '';
-            document.getElementById('modal-desc').textContent = project.Description || '';
+            inner.style.transform = `rotateX(${y * -35}deg) rotateY(${x * 35}deg)`;
+            glare.style.opacity = '1';
             
-            const linkBtn = document.getElementById('modal-link');
-            if (project.Link && project.Link.trim() !== '') {
-                linkBtn.href = project.Link; linkBtn.classList.remove('hidden');
-            } else { linkBtn.classList.add('hidden'); }
-
-            const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
-            
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                contentBox.classList.remove('scale-95');
-                contentBox.classList.add('scale-100');
-            }, 10);
+            // Xử lý động cho hiệu ứng Gương và Holo
+            glare.style.setProperty('--x', `${(x + 0.5) * 100}%`);
+            glare.style.setProperty('--y', `${(y + 0.5) * 100}%`);
+            glare.style.backgroundPosition = `${50 - x * 100}% ${50 - y * 100}%`;
+        }
+        function ml(el) {
+            el.querySelector('.card-3d-inner').style.transform = 'rotateX(0deg) rotateY(0deg)';
+            el.querySelector('.glare-layer').style.opacity = '0';
         }
 
-        function closeModal() {
+        /* --- MODAL LÔGIC --- */
+        function openModal(i) {
+            const p = globalProjects[i];
+            document.getElementById('modal-img').src = p.ImageUrl;
+            document.getElementById('modal-title').textContent = p.Title;
+            document.getElementById('modal-category').textContent = p.Category;
+            document.getElementById('modal-desc').textContent = p.Description;
+            const link = document.getElementById('modal-link');
+            if(p.Link) { link.href = p.Link; link.classList.remove('hidden'); } else { link.classList.add('hidden'); }
+            
             const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
-            
-            modal.classList.add('opacity-0');
-            contentBox.classList.remove('scale-100');
-            contentBox.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }, 400);
+            const box = document.getElementById('modal-content-box');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+        }
+        function closeModal() {
+            document.getElementById('project-modal').classList.add('opacity-0');
+            document.getElementById('modal-content-box').classList.add('scale-95');
+            setTimeout(() => { document.getElementById('project-modal').classList.add('hidden'); document.body.style.overflow = ''; }, 400);
         }
 
         function toggleFullScreen() {
             const img = document.getElementById('modal-img');
             if (!document.fullscreenElement) {
-                if (img.requestFullscreen) { img.requestFullscreen(); }
-                else if (img.webkitRequestFullscreen) { img.webkitRequestFullscreen(); } // Safari
-                else if (img.msRequestFullscreen) { img.msRequestFullscreen(); } // IE11
+                if (img.requestFullscreen) img.requestFullscreen();
+                else if (img.webkitRequestFullscreen) img.webkitRequestFullscreen();
+                else if (img.msRequestFullscreen) img.msRequestFullscreen();
             } else {
-                if (document.exitFullscreen) { document.exitFullscreen(); }
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         }
 
-        /* --- HIỆU ỨNG THẺ 3D METALIC & HOLOGRAPHIC (NÂNG CẤP) --- */
-        function handleMouseMove(e, element) {
-            const inner = element.querySelector('.card-3d-inner');
-            const glare = element.querySelector('.card-holographic-glare'); // LỚP HOLOGRAPHIC MỚI
-            const rect = element.getBoundingClientRect();
-            
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
-            // Tăng cường độ nghiêng một chút
-            const rotateY = x * 35; 
-            const rotateX = y * -35;
-            
-            inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            
-            // XỬ LÝ LỚP HOLOGRAPHIC CẦU VỒNG:
-            // Gradient di chuyển theo hướng ngược lại của chuột để tạo chiều sâu phản chiếu
-            const glareX = 50 - (x * 100);
-            const glareY = 50 - (y * 100);
-            
-            glare.style.opacity = '1';
-            // Di chuyển background-position của gradient quang phổ
-            glare.style.backgroundPosition = `${glareX}% ${glareY}%`;
-            // Thêm một chút độ sáng trắng mờ theo tâm chuột
-            glare.style.backgroundImage = `
-                radial-gradient(circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(255,255,255,0.2) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 0, 0, 0.1) 35%, rgba(255, 255, 0, 0.15) 45%, rgba(0, 255, 0, 0.1) 55%, rgba(0, 0, 255, 0.1) 65%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0) 100%)
-            `;
-        }
-
-        function handleMouseLeave(element) {
-            const inner = element.querySelector('.card-3d-inner');
-            const glare = element.querySelector('.card-holographic-glare');
-            
-            inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            glare.style.opacity = '0';
-        }
-
-        if(SHEET_CSV_URL.includes("http")) { initPortfolio(); } 
+        if(SHEET_CSV_URL.includes("http")) init();
     </script>
 </body>
 </html>
