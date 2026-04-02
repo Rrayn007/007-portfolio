@@ -34,46 +34,12 @@
             font-family: 'Inter', sans-serif; 
         }
         
-        /* 1. Youtube Loading Bar - Tối ưu hơn */
-        #yt-loader { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            height: 3px; 
-            background: linear-gradient(to right, #dc2626, #f59e0b); 
-            z-index: 1000; 
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            width: 0%; 
-            box-shadow: 0 0 12px #dc2626; 
-        }
-
-        /* 2. Moon & Space Atmosphere - Cải tiến mờ huyền bí như yêu cầu */
-        .moon-glow {
-            position: fixed; 
-            top: -40vh; 
-            left: 50%; 
-            transform: translateX(-50%);
-            width: 130vw; 
-            height: 130vw; 
-            max-width: 1600px;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 75%);
-            border-radius: 50%; 
-            z-index: -1; 
-            pointer-events: none;
-            filter: blur(60px);
-            animation: moonBreath 18s infinite alternate ease-in-out;
-        }
-        @keyframes moonBreath { 
-            from { opacity: 0.45; transform: translateX(-50%) scale(0.92); } 
-            to { opacity: 0.85; transform: translateX(-50%) scale(1.08); } 
-        }
-        
-        /* Stars - Layer 1 (gốc) + Layer 2 mờ mới để tăng chiều sâu huyền bí */
+        /* ================= BACKGROUND - Tăng độ rõ & huyền bí ================= */
         .stars-bg { 
             position: fixed; 
             inset: 0; 
             z-index: -2; 
-            background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); 
+            background-image: radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px); 
             background-size: 55px 55px; 
         }
         .stars-layer {
@@ -81,67 +47,89 @@
             inset: 0; 
             z-index: -3; 
             background-image: 
-                radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-                radial-gradient(rgba(255,255,255,0.025) 1.5px, transparent 1.5px);
-            background-size: 90px 90px, 160px 160px;
-            background-position: 0 0, 40px 60px;
-            filter: blur(3px);
-            animation: starTwinkle 22s infinite linear;
-            opacity: 0.75;
+                radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+                radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
+            background-size: 85px 85px, 170px 170px;
+            background-position: 0 0, 35px 55px;
+            filter: blur(2px);
+            animation: starTwinkle 25s infinite linear;
+            opacity: 0.85;
         }
         @keyframes starTwinkle {
-            0%, 100% { opacity: 0.45; }
+            0%, 100% { opacity: 0.55; }
             50% { opacity: 0.95; }
         }
-
-        /* 3. Pixel LED Sticker - Giữ nguyên nhưng tinh chỉnh glow */
-        .pixel-board { 
-            display: grid; 
-            grid-template-columns: repeat(14, 1fr); 
-            gap: 1px; 
-            padding: 2px; 
-            background: #000; 
-            border: 1px solid #1f1f2e; 
-            width: 64px; 
-            height: 22px; 
+        .moon-glow {
+            position: fixed; 
+            top: -42vh; 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: 135vw; 
+            height: 135vw; 
+            max-width: 1650px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.035) 38%, transparent 72%);
+            border-radius: 50%; 
+            z-index: -1; 
+            pointer-events: none;
+            filter: blur(68px);
+            animation: moonBreath 20s infinite alternate ease-in-out;
         }
-        .pxl { background: #0a0a0c; border-radius: 0.5px; }
-        .pxl.r { background: #dc2626; box-shadow: 0 0 6px #dc2626; animation: ledPulse 1.8s infinite; }
-        .pxl.w { background: #fff; opacity: 0.75; }
-        @keyframes ledPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        @keyframes moonBreath { 
+            from { opacity: 0.5; transform: translateX(-50%) scale(0.9); } 
+            to { opacity: 0.9; transform: translateX(-50%) scale(1.1); } 
+        }
 
-        /* 4. Glassmorphism - Tối ưu, mỏng hơn, sang trọng hơn */
+        /* ================= HEADER - Thêm motion LED trắng-đen ================= */
+        #main-header {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+        }
+        .header-led {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #dc2626 15%, 
+                #fff 25%, 
+                #dc2626 35%, 
+                transparent 50%,
+                #dc2626 65%, 
+                #fff 75%, 
+                #dc2626 85%, 
+                transparent 100%);
+            background-size: 300% 100%;
+            animation: ledScan 4s linear infinite;
+            opacity: 0.15;
+        }
+        @keyframes ledScan {
+            0% { background-position: 0% 0; }
+            100% { background-position: -300% 0; }
+        }
+
+        /* ================= GLASS & TYPOGRAPHY - Sang trọng hơn ================= */
         .glass-panel { 
-            background: rgba(10, 10, 12, 0.68); 
-            backdrop-filter: blur(22px); 
-            border: 1px solid rgba(255,255,255,0.06); 
+            background: rgba(10, 10, 12, 0.72); 
+            backdrop-filter: blur(26px); 
+            border: 1px solid rgba(255,255,255,0.08); 
+        }
+        .hero-badge {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(220,38,38,0.2);
+        }
+        .lux-text {
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            text-shadow: 0 10px 40px rgba(220,38,38,0.25);
         }
 
-        /* 5. Header Motion - Cyber Trail mượt hơn */
-        .header-track { 
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 1px; 
-            background: transparent; 
-            overflow: hidden; 
+        /* ================= CARD 3D - Hỗ trợ Touch Mobile ================= */
+        .card-scene { 
+            perspective: 1600px; 
+            touch-action: none;
         }
-        .cyber-car {
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 52px; 
-            height: 2px;
-            background: #dc2626; 
-            box-shadow: 0 0 18px 3px rgba(220, 38, 38, 0.95);
-            transform: translateX(-100px);
-            transition: transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
-            will-change: transform;
-        }
-
-        /* 6. 3D Card System - Vuông vức tuyệt đối, chuyên nghiệp */
-        .card-scene { perspective: 1600px; }
         .card-inner {
             position: relative; 
             width: 100%; 
@@ -151,8 +139,8 @@
             z-index: 1;
             transform-style: preserve-3d; 
             will-change: transform; 
-            transition: transform 0.12s linear;
-            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.1s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255,255,255,0.09);
             border-radius: 0 !important;
         }
         .glare { 
@@ -161,27 +149,31 @@
             opacity: 0; 
             z-index: 5; 
             pointer-events: none; 
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: opacity 0.4s ease;
         }
 
-        /* Premium textures - Giữ nguyên nhưng blend nhẹ hơn cho không khí huyền bí */
-        .effect-holo { background: linear-gradient(115deg, transparent 10%, rgba(220,38,38,0.25) 30%, rgba(255,255,255,0.15) 50%, rgba(220,38,38,0.25) 70%, transparent 90%); background-size: 200% 200%; mix-blend-mode: color-dodge; }
-        .effect-mirror { background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.55) 55%, transparent 65%); background-size: 200% 200%; mix-blend-mode: overlay; }
-        .effect-gold { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba); mix-blend-mode: overlay; opacity: 0.75 !important; }
-        .effect-holo-dots { background: linear-gradient(115deg, transparent 20%, rgba(220,38,38,0.35) 30%, rgba(255,255,255,0.2) 50%, rgba(220,38,38,0.35) 70%, transparent 80%), radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px); background-size: 200% 200%, 8px 8px; mix-blend-mode: color-dodge; }
-        .effect-holo-scratch { background: linear-gradient(115deg, transparent 20%, rgba(220,38,38,0.35) 30%, rgba(255,255,255,0.2) 50%, rgba(220,38,38,0.35) 70%, transparent 80%), repeating-linear-gradient(65deg, transparent, transparent 1px, rgba(255,255,255,0.08) 2px, rgba(255,255,255,0.08) 3px); background-size: 200% 200%, 100% 100%; mix-blend-mode: color-dodge; }
-        .effect-liquid { background: radial-gradient(circle at 30% 40%, rgba(220,38,38,0.45), transparent 55%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.35), transparent 55%); background-size: 200% 200%; filter: blur(6px) contrast(1.15); mix-blend-mode: color-dodge; opacity: 0.85 !important; }
-        .effect-firework { background: radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 2px), radial-gradient(circle, rgba(220,38,38,0.55) 2px, transparent 3px); background-size: 40px 40px, 60px 60px; background-position: 0 0, 20px 20px; mix-blend-mode: color-dodge; opacity: 0.65 !important; }
-        .effect-texture-3d { background: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 11px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 11px); mix-blend-mode: overlay; opacity: 0.85 !important; }
+        /* Responsive card size */
+        @media (max-width: 640px) {
+            .card-scene {
+                width: 280px !important;
+                height: 392px !important;
+            }
+        }
 
-        /* Scrollbar tinh tế */
+        /* ================= HERO - Vị trí chuyên nghiệp hơn ================= */
+        .hero-section {
+            padding-top: 7.5rem; /* mobile đẹp */
+        }
+        @media (min-width: 768px) {
+            .hero-section {
+                padding-top: 13rem;
+            }
+        }
+
+        /* Scrollbar & UX tinh tế */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #222; border-radius: 9999px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #dc2626; }
-
-        /* Thêm khoảng không (space) và cảm giác huyền bí */
-        .section-space { padding-top: 5rem; padding-bottom: 5rem; }
-        .hero-text { text-shadow: 0 0 40px rgba(220,38,38,0.3); }
     </style>
 </head>
 <body>
@@ -190,30 +182,34 @@
     <div class="stars-layer"></div>
     <div class="moon-glow"></div>
 
+    <!-- HEADER -->
     <header id="main-header" class="fixed top-0 w-full z-50 glass-panel h-20 flex items-center border-b-0">
         <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center relative z-10">
             <div class="flex items-center gap-6">
                 <img id="site-logo" src="" alt="Rayn Scofield" class="h-8 opacity-0 transition-opacity duration-1000 object-contain" />
                 <div class="pixel-board" id="led-matrix"></div>
             </div>
-            <div class="text-[10px] tracking-[0.5em] text-gray-400 font-bold uppercase hidden md:block">
+            <div class="text-[10px] tracking-[0.6em] text-gray-400 font-bold uppercase hidden md:block">
                 RAYN SCOFIELD <span class="text-brand-red px-2">/</span> VISUAL ELITE
             </div>
         </div>
+        <!-- LED motion sticker mới -->
+        <div class="header-led"></div>
         <div class="header-track"><div class="cyber-car" id="cyber-car"></div></div>
     </header>
 
-    <section class="pt-64 pb-24 px-6 text-center relative z-10">
-        <div class="inline-flex items-center gap-2 px-6 py-3 glass-panel text-[10px] font-bold tracking-[0.4em] text-brand-red mb-12 uppercase rounded-full shadow-inner">
+    <!-- HERO - Đã tối ưu vị trí -->
+    <section class="hero-section pb-20 px-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-6 py-3 hero-badge text-[10px] font-bold tracking-[0.45em] text-brand-red mb-10 uppercase rounded-3xl shadow-inner">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span> AVAILABLE FOR FREELANCE
         </div>
         
-        <h1 class="font-black tracking-tighter uppercase leading-[0.85] text-[15vw] md:text-[9.5rem] flex flex-wrap justify-center gap-x-6 select-none hero-text">
+        <h1 class="lux-text tracking-tighter uppercase leading-[0.82] text-[14vw] md:text-[9.2rem] flex flex-wrap justify-center gap-x-5 select-none">
             <span class="text-white">VISUAL</span>
             <span class="text-brand-red">ELITE</span>
         </h1>
       
-        <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-gray-400 text-sm font-bold mt-16 mb-12 tracking-[0.35em] uppercase">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-gray-400 text-sm font-bold mt-12 mb-12 tracking-[0.4em] uppercase">
             <div class="flex items-center gap-3">
                 <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 <span id="p-country-name" class="text-white">Location</span>
@@ -234,8 +230,8 @@
     </main>
 
     <section class="py-40 border-t border-white/5 bg-[#030303] relative z-10 text-center shadow-[0_-20px_60px_rgba(0,0,0,0.6)]">
-        <h2 class="text-4xl md:text-5xl font-black mb-28 tracking-[-0.04em] text-white uppercase">Exclusive Collection</h2>
-        <div id="cards-container" class="flex flex-wrap justify-center gap-16 md:gap-24"></div>
+        <h2 class="lux-text text-4xl md:text-5xl mb-28 tracking-[-0.04em] text-white uppercase">Exclusive Collection</h2>
+        <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-24"></div>
     </section>
 
     <footer class="py-24 bg-black border-t border-white/5 text-center relative z-10">
@@ -243,25 +239,22 @@
         <p class="text-[10px] tracking-[0.5em] text-gray-600 font-bold uppercase">&copy; <span id="current-year"></span> // RAYN SCOFIELD // ALL RIGHTS RESERVED</p>
     </footer>
 
-    <!-- Modal giữ nguyên cấu trúc -->
+    <!-- MODAL -->
     <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-2xl cursor-pointer" onclick="closeModal()"></div>
         <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-7xl h-[90vh] md:h-[85vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 rounded-3xl shadow-[0_0_90px_rgba(0,0,0,0.85)]">
-          
             <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red text-white p-3 transition-colors rounded-full backdrop-blur-md border border-white/10">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-          
             <div class="w-full md:w-[60%] h-[45vh] md:h-full bg-black flex items-center justify-center p-8 border-r border-white/5 relative group">
                 <img id="modal-img" src="" class="max-w-full max-h-full object-contain drop-shadow-2xl" />
                 <button onclick="toggleFullScreen()" class="absolute bottom-8 right-8 bg-white/10 hover:bg-brand-red p-3 text-white transition-all opacity-0 group-hover:opacity-100 border border-white/20 rounded-2xl backdrop-blur-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                 </button>
             </div>
-          
             <div class="w-full md:w-[40%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
                 <span id="modal-category" class="text-brand-red text-[10px] font-bold tracking-[0.5em] mb-6 uppercase glass-panel border-brand-red/20 px-4 py-1.5 rounded-full self-start shadow-md"></span>
-                <h2 id="modal-title" class="text-3xl md:text-5xl font-black text-white mb-8 leading-[1.05] tracking-tighter"></h2>
+                <h2 id="modal-title" class="lux-text text-3xl md:text-5xl mb-8 leading-[1.05] tracking-tighter"></h2>
                 <div class="w-12 h-1 bg-gradient-to-r from-brand-red to-orange-500 mb-8 rounded-full"></div>
                 <p id="modal-desc" class="text-gray-400 text-sm leading-relaxed mb-12 whitespace-pre-line font-light"></p>
                 <div class="mt-auto border-t border-white/5 pt-8">
@@ -275,7 +268,6 @@
 
     <script>
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        
         document.getElementById('current-year').textContent = new Date().getFullYear();
         let globalProjects = [];
 
@@ -291,7 +283,56 @@
             }
         }
 
-        // Mouse Tracker For Header Light Trail - mượt hơn
+        // Mouse + Touch unified handler
+        let ticking = false;
+        function mv(e, el) {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const inner = el.querySelector('.card-inner');
+                    const glare = el.querySelector('.glare');
+                    const r = el.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    
+                    inner.style.transform = `rotateX(${y * -30}deg) rotateY(${x * 30}deg)`;
+                    glare.style.opacity = '1';
+                    glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        function ml(el) {
+            const inner = el.querySelector('.card-inner');
+            const glare = el.querySelector('.glare');
+            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+        }
+
+        // Attach cả mouse + touch cho mọi thẻ (mobile giữ & xoay = tilt giống PC)
+        function attachCardListeners() {
+            document.querySelectorAll('.card-scene').forEach(el => {
+                // Mouse
+                el.addEventListener('mousemove', (e) => mv(e, el));
+                el.addEventListener('mouseleave', () => ml(el));
+
+                // Touch (giữ ngón tay & xoay thẻ)
+                let touching = false;
+                el.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+                el.addEventListener('touchmove', (e) => {
+                    if (!touching || e.touches.length !== 1) return;
+                    const touch = e.touches[0];
+                    const fakeEvent = { clientX: touch.clientX, clientY: touch.clientY };
+                    mv(fakeEvent, el);
+                }, { passive: true });
+                el.addEventListener('touchend', () => {
+                    touching = false;
+                    ml(el);
+                });
+            });
+        }
+
+        // Header cyber trail
         const header = document.getElementById('main-header');
         const car = document.getElementById('cyber-car');
         let targetCarPos = -100, carPos = -100;
@@ -300,9 +341,8 @@
             targetCarPos = e.clientX - rect.left - 26; 
         });
         header.addEventListener('mouseleave', () => { targetCarPos = -100; });
-        
         function animateCar() { 
-            carPos += (targetCarPos - carPos) * 0.12; 
+            carPos += (targetCarPos - carPos) * 0.13; 
             car.style.transform = `translateX(${carPos}px)`; 
             requestAnimationFrame(animateCar); 
         }
@@ -333,39 +373,25 @@
               
                 const rows = csvText.split('\n').filter(row => row.trim() !== '');
                 const headers = parseCSVRow(rows[0]);
-              
-                // Tối ưu: Tính index cột một lần duy nhất
-                const findCol = (name) => headers.findIndex(h => 
-                    h.toLowerCase().replace(/[^a-z]/g, '').includes(name.toLowerCase())
-                );
                 
-                const idxKey = findCol('configkey');
-                const idxVal = findCol('configvalue');
-                const idxEff = findCol('effect');
-                const idxTitle = findCol('title');
-                const idxCategory = findCol('category');
-                const idxImageUrl = findCol('imageurl');
-                const idxDescription = findCol('description');
-                const idxLink = findCol('link');
+                const findCol = (name) => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g, '').includes(name.toLowerCase()));
                 
-                const config = {};
-                const cards = [];
-                const projects = [];
+                const idxKey = findCol('configkey'), idxVal = findCol('configvalue'), idxEff = findCol('effect');
+                const idxTitle = findCol('title'), idxCategory = findCol('category');
+                const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
+                
+                const config = {}, cards = [], projects = [];
 
                 rows.slice(1).forEach(row => {
                     const vals = parseCSVRow(row);
-                    const k = vals[idxKey] || '';
-                    const v = vals[idxVal] || '';
+                    const k = vals[idxKey] || '', v = vals[idxVal] || '';
                     const eff = (idxEff !== -1 && vals[idxEff]) ? vals[idxEff].toLowerCase().trim() : 'metal';
 
                     if (k) config[k] = v;
 
-                    // Trading cards
                     if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) {
                         cards.push({ img: v, eff: eff });
                     }
-
-                    // Projects
                     if (idxTitle !== -1 && vals[idxTitle]) {
                         projects.push({
                             Title: vals[idxTitle],
@@ -377,40 +403,32 @@
                     }
                 });
 
-                // Cập nhật thông tin profile
+                // Profile
                 if (config.siteLogo) { 
                     document.getElementById('site-logo').src = config.siteLogo; 
                     document.getElementById('site-logo').classList.remove('opacity-0'); 
                 }
-                if (config.siteSignature) { 
-                    document.getElementById('footer-signature').src = config.siteSignature; 
-                }
-              
+                if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
+                
                 document.getElementById('p-country-name').textContent = config.country || 'Vietnam';
-                
-                if (config.schoolName) { 
-                    document.getElementById('p-school-name').textContent = config.schoolName; 
-                } else { 
-                    document.getElementById('p-school-name').parentElement.classList.add('hidden'); 
-                }
-                
+                if (config.schoolName) document.getElementById('p-school-name').textContent = config.schoolName;
+                else document.getElementById('p-school-name').parentElement.classList.add('hidden');
                 if (config.schoolLogo) { 
                     document.getElementById('p-school-logo').src = config.schoolLogo; 
                     document.getElementById('p-school-logo').classList.remove('hidden'); 
                 }
 
-                // Skills tags
                 if (config.skills) {
                     document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(s => 
-                        `<span class="px-6 py-3 glass-panel text-[10px] font-bold text-gray-300 uppercase tracking-[0.25em] hover:text-white hover:border-brand-red hover:bg-brand-red/10 transition-all cursor-default shadow-sm rounded-full">${s.trim()}</span>`
+                        `<span class="px-6 py-3 glass-panel text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em] hover:text-white hover:border-brand-red hover:bg-brand-red/10 transition-all cursor-default shadow-sm rounded-full">${s.trim()}</span>`
                     ).join('');
                 }
 
-                // Exclusive Collection - Trading Cards
+                // TRADING CARDS
                 const cardsContainer = document.getElementById('cards-container');
                 cards.forEach(c => {
                     cardsContainer.innerHTML += `
-                        <div class="card-scene w-[300px] h-[420px] md:w-[340px] md:h-[476px] cursor-crosshair" onmousemove="mv(event, this)" onmouseleave="ml(this)">
+                        <div class="card-scene w-[300px] h-[420px] md:w-[340px] md:h-[476px] cursor-crosshair">
                             <div class="card-inner shadow-[0_30px_70px_rgba(0,0,0,0.95)]">
                                 <div class="glare effect-${c.eff}"></div>
                                 <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" alt="Trading Card" />
@@ -418,7 +436,7 @@
                         </div>`;
                 });
 
-                // Portfolio Grid
+                // PROJECTS
                 const grid = document.getElementById('portfolio-grid');
                 projects.forEach((p, i) => {
                     grid.innerHTML += `
@@ -437,103 +455,55 @@
 
                 globalProjects = projects;
                 
-                // Hoàn tất loading
+                // Hoàn tất
                 document.getElementById('loading').classList.add('hidden');
                 grid.classList.remove('hidden');
-                setTimeout(() => { grid.classList.remove('opacity-0'); }, 80);
+                setTimeout(() => grid.classList.remove('opacity-0'), 100);
                 
                 yt.style.width = '100%'; 
-                setTimeout(() => { yt.style.opacity = '0'; }, 600);
-                
+                setTimeout(() => yt.style.opacity = '0', 600);
+
+                // Kích hoạt 3D touch cho mobile
+                attachCardListeners();
+
             } catch (e) {
                 console.error(e);
                 document.getElementById('loading').innerHTML = `<p class="text-brand-red font-bold uppercase text-sm">Không thể tải dữ liệu. Vui lòng kiểm tra kết nối.</p>`;
             }
         }
 
-        // 3D Card Engine - Tối ưu RAF
-        let ticking = false;
-        function mv(e, el) {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const inner = el.querySelector('.card-inner');
-                    const glare = el.querySelector('.glare');
-                    const r = el.getBoundingClientRect();
-                    const x = (e.clientX - r.left) / r.width - 0.5;
-                    const y = (e.clientY - r.top) / r.height - 0.5;
-                    
-                    inner.style.transform = `rotateX(${y * -28}deg) rotateY(${x * 28}deg)`;
-                    glare.style.opacity = '1';
-                    glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-        function ml(el) {
-            const inner = el.querySelector('.card-inner');
-            const glare = el.querySelector('.glare');
-            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
-            glare.style.opacity = '0';
-        }
-
-        // Modal Controls
+        // Modal
         function openModal(index) {
             const p = globalProjects[index];
             if (!p) return;
-            
             document.getElementById('modal-img').src = p.ImageUrl || '';
             document.getElementById('modal-category').textContent = p.Category || '';
             document.getElementById('modal-title').textContent = p.Title || '';
             document.getElementById('modal-desc').textContent = p.Description || '';
-          
             const linkBtn = document.getElementById('modal-link');
-            if (p.Link) {
-                linkBtn.href = p.Link;
-                linkBtn.classList.remove('hidden');
-            } else {
-                linkBtn.classList.add('hidden');
-            }
+            p.Link ? (linkBtn.href = p.Link, linkBtn.classList.remove('hidden')) : linkBtn.classList.add('hidden');
             
             const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
-            
+            const box = document.getElementById('modal-content-box');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            
-            setTimeout(() => { 
-                modal.classList.remove('opacity-0'); 
-                contentBox.classList.remove('scale-95'); 
-                contentBox.classList.add('scale-100'); 
-            }, 10);
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.add('scale-100'); }, 10);
         }
-
         function closeModal() {
             const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
+            const box = document.getElementById('modal-content-box');
             modal.classList.add('opacity-0');
-            contentBox.classList.remove('scale-100');
-            contentBox.classList.add('scale-95');
-            setTimeout(() => { 
-                modal.classList.add('hidden'); 
-                document.body.style.overflow = ''; 
-            }, 420);
+            box.classList.remove('scale-100');
+            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 420);
         }
-
         function toggleFullScreen() {
             const img = document.getElementById('modal-img');
-            if (!document.fullscreenElement) {
-                img.requestFullscreen().catch(() => {});
-            } else {
-                document.exitFullscreen();
-            }
+            document.fullscreenElement ? document.exitFullscreen() : img.requestFullscreen().catch(() => {});
         }
 
         // Khởi chạy
         initLED();
-        if (SHEET_CSV_URL.includes("http")) {
-            initPortfolio();
-        }
+        if (SHEET_CSV_URL.includes("http")) initPortfolio();
     </script>
 </body>
 </html>
