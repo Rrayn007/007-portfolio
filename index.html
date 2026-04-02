@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007 | Rayn Scofield Portfolio</title>
+    <title>007 | Visual Experiences by Rayn Scofield</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: { orange: '#f97316', red: '#dc2626', dark: '#111111', light: '#f8fafc' }
+                        brand: { orange: '#f97316', red: '#dc2626', dark: '#0a0a0a', surface: '#111111' }
                     },
-                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
                     keyframes: {
                         fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
@@ -24,107 +26,155 @@
         }
     </script>
     <style>
+        /* Tối ưu UI/UX */
         ::selection { background-color: #f97316; color: white; }
-        body { scroll-behavior: smooth; transition: background 0.5s ease; }
-        .loader { border-top-color: #f97316; animation: spinner 1.5s linear infinite; }
-        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        /* Tùy chỉnh thanh cuộn cho Modal */
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        body { scroll-behavior: smooth; background-color: #0a0a0a; color: #f3f4f6; overflow-x: hidden; }
+        
+        /* Motion Background Cực Xịn */
+        .bg-motion {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            background: linear-gradient(-45deg, #0a0a0a, #140d0b, #1f0802, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            opacity: 0.8;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Tùy chỉnh Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
+        
+        /* Hiệu ứng kính (Glassmorphism) */
+        .glass-panel { background: rgba(17, 17, 17, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Hiệu ứng thẻ 3D */
+        .card-3d-wrapper { perspective: 1000px; }
+        .card-3d-inner { 
+            transition: transform 0.1s ease-out; 
+            transform-style: preserve-3d; 
+            will-change: transform;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(249, 115, 22, 0.2);
+        }
+        .card-glare {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10; mix-blend-mode: overlay;
+        }
     </style>
 </head>
-<body class="bg-brand-light text-brand-dark antialiased font-sans min-h-screen flex flex-col overflow-x-hidden">
+<body class="antialiased font-sans flex flex-col min-h-screen">
 
-    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100">
+    <div class="bg-motion"></div>
+
+    <header class="fixed top-0 w-full z-40 glass-panel border-b-0">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="#" class="block h-10 md:h-12 w-auto transition-transform hover:scale-105 active:scale-95">
-                <img id="site-logo" src="" alt="007 Logo" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500" />
+            <a href="#" class="block h-8 md:h-10 w-auto transition-transform hover:scale-105">
+                <img id="site-logo" src="" alt="007" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500" />
             </a>
-            <div class="text-sm font-medium text-gray-500">
-                007 - Portfolio / <span class="text-brand-dark font-bold">Rayn Scofield</span>
+            <div class="text-xs tracking-widest font-medium text-gray-400 uppercase">
+                <span class="text-brand-orange">007</span> &nbsp;//&nbsp; Portfolio
             </div>
         </div>
     </header>
 
-    <section class="py-24 px-6 bg-white border-b border-gray-100">
-        <div class="max-w-7xl mx-auto animate-fade-in-up flex flex-col lg:flex-row gap-16">
+    <section class="pt-36 pb-20 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in-up">
             
-            <div class="flex-grow flex flex-col items-center lg:items-start text-center lg:text-left">
-                <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-4 leading-tight drop-shadow-sm">
-                    <span id="p-nickname" class="text-brand-dark">007 / </span>
-                    <span id="p-fullname" class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-orange">Rayn Scofield</span>
-                </h1>
-                
-                <div class="flex flex-col md:flex-row items-center lg:items-start gap-5 md:gap-10 text-xl text-gray-600 font-light mt-5">
-                    <div class="flex items-center gap-3">
-                        <span id="p-country-flag" class="text-3xl">VN</span> <span id="p-country-name">Vietnam</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-4">
-                        <img id="p-school-logo" src="" alt="DNU" class="h-12 w-auto object-contain hidden" />
-                        <span id="p-school-name" class="font-medium text-brand-dark">Dong Nai University (DNU)</span>
-                    </div>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-800 bg-gray-900/50 text-xs font-semibold tracking-widest text-brand-orange mb-8 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+                AVAILABLE FOR FREELANCE
+            </div>
+
+            <h1 class="text-5xl md:text-8xl font-black tracking-tighter mb-6 leading-tight">
+                Crafting <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-orange">Visual</span><br/>Experiences.
+            </h1>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-400 font-light mb-10 text-lg">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span id="p-country-name">Vietnam</span>
+                </div>
+                <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-gray-700"></span>
+                <div class="flex items-center gap-3">
+                    <img id="p-school-logo" src="" alt="DNU" class="h-6 w-auto object-contain hidden" />
+                    <span id="p-school-name">Dong Nai University</span>
                 </div>
             </div>
-            
-            <div class="w-full lg:w-2/5 flex flex-col gap-6">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-brand-orange">Skills & Tools</h3>
-                <div id="p-skills-tags" class="flex flex-wrap gap-x-3 gap-y-3.5">
-                    </div>
-            </div>
+
+            <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-3xl">
+                </div>
         </div>
     </section>
 
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full mb-20">
+    <main class="flex-grow max-w-7xl mx-auto px-6 w-full relative z-10 pb-24">
         <div id="loading" class="flex justify-center items-center h-40">
-            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-brand-orange"></div>
         </div>
-        
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 hidden opacity-0 transition-opacity duration-1000">
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden opacity-0 transition-opacity duration-1000">
             </div>
     </main>
 
-    <footer class="bg-brand-dark text-gray-400 mt-auto border-t-4 border-brand-orange">
+    <section class="py-24 relative z-10 border-t border-gray-900 bg-black/30">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-16 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">Trading Card Showcase</h2>
+            
+            <div class="flex justify-center items-center perspective-1000">
+                <div class="card-3d-wrapper w-[300px] h-[420px] md:w-[400px] md:h-[560px] cursor-pointer" onmousemove="handleMouseMove(event, this)" onmouseleave="handleMouseLeave(this)">
+                    <div class="card-3d-inner w-full h-full relative rounded-2xl overflow-hidden border border-gray-700/50 bg-gray-900">
+                        <div class="card-glare"></div>
+                        <img id="special-card-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800" alt="Trading Card" class="w-full h-full object-cover" />
+                    </div>
+                </div>
+            </div>
+            <p class="mt-8 text-sm text-gray-500 font-light">Di chuột lên thẻ để xem hiệu ứng 3D</p>
+        </div>
+    </section>
+
+    <footer class="bg-[#050505] relative z-10 border-t border-brand-orange/30">
         <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col items-center text-center">
-            <div class="mb-10 h-16 md:h-20 w-auto">
+            <div class="mb-8 h-16 w-auto opacity-70 hover:opacity-100 transition-opacity">
                 <img id="footer-signature" src="" alt="Signature" class="h-full w-auto object-contain opacity-0 transition-opacity duration-500 invert" />
             </div>
-            <div class="w-24 h-px bg-zinc-700 mb-8"></div>
-            <p class="text-sm tracking-wide mb-2">
-                &copy; <span id="current-year"></span> Rayn Scofield. All rights reserved.
-                <span class="text-brand-orange font-bold">/</span> 007
+            <p class="text-xs tracking-widest text-gray-600 uppercase">
+                &copy; <span id="current-year"></span> Rayn Scofield <span class="text-brand-orange px-2">|</span> 007
             </p>
         </div>
     </footer>
 
-    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
+    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-400">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md cursor-pointer" onclick="closeModal()"></div>
         
-        <div id="modal-content-box" class="relative bg-white text-brand-dark w-full max-w-6xl mx-4 max-h-[90vh] rounded-2xl md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-300">
+        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-6xl h-[90vh] md:h-[85vh] rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400">
             
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-white/50 hover:bg-white p-2 rounded-full text-brand-dark transition-colors shadow-sm">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-black/50 hover:bg-brand-orange p-2 rounded-full text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
-            <div class="w-full md:w-3/5 bg-gray-100 min-h-[300px] md:min-h-[600px] flex items-center justify-center relative group">
-                <img id="modal-img" src="" alt="Project Image" class="w-full h-full max-h-[90vh] object-cover" />
+            <div class="w-full md:w-2/3 h-[50vh] md:h-full relative group bg-[#0a0a0a] flex items-center justify-center p-4">
+                <img id="modal-img" src="" alt="Project" class="w-full h-full object-contain rounded-lg" />
+                
+                <button onclick="toggleFullScreen()" class="absolute bottom-6 right-6 bg-black/60 hover:bg-brand-orange p-3 rounded-xl text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                </button>
             </div>
             
-            <div class="w-full md:w-2/5 p-8 md:p-12 flex flex-col custom-scrollbar overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
-                <span id="modal-category" class="text-xs font-bold uppercase tracking-widest text-brand-orange mb-3 block">Category</span>
-                <h2 id="modal-title" class="text-3xl md:text-4xl font-extrabold mb-6 text-brand-dark leading-tight">Project Title</h2>
-                
-                <div class="w-12 h-1 bg-brand-orange mb-8"></div>
-                
-                <p id="modal-desc" class="text-gray-600 mb-10 leading-relaxed font-light whitespace-pre-line text-lg">
-                    Project description...
+            <div class="w-full md:w-1/3 p-8 flex flex-col custom-scrollbar overflow-y-auto h-[40vh] md:h-full bg-brand-surface">
+                <span id="modal-category" class="text-xs font-bold uppercase tracking-widest text-brand-orange mb-2 block">Category</span>
+                <h2 id="modal-title" class="text-3xl font-bold mb-6 text-white leading-tight">Title</h2>
+                <div class="w-10 h-1 bg-gradient-to-r from-brand-red to-brand-orange mb-6"></div>
+                <p id="modal-desc" class="text-gray-400 mb-8 leading-relaxed font-light whitespace-pre-line text-sm md:text-base">
+                    Description...
                 </p>
-                
-                <div class="mt-auto pt-6">
-                    <a id="modal-link" href="#" target="_blank" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-sm font-bold rounded-full text-white bg-brand-dark hover:bg-brand-orange transition-colors duration-300 w-fit hidden">
-                        Xem chi tiết dự án &rarr;
+                <div class="mt-auto pt-6 border-t border-gray-800">
+                    <a id="modal-link" href="#" target="_blank" class="flex items-center justify-between w-full px-6 py-4 text-sm font-medium rounded-xl text-white bg-white/5 hover:bg-white/10 transition-colors hidden group">
+                        <span>View Live Project</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
             </div>
@@ -132,9 +182,9 @@
     </div>
 
     <script>
-        // DÁN LINK CSV DUY NHẤT CỦA BẠN VÀO ĐÂY ===================
-        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        // ========================================================
+        // ==========================================
+        const SHEET_CSV_URL = "DAN_LINK_CSV_CUA_BAN_VAO_DAY";
+        // ==========================================
         
         document.getElementById('current-year').textContent = new Date().getFullYear();
         let globalProjects = [];
@@ -159,46 +209,33 @@
             try {
                 const response = await fetch(SHEET_CSV_URL);
                 const csvText = await response.text();
-                
                 const rows = csvText.split('\n').filter(row => row.trim() !== '');
                 if (rows.length < 2) throw new Error("Dữ liệu trống");
 
                 const headers = parseCSVRow(rows[0]);
-                
-                // Lấy vị trí cột
-                const idxConfigKey = headers.indexOf('ConfigKey');
-                const idxConfigValue = headers.indexOf('ConfigValue');
-                const idxTitle = headers.indexOf('Title');
-                const idxCategory = headers.indexOf('Category');
-                const idxImageUrl = headers.indexOf('ImageUrl');
-                const idxDesc = headers.indexOf('Description');
-                const idxLink = headers.indexOf('Link');
-
                 const config = {};
                 const projects = [];
 
                 rows.slice(1).forEach(row => {
                     const matchValues = parseCSVRow(row);
-                    const getValue = (index) => (index < 0 || index >= matchValues.length) ? '' : matchValues[index];
+                    const getValue = (colName) => {
+                        const idx = headers.indexOf(colName);
+                        return (idx !== -1 && idx < matchValues.length) ? matchValues[idx] : '';
+                    };
 
-                    // Cấu hình
-                    const cKey = getValue(idxConfigKey);
-                    if (cKey) config[cKey] = getValue(idxConfigValue);
+                    const cKey = getValue('ConfigKey');
+                    if (cKey) config[cKey] = getValue('ConfigValue');
 
-                    // Dự án
-                    const pTitle = getValue(idxTitle);
+                    const pTitle = getValue('Title');
                     if (pTitle) {
                         projects.push({
-                            Title: pTitle,
-                            Category: getValue(idxCategory),
-                            ImageUrl: getValue(idxImageUrl),
-                            Description: getValue(idxDesc),
-                            Link: getValue(idxLink)
+                            Title: pTitle, Category: getValue('Category'),
+                            ImageUrl: getValue('ImageUrl'), Description: getValue('Description'), Link: getValue('Link')
                         });
                     }
                 });
 
-                // --- 1. Áp dụng Cấu hình UI ---
+                // Cấu hình Header & Footer
                 if (config.siteLogo) {
                     const logo = document.getElementById('site-logo');
                     logo.src = config.siteLogo; logo.classList.remove('opacity-0');
@@ -207,45 +244,38 @@
                     const sig = document.getElementById('footer-signature');
                     sig.src = config.siteSignature; sig.classList.remove('opacity-0');
                 }
-                if (config.siteBackground) {
-                    if (config.siteBackground.startsWith('http')) {
-                        document.body.style.backgroundImage = `url('${config.siteBackground}')`;
-                        document.body.style.backgroundSize = 'cover';
-                        document.body.style.backgroundAttachment = 'fixed';
-                    } else document.body.style.backgroundColor = config.siteBackground;
+                // Cấu hình Trading Card đặc biệt
+                if (config.tradingCardImg) {
+                    document.getElementById('special-card-img').src = config.tradingCardImg;
                 }
 
-                // --- 2. Áp dụng Thông tin Profile ---
-                document.getElementById('p-fullname').textContent = config.fullName || 'Rayn Scofield';
-                document.getElementById('p-nickname').textContent = (config.fullName ? '007 / ' : '007');
+                // Cấu hình Profile
                 document.getElementById('p-country-name').textContent = config.country || 'Vietnam';
-                // Bạn có thể xử lý countryFlag thành icon ở đây
                 document.getElementById('p-school-name').textContent = config.schoolName || 'University';
                 if (config.schoolLogo) {
                     const sLogo = document.getElementById('p-school-logo');
                     sLogo.src = config.schoolLogo; sLogo.classList.remove('hidden');
                 }
 
-                // --- 3. Áp dụng Kỹ năng (Tags) ---
+                // Kỹ năng
                 if (config.skills) {
                     const skillsTagsGrid = document.getElementById('p-skills-tags');
                     const skillsArray = config.skills.split(',').map(s => s.trim()).filter(s => s !== '');
                     skillsArray.forEach(skill => {
                         skillsTagsGrid.innerHTML += `
-                            <span class="inline-block px-4 py-2 border border-gray-100/50 bg-gray-50/50 rounded-full text-xs font-medium text-brand-dark shadow-sm transition-colors hover:border-brand-orange hover:bg-brand-light hover:text-brand-orange">
+                            <span class="px-4 py-1.5 rounded-md border border-gray-800 bg-[#0a0a0a] text-xs font-medium text-gray-300 hover:border-brand-orange hover:text-brand-orange transition-colors">
                                 ${skill}
                             </span>
                         `;
                     });
                 }
 
-                // --- 4. Render Dự án ---
                 globalProjects = projects;
                 renderProjects(projects);
 
             } catch (error) {
-                console.error("Lỗi:", error);
-                document.getElementById('loading').innerHTML = "<p class='text-red-500'>Lỗi tải dữ liệu. Kiểm tra Sheet và link CSV.</p>";
+                console.error(error);
+                document.getElementById('loading').innerHTML = "<p class='text-brand-red'>Lỗi tải dữ liệu.</p>";
             }
         }
 
@@ -254,30 +284,30 @@
             let htmlContent = '';
             
             projects.forEach((project, index) => {
-                const img = project.ImageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
-                const delay = index * 100;
+                const img = project.ImageUrl || 'https://via.placeholder.com/800';
+                const delay = index * 50;
 
                 htmlContent += `
                     <div onclick="openModal(${index})" 
-                       class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 ease-out border border-gray-100/50 cursor-pointer animate-fade-in-up"
+                       class="group relative glass-panel rounded-2xl overflow-hidden cursor-pointer animate-fade-in-up hover:-translate-y-2 transition-transform duration-300"
                        style="animation-delay: ${delay}ms; opacity: 0;"
                     >
-                        <div class="relative h-72 overflow-hidden bg-gray-50">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500"></div>
-                            <img src="${img}" alt="${project.Title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out" />
-                            <span class="absolute top-4 right-4 z-20 text-xs font-bold uppercase tracking-wider bg-white/90 text-brand-orange px-3 py-1 rounded-full shadow-sm">
-                                ${project.Category || 'Portfolio'}
+                        <div class="relative h-64 overflow-hidden bg-black/50">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
+                            <img src="${img}" alt="${project.Title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                            <span class="absolute top-4 left-4 z-20 text-[10px] font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-sm border border-gray-700">
+                                ${project.Category}
                             </span>
                         </div>
-                        <div class="p-8 relative z-20">
-                            <h3 class="text-2xl font-bold mb-3 text-brand-dark group-hover:text-brand-red transition-colors line-clamp-1">
-                                ${project.Title || 'Dự án'}
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white group-hover:text-brand-orange transition-colors truncate">
+                                ${project.Title}
                             </h3>
-                            <p class="text-gray-600 line-clamp-2 font-light leading-relaxed text-sm">
-                                ${project.Description || ''}
+                            <p class="text-gray-500 line-clamp-2 text-sm font-light">
+                                ${project.Description}
                             </p>
                         </div>
-                        <div class="absolute bottom-0 left-0 h-1.5 w-0 bg-gradient-to-r from-brand-red to-brand-orange group-hover:w-full transition-all duration-500 ease-out z-30"></div>
+                        <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-brand-red to-brand-orange group-hover:w-full transition-all duration-500 z-30"></div>
                     </div>
                 `;
             });
@@ -288,26 +318,26 @@
             setTimeout(() => { grid.classList.remove('opacity-0'); }, 50);
         }
 
+        /* --- XỬ LÝ MODAL & FULLSCREEN --- */
         function openModal(index) {
             const project = globalProjects[index];
             if(!project) return;
             
-            document.getElementById('modal-img').src = project.ImageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
-            document.getElementById('modal-category').textContent = project.Category || 'Danh mục';
-            document.getElementById('modal-title').textContent = project.Title || 'Dự án';
-            document.getElementById('modal-desc').textContent = project.Description || 'Không có mô tả chi tiết.';
+            document.getElementById('modal-img').src = project.ImageUrl || '';
+            document.getElementById('modal-category').textContent = project.Category || '';
+            document.getElementById('modal-title').textContent = project.Title || '';
+            document.getElementById('modal-desc').textContent = project.Description || '';
             
             const linkBtn = document.getElementById('modal-link');
             if (project.Link && project.Link.trim() !== '') {
-                linkBtn.href = project.Link;
-                linkBtn.classList.remove('hidden');
+                linkBtn.href = project.Link; linkBtn.classList.remove('hidden');
             } else { linkBtn.classList.add('hidden'); }
 
             const modal = document.getElementById('project-modal');
             const contentBox = document.getElementById('modal-content-box');
             
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Khóa cuộn trang nền
+            document.body.style.overflow = 'hidden';
             
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
@@ -326,8 +356,49 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-                document.body.style.overflow = ''; // Mở khóa cuộn trang
-            }, 300);
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
+        function toggleFullScreen() {
+            const img = document.getElementById('modal-img');
+            if (!document.fullscreenElement) {
+                img.requestFullscreen().catch(err => console.log(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        /* --- HIỆU ỨNG THẺ 3D TRADING CARD --- */
+        function handleMouseMove(e, element) {
+            const inner = element.querySelector('.card-3d-inner');
+            const glare = element.querySelector('.card-glare');
+            const rect = element.getBoundingClientRect();
+            
+            // Tính toán vị trí chuột tương đối với tâm thẻ (-1 đến 1)
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            
+            // Cường độ nghiêng (xoay tối đa 20 độ)
+            const rotateY = x * 30; 
+            const rotateX = y * -30;
+            
+            inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Tính toán vị trí ánh sáng chói
+            const glareX = x * 100 + 50;
+            const glareY = y * 100 + 50;
+            glare.style.opacity = '1';
+            glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.3) 0%, transparent 60%)`;
+        }
+
+        function handleMouseLeave(element) {
+            const inner = element.querySelector('.card-3d-inner');
+            const glare = element.querySelector('.card-glare');
+            
+            // Trả về vị trí cũ một cách mượt mà
+            inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            glare.style.opacity = '0';
         }
 
         if(SHEET_CSV_URL.includes("http")) { initPortfolio(); } 
