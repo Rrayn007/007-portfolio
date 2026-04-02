@@ -2,20 +2,32 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>DEBUG DATA // RAYN</title>
+    <title>TEST DATA CONNECTION // 007</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-zinc-950 text-white p-10">
-    <h1 class="text-xs tracking-widest text-zinc-500 mb-10">DEBUG MODE: CHECKING ROW-BASED EFFECT</h1>
+<body class="bg-black text-white p-10 font-mono">
     
-    <div id="test-container" class="flex flex-wrap gap-10"></div>
+    <h1 class="text-xl font-bold mb-6 text-red-500 underline">RAW DATA FROM GOOGLE SHEETS</h1>
+    
+    <div class="overflow-x-auto">
+        <table class="w-full border-collapse border border-zinc-800 text-left">
+            <thead class="bg-zinc-900">
+                <tr id="table-header">
+                    </tr>
+            </thead>
+            <tbody id="table-body" class="text-xs">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="status" class="mt-6 text-[10px] text-zinc-500">Đang tải dữ liệu...</div>
 
     <script>
+        // 1. Dán link CSV của bạn vào đây
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
 
         function parseCSVRow(str) {
-            const result = [];
-            let cur = '', inQuote = false;
+            const result = []; let cur = '', inQuote = false;
             for (let i = 0; i < str.length; i++) {
                 if (str[i] === '"') inQuote = !inQuote;
                 else if (str[i] === ',' && !inQuote) { result.push(cur); cur = ''; }
@@ -30,39 +42,37 @@
                 const res = await fetch(SHEET_CSV_URL);
                 const data = await res.text();
                 const rows = data.split('\n').filter(r => r.trim() !== '');
-                const headers = parseCSVRow(rows[0]);
                 
-                // Tìm vị trí cột Effect (Không phân biệt hoa thường)
-                const idxKey = headers.findIndex(h => h.toLowerCase().includes('key'));
-                const idxEffect = headers.findIndex(h => h.toLowerCase().includes('eff'));
-
-                const container = document.getElementById('test-container');
-
-                rows.slice(1).forEach((row, i) => {
-                    const vals = parseCSVRow(row);
-                    const key = vals[idxKey] || `Row_${i+1}`;
-                    const effect = (idxEffect !== -1 && vals[idxEffect]) ? vals[idxEffect] : "NULL";
-
-                    // Chỉ hiện những hàng có liên quan đến tradingCard
-                    if (key.toLowerCase().includes('tradingcard')) {
-                        container.innerHTML += `
-                            <div class="border border-zinc-800 p-6 rounded bg-zinc-900 w-64">
-                                <p class="text-[10px] text-zinc-500 mb-2 uppercase">${key}</p>
-                                <div class="text-4xl font-black text-orange-500 underline">
-                                    ${effect}
-                                </div>
-                                <p class="text-[10px] text-zinc-600 mt-4 italic">Index cột Effect: ${idxEffect}</p>
-                            </div>
-                        `;
-                    }
+                // Hiển thị Tiêu đề (Dòng 1)
+                const headers = parseCSVRow(rows[0]);
+                const headerRow = document.getElementById('table-header');
+                headers.forEach(h => {
+                    headerRow.innerHTML += `<th class="border border-zinc-800 p-3 text-zinc-400 uppercase">${h}</th>`;
                 });
 
-                if (container.innerHTML === "") {
-                    container.innerHTML = "Không tìm thấy hàng nào có Key chứa 'tradingCard'.";
-                }
+                // Hiển thị Dữ liệu (Dòng 2 trở đi)
+                const tableBody = document.getElementById('table-body');
+                rows.slice(1).forEach(row => {
+                    const vals = parseCSVRow(row);
+                    let rowHtml = '<tr>';
+                    vals.forEach(v => {
+                        // Nếu là Link thì rút gọn, nếu là Effect thì bôi đỏ cho dễ nhìn
+                        const isLink = v.startsWith('http');
+                        const isEffect = (v === 'gold' || v === 'mirror' || v === 'holo');
+                        
+                        rowHtml += `
+                            <td class="border border-zinc-800 p-3 ${isEffect ? 'text-red-500 font-bold' : ''}">
+                                ${isLink ? 'LINK_DETECTED' : v}
+                            </td>`;
+                    });
+                    rowHtml += '</tr>';
+                    tableBody.innerHTML += rowHtml;
+                });
+
+                document.getElementById('status').innerHTML = "KẾT NỐI THÀNH CÔNG: Đã tải " + (rows.length - 1) + " hàng.";
 
             } catch (e) {
-                document.body.innerHTML = "LỖI KẾT NỐI: " + e.message;
+                document.getElementById('status').innerHTML = "LỖI KẾT NỐI: " + e.message;
             }
         }
 
