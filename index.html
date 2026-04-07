@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion &amp; digital experience.">
+    <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
+    <meta property="og:title" content="Rayn Scofield // Visual Architect">
+    <meta property="og:description" content="Cinematic Motion • Immersive 3D • Cyberpunk Storyteller">
+    <meta property="og:image" content="https://i.imgur.com/your-og-image.jpg"> <!-- Thay bằng link ảnh OG của bạn -->
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Rayn Scofield // Visual Architect</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,157 +16,101 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        brand: { red: '#dc2626', dark: '#020203', surface: '#0a0a0c', border: '#1f1f2e' }
-                    },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { brand: { red: '#dc2626', dark: '#020203', surface: '#0a0a0c', border: '#1f1f2e' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
         ::selection { background-color: #dc2626; color: white; }
-        body {
-            background-color: #020203;
-            color: #fff;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            font-family: 'Inter', sans-serif;
-        }
+        body { background-color: #020203; color: #fff; overflow-x: hidden; scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
 
-        /* Background Moon + Stars - Tăng độ rõ, không lấn át */
-        .stars-bg {
-            position: fixed; inset: 0; z-index: -3;
-            background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-            background-size: 55px 55px;
-        }
+        /* Background */
+        .stars-bg, .stars-layer, .moon-glow { position: fixed; inset: 0; z-index: -3; pointer-events: none; }
+        .stars-bg { background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 55px 55px; }
         .stars-layer {
-            position: fixed; inset: 0; z-index: -4;
-            background-image:
-                radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-                radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
-            background-size: 85px 85px, 170px 170px;
-            background-position: 0 0, 35px 55px;
-            filter: blur(2px);
-            animation: starTwinkle 25s infinite linear;
-            opacity: 0.75;
+            background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+                              radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
+            background-size: 85px 85px, 170px 170px; background-position: 0 0, 35px 55px;
+            filter: blur(2px); animation: starTwinkle 25s infinite linear; opacity: 0.75;
         }
-        @keyframes starTwinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.95; }
-        }
+        @keyframes starTwinkle { 0%,100% {opacity:0.5} 50% {opacity:0.95} }
         .moon-glow {
-            position: fixed; top: -45vh; left: 50%; transform: translateX(-50%);
+            top: -45vh; left: 50%; transform: translateX(-50%);
             width: 140vw; height: 140vw; max-width: 1700px;
             background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.035) 40%, transparent 75%);
-            border-radius: 50%; z-index: -2; pointer-events: none;
-            filter: blur(75px); animation: moonBreath 18s infinite alternate ease-in-out;
-            opacity: 0.85;
+            border-radius: 50%; z-index: -2; filter: blur(75px);
+            animation: moonBreath 18s infinite alternate ease-in-out; opacity: 0.85;
         }
-        @keyframes moonBreath {
-            from { opacity: 0.65; transform: translateX(-50%) scale(0.88); }
-            to { opacity: 0.95; transform: translateX(-50%) scale(1.12); }
-        }
+        @keyframes moonBreath { from {opacity:0.65; transform:translateX(-50%) scale(0.88)} to {opacity:0.95; transform:translateX(-50%) scale(1.12)} }
 
-        /* CRT Motion - Đỏ trắng đen, sinh động hơn */
+        /* CRT */
         .crt-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            pointer-events: none;
-            background: 
-                repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(220,38,38,0.22) 3px, rgba(220,38,38,0.22) 6px),
-                linear-gradient(rgba(255,255,255,0.04) 50%, transparent 50%);
+            position: fixed; inset: 0; z-index: 99999; pointer-events: none;
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(220,38,38,0.22) 3px, rgba(220,38,38,0.22) 6px),
+                        linear-gradient(rgba(255,255,255,0.04) 50%, transparent 50%);
             background-size: 100% 6px, 100% 100%;
             animation: crt-scan 4s linear infinite, crt-flicker 0.07s infinite alternate;
-            opacity: 0.16;
-            mix-blend-mode: overlay;
+            opacity: 0.16; mix-blend-mode: overlay;
             box-shadow: inset 0 0 140px rgba(0,0,0,0.9), inset 0 0 45px rgba(220,38,38,0.25);
         }
-        @keyframes crt-scan { 0% { background-position: 0 0, 0 0; } 100% { background-position: 0 100%, 0 0; } }
-        @keyframes crt-flicker { 0%, 100% { opacity: 0.16; } 50% { opacity: 0.23; } }
-        .crt-overlay::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.055) 50%, transparent 52%);
-            animation: crt-rgb 7s linear infinite;
-            opacity: 0.45;
-        }
-        @keyframes crt-rgb { 0% { transform: translateX(-3px); } 100% { transform: translateX(3px); } }
+        @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
+        @keyframes crt-flicker { 0%,100%{opacity:0.16} 50%{opacity:0.23} }
 
-        /* Glassmorphism - Tăng mạnh, sạch sẽ hơn */
-        .glass-panel {
-            background: rgba(10,10,12,0.72);
-            backdrop-filter: blur(32px);
-            border: 1px solid rgba(255,255,255,0.09);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.55),
-                        inset 0 1px 0 rgba(255,255,255,0.12);
-        }
-        .glass-strong {
-            background: rgba(10,10,12,0.85);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6),
-                        inset 0 2px 0 rgba(255,255,255,0.15);
-        }
+        /* Glass + Lux */
+        .glass-panel { background: rgba(10,10,12,0.72); backdrop-filter: blur(32px); border: 1px solid rgba(255,255,255,0.09); }
+        .glass-strong { background: rgba(10,10,12,0.85); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.15); }
+        .lux-text { font-weight: 900; letter-spacing: -0.04em; text-shadow: 0 12px 45px rgba(220,38,38,0.3); }
 
-        .lux-text {
-            font-weight: 900;
-            letter-spacing: -0.04em;
-            text-shadow: 0 12px 45px rgba(220,38,38,0.3);
-        }
-
-        /* Card 3D & Project */
+        /* 3D Card Glare */
         .card-scene { perspective: 1600px; }
         .card-inner {
-            transform-style: preserve-3d;
-            transition: transform 0.12s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d; transition: transform 0.12s cubic-bezier(0.23,1,0.32,1);
         }
-        .project-card {
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        .glare {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 50%, rgba(255,255,255,0.15) 100%);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            mix-blend-mode: screen;
         }
-        .project-card:hover { transform: translateY(-8px); }
+        .card-scene:hover .glare { opacity: 0.9; }
 
-        /* Clean layout */
+        .project-card { transition: all 0.4s cubic-bezier(0.23,1,0.32,1); }
+        .project-card:hover { transform: translateY(-8px); }
         section { scroll-margin-top: 80px; }
-        .custom-scroll::-webkit-scrollbar { width: 5px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #222; border-radius: 9999px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stars-layer, .moon-glow, .crt-overlay, .card-inner { animation: none !important; }
+            * { transition-duration: 0.01ms !important; }
+        }
     </style>
 </head>
 <body>
-    <!-- Background layers -->
+    <!-- Background -->
     <div class="stars-bg"></div>
     <div class="stars-layer"></div>
     <div class="moon-glow"></div>
     <div id="crt-overlay" class="crt-overlay"></div>
 
-    <!-- HEADER - Glass mạnh hơn, sạch sẽ -->
+    <!-- HEADER -->
     <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
             <div class="flex items-center gap-6">
                 <img id="site-logo" src="" alt="Rayn Scofield" class="h-9 opacity-0 transition-opacity duration-1000" />
                 <div class="pixel-board" id="led-matrix"></div>
             </div>
-
-            <!-- Desktop Nav - Ngăn nắp -->
             <nav class="hidden md:flex items-center gap-10 text-sm font-bold tracking-[0.2em] uppercase">
-                <a href="#about" onclick="smoothScrollTo('about')" class="nav-link text-white hover:text-brand-red transition-colors">ABOUT</a>
-                <a href="#work" onclick="smoothScrollTo('work')" class="nav-link text-white hover:text-brand-red transition-colors">WORK</a>
-                <a href="#collection" onclick="smoothScrollTo('collection')" class="nav-link text-white hover:text-brand-red transition-colors">COLLECTION</a>
-                <a href="#contact" onclick="smoothScrollTo('contact')" class="nav-link text-white hover:text-brand-red transition-colors">CONTACT</a>
+                <a href="#about" onclick="smoothScrollTo('about')" class="hover:text-brand-red transition-colors">ABOUT</a>
+                <a href="#work" onclick="smoothScrollTo('work')" class="hover:text-brand-red transition-colors">WORK</a>
+                <a href="#collection" onclick="smoothScrollTo('collection')" class="hover:text-brand-red transition-colors">COLLECTION</a>
+                <a href="#contact" onclick="smoothScrollTo('contact')" class="hover:text-brand-red transition-colors">CONTACT</a>
             </nav>
-
             <div class="hidden md:block text-[10px] tracking-[0.65em] font-bold text-gray-400 uppercase">
                 RAYN SCOFIELD <span class="text-brand-red">/</span> VISUAL ARCHITECT
             </div>
-
-            <!-- Mobile trigger -->
             <button onclick="toggleMobileNav()" class="md:hidden p-2 text-brand-red">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
 
@@ -174,25 +123,21 @@
         </div>
     </header>
 
-    <!-- HERO - Đã thay VISUAL ELITE -->
+    <!-- HERO -->
     <section id="hero" class="pt-28 pb-24 px-6 text-center relative z-10">
         <div class="inline-flex items-center gap-2 px-8 py-4 glass-panel text-xs font-bold tracking-[0.5em] text-brand-red mb-12 uppercase rounded-3xl">
             <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
             NOW OPEN FOR FREELANCE
         </div>
-
         <h1 class="lux-text text-[13.5vw] md:text-[9.8rem] leading-[0.85] tracking-[-0.06em] flex flex-wrap justify-center gap-x-6">
             <span class="text-white">RAYN</span>
             <span class="text-brand-red">SCOFIELD</span>
         </h1>
-
-        <!-- Biểu ngữ mới -->
         <div class="mt-6 mb-16 mx-auto max-w-xl px-8 py-6 border border-brand-red/20 bg-black/30 backdrop-blur-3xl rounded-3xl flex items-center justify-center gap-4 text-base font-bold tracking-[0.3em] text-white/90">
             <span class="text-brand-red">◉</span>
             VISUAL ARCHITECT • CYBERPUNK STORYTELLER • DIGITAL IMMORTALITY
             <span class="text-brand-red">◉</span>
         </div>
-
         <div class="flex flex-col md:flex-row items-center justify-center gap-10 text-gray-400 text-sm font-bold tracking-[0.45em] uppercase">
             <div class="flex items-center gap-3">
                 <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -203,7 +148,6 @@
                 <span id="p-school-name" class="text-white"></span>
             </div>
         </div>
-
         <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mt-14"></div>
     </section>
 
@@ -247,7 +191,7 @@
         </div>
     </section>
 
-    <!-- WORK / PORTFOLIO -->
+    <!-- WORK -->
     <section id="work" class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex justify-between items-end mb-12">
             <h2 class="lux-text text-5xl">SELECTED WORK</h2>
@@ -256,7 +200,7 @@
         <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </section>
 
-    <!-- EXCLUSIVE COLLECTION -->
+    <!-- COLLECTION -->
     <section id="collection" class="py-32 border-t border-white/10 bg-[#030303]">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="lux-text text-5xl text-center mb-20">EXCLUSIVE COLLECTION</h2>
@@ -264,38 +208,30 @@
         </div>
     </section>
 
-    <!-- CONTACT - Form submit trực tiếp vào Google Sheet -->
+    <!-- CONTACT -->
     <section id="contact" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="lux-text text-5xl mb-6">LET'S CREATE SOMETHING ELITE</h2>
             <p class="text-gray-400 mb-14">Điền thông tin bên dưới. Dữ liệu sẽ được ghi trực tiếp vào Google Sheet của tôi.</p>
-
             <form id="contact-form" class="space-y-8">
-                <input type="text" id="name" placeholder="HỌ VÀ TÊN" required
-                       class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
-                <input type="email" id="email" placeholder="EMAIL" required
-                       class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
-                <textarea id="message" rows="6" placeholder="NỘI DUNG TIN NHẮN / DỰ ÁN BẠN MUỐN THẢO LUẬN..." required
-                          class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base resize-none"></textarea>
-                
-                <button type="submit"
+                <input type="text" id="name" placeholder="HỌ VÀ TÊN" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <input type="email" id="email" placeholder="EMAIL" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <textarea id="message" rows="6" placeholder="NỘI DUNG TIN NHẮN / DỰ ÁN BẠN MUỐN THẢO LUẬN..." required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base resize-none"></textarea>
+                <button type="submit" id="submit-btn"
                         class="w-full py-8 bg-brand-red hover:brightness-110 transition-all font-bold text-sm tracking-[0.6em] uppercase rounded-3xl glass-panel">
-                    GỬI THÔNG TIN → DỮ LIỆU SẼ VÀO SHEET
+                    GỬI THÔNG TIN →
                 </button>
             </form>
-
             <div id="form-success" class="hidden mt-8 text-green-400 font-bold">✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.</div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="py-24 bg-black border-t border-white/10 text-center">
         <img id="footer-signature" src="" alt="Signature" class="h-24 mx-auto mb-10 invert opacity-40 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
         <p class="text-[10px] tracking-[0.6em] text-gray-500 font-bold">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED</p>
-        
-        <!-- CRT Toggle -->
         <div class="mt-14 flex justify-center items-center gap-4">
-            <button onclick="toggleCRT()" id="crt-toggle-btn"
-                    class="flex items-center gap-3 px-8 py-4 glass-panel rounded-3xl text-xs font-bold tracking-widest hover:bg-brand-red/10">
+            <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-3 px-8 py-4 glass-panel rounded-3xl text-xs font-bold tracking-widest hover:bg-brand-red/10">
                 <span id="crt-status">CRT MOTION</span>
                 <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                 <span class="text-brand-red">ON</span>
@@ -307,9 +243,7 @@
     <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center">
         <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/80 backdrop-blur-3xl"></div>
         <div id="modal-content-box" class="modal-glass max-w-[95vw] md:max-w-7xl w-full h-[90vh] md:h-[88vh] flex flex-col md:flex-row rounded-3xl overflow-hidden relative scale-95 transition-transform">
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red p-4 rounded-3xl text-white">
-                ✕
-            </button>
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red p-4 rounded-3xl text-white">✕</button>
             <div class="flex-1 md:w-3/5 bg-black flex items-center justify-center p-8 relative">
                 <img id="modal-img" src="" class="max-h-full max-w-full object-contain" />
             </div>
@@ -324,74 +258,41 @@
 
     <script>
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        
-        // === FORM SUBMIT VÀO GOOGLE SHEET ===
-        // TẠO Google Apps Script (doPost) để append dữ liệu vào sheet, sau đó dán URL vào đây:
-        const GOOGLE_APPS_SCRIPT_URL = ''; // ←←← THAY BẰNG URL APPS SCRIPT CỦA BẠN (nếu có)
+        const GOOGLE_APPS_SCRIPT_URL = ''; // ← Thay bằng URL Google Apps Script nếu muốn submit thật
 
         let globalProjects = [];
         let crtEnabled = true;
 
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // LED Matrix
-        function initLED() {
-            const matrix = document.getElementById('led-matrix');
-            const pattern = [0,13,42,55,16,17,20,21,30,31,34,35];
-            matrix.innerHTML = '';
-            for (let i = 0; i < 56; i++) {
-                const px = document.createElement('div');
-                px.className = `inline-block w-1.5 h-1.5 mx-px my-px ${[0,13,42,55].includes(i) ? 'bg-red-500' : pattern.includes(i) ? 'bg-white' : 'bg-transparent'}`;
-                matrix.appendChild(px);
-            }
-        }
-
-        // 3D Card effect
-        let ticking = false;
-        function mv(e, el) {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                const inner = el.querySelector('.card-inner');
-                const glare = el.querySelector('.glare');
-                const rect = el.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
-                inner.style.transform = `rotateX(${y * -28}deg) rotateY(${x * 28}deg)`;
-                if (glare) {
-                    glare.style.opacity = '0.9';
-                    glare.style.backgroundPosition = `${(x + 0.5) * 120}% ${(y + 0.5) * 120}%`;
-                }
-                ticking = false;
-            });
-        }
-        function ml(el) {
-            const inner = el.querySelector('.card-inner');
-            const glare = el.querySelector('.glare');
-            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
-            if (glare) glare.style.opacity = '0';
-        }
-        function attachCardListeners() {
-            document.querySelectorAll('.card-scene').forEach(el => {
-                el.addEventListener('mousemove', e => mv(e, el));
-                el.addEventListener('mouseleave', () => ml(el));
-            });
-        }
-
-        // Parse CSV
         function parseCSVRow(str) {
             const result = [];
-            let cur = '', inQuote = false;
+            let current = '', inQuotes = false;
             for (let i = 0; i < str.length; i++) {
-                if (str[i] === '"') inQuote = !inQuote;
-                else if (str[i] === ',' && !inQuote) { result.push(cur); cur = ''; }
-                else cur += str[i];
+                const char = str[i];
+                if (char === '"') {
+                    if (inQuotes && str[i+1] === '"') { current += '"'; i++; }
+                    else inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else current += char;
             }
-            result.push(cur);
-            return result.map(v => v.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
+            result.push(current.trim());
+            return result.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
+        }
+
+        function showPortfolioSkeleton() {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = Array(6).fill(0).map(() => `
+                <div class="glass-panel rounded-3xl overflow-hidden animate-pulse">
+                    <div class="h-80 bg-gray-800"></div>
+                    <div class="p-8"><div class="h-6 bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-4 bg-gray-700 rounded w-1/2"></div></div>
+                </div>
+            `).join('');
         }
 
         async function initPortfolio() {
+            const loadingEl = document.getElementById('loading');
+            showPortfolioSkeleton();
             try {
                 const res = await fetch(SHEET_CSV_URL);
                 const csv = await res.text();
@@ -404,62 +305,52 @@
                 const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
 
                 const config = {}, cards = [], projects = [];
-
                 rows.slice(1).forEach(row => {
                     const vals = parseCSVRow(row);
                     const k = vals[idxKey] || '', v = vals[idxVal] || '';
                     const eff = vals[idxEff] ? vals[idxEff].toLowerCase().trim() : 'metal';
-
                     if (k) config[k] = v;
-                    if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) {
-                        cards.push({img: v, eff});
-                    }
+                    if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) cards.push({img: v, eff});
                     if (vals[idxTitle]) {
                         projects.push({
-                            Title: vals[idxTitle],
-                            Category: vals[idxCategory] || '',
-                            ImageUrl: vals[idxImageUrl] || '',
-                            Description: vals[idxDescription] || '',
+                            Title: vals[idxTitle], Category: vals[idxCategory] || '',
+                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
                             Link: vals[idxLink] || ''
                         });
                     }
                 });
 
-                // Profile data
-                if (config.siteLogo) {
-                    document.getElementById('site-logo').src = config.siteLogo;
-                    document.getElementById('site-logo').classList.remove('opacity-0');
-                }
+                // Profile
+                if (config.siteLogo) { document.getElementById('site-logo').src = config.siteLogo; document.getElementById('site-logo').classList.remove('opacity-0'); }
                 if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
                 document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, Vietnam';
                 if (config.schoolName) {
                     document.getElementById('p-school-name').textContent = config.schoolName;
-                    document.getElementById('p-school-logo').src = config.schoolLogo || '';
-                    document.getElementById('p-school-logo').classList.remove('hidden');
+                    const sl = document.getElementById('p-school-logo');
+                    sl.src = config.schoolLogo || ''; sl.classList.remove('hidden');
                 }
                 if (config.skills) {
-                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag => 
+                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag =>
                         `<span class="glass-panel px-7 py-3 text-xs font-bold uppercase tracking-widest rounded-3xl">${tag.trim()}</span>`
                     ).join('');
                 }
 
-                // Trading cards
-                const cardsContainer = document.getElementById('cards-container');
-                cardsContainer.innerHTML = cards.map(c => `
+                // Cards
+                document.getElementById('cards-container').innerHTML = cards.map(c => `
                     <div class="card-scene w-[300px] h-[420px] cursor-crosshair">
                         <div class="card-inner w-full h-full relative overflow-hidden rounded-3xl">
-                            <div class="glare effect-${c.eff} absolute inset-0"></div>
-                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy">
+                            <div class="glare"></div>
+                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         </div>
                     </div>
                 `).join('');
 
-                // Portfolio grid
+                // Portfolio
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => `
                     <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-3xl group">
                         <div class="h-80 relative">
-                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         </div>
                         <div class="p-8">
@@ -470,12 +361,11 @@
                 `).join('');
 
                 globalProjects = projects;
-                document.getElementById('loading').classList.add('hidden');
+                loadingEl.classList.add('hidden');
                 attachCardListeners();
-
             } catch (e) {
                 console.error(e);
-                document.getElementById('loading').innerHTML = `<span class="text-red-500">Lỗi tải dữ liệu</span>`;
+                loadingEl.innerHTML = `<span class="text-red-500">Lỗi tải dữ liệu</span>`;
             }
         }
 
@@ -486,30 +376,50 @@
             document.getElementById('modal-category').textContent = p.Category;
             document.getElementById('modal-title').textContent = p.Title;
             document.getElementById('modal-desc').textContent = p.Description;
-            const link = document.getElementById('modal-link');
-            if (p.Link) { link.href = p.Link; link.style.display = 'flex'; } else link.style.display = 'none';
-            document.getElementById('project-modal').classList.remove('hidden');
-            document.getElementById('project-modal').classList.add('flex');
+            const linkEl = document.getElementById('modal-link');
+            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
             setTimeout(() => document.getElementById('modal-content-box').classList.add('scale-100'), 10);
         }
 
         function closeModal() {
             const modal = document.getElementById('project-modal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+            modal.classList.remove('flex'); modal.classList.add('hidden');
             document.getElementById('modal-content-box').classList.remove('scale-100');
         }
 
-        // Smooth scroll
-        function smoothScrollTo(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        function initLED() {
+            const matrix = document.getElementById('led-matrix');
+            matrix.innerHTML = '';
+            const pattern = [0,13,42,55,16,17,20,21,30,31,34,35];
+            for (let i = 0; i < 56; i++) {
+                const px = document.createElement('div');
+                const isRed = [0,13,42,55].includes(i);
+                px.className = `inline-block w-1.5 h-1.5 mx-px my-px transition-colors ${isRed ? 'bg-red-500 animate-pulse' : pattern.includes(i) ? 'bg-white' : 'bg-transparent'}`;
+                matrix.appendChild(px);
+            }
         }
 
-        function toggleMobileNav() {
-            document.getElementById('mobile-nav').classList.toggle('hidden');
+        function attachCardListeners() {
+            document.querySelectorAll('.card-scene').forEach(el => {
+                el.addEventListener('mousemove', e => {
+                    const inner = el.querySelector('.card-inner');
+                    const rect = el.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                    inner.style.transform = `rotateX(${y * -28}deg) rotateY(${x * 28}deg)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    el.querySelector('.card-inner').style.transform = 'rotateX(0deg) rotateY(0deg)';
+                });
+            });
         }
 
-        // CRT toggle
+        function smoothScrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+
         function toggleCRT() {
             crtEnabled = !crtEnabled;
             const overlay = document.getElementById('crt-overlay');
@@ -525,59 +435,59 @@
             }
         }
 
-        // Submit form → Google Sheet
         async function submitContactForm(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const message = document.getElementById('message').value.trim();
-
             if (!name || !email || !message) return;
+
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.textContent;
+            btn.disabled = true; btn.textContent = 'ĐANG GỬI...';
 
             const successBox = document.getElementById('form-success');
 
-            // Nếu chưa có Apps Script thì chỉ demo
             if (!GOOGLE_APPS_SCRIPT_URL) {
-                console.log('%c✅ [DEMO] Dữ liệu sẽ được ghi vào sheet:', 'color:#dc2626; font-weight:bold', { name, email, message, time: new Date().toLocaleString('vi-VN') });
-                successBox.textContent = '✅ Đã gửi (demo mode). Trong thực tế sẽ vào Google Sheet.';
+                console.log('%c✅ [DEMO] Dữ liệu:', 'color:#dc2626', {name, email, message});
+                successBox.textContent = '✅ Đã gửi (demo mode)';
                 successBox.classList.remove('hidden');
                 e.target.reset();
-                setTimeout(() => successBox.classList.add('hidden'), 4500);
+                setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.textContent = originalText; }, 4500);
                 return;
             }
 
-            // Gửi thật vào sheet
+            // Nếu có Apps Script thì submit thật (code giữ nguyên như cũ)
             try {
-                const res = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        message: message,
-                        timestamp: new Date().toISOString()
-                    })
-                });
+                const res = await fetch(GOOGLE_APPS_SCRIPT_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, email, message, timestamp: new Date().toISOString()}) });
                 if (res.ok) {
                     successBox.textContent = '✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.';
                     successBox.classList.remove('hidden');
                     e.target.reset();
                     setTimeout(() => successBox.classList.add('hidden'), 4500);
                 }
-            } catch (err) {
-                console.error(err);
-                alert('Có lỗi khi gửi. Vui lòng thử lại sau.');
-            }
+            } catch (err) { alert('Có lỗi khi gửi. Vui lòng thử lại sau.'); }
+            btn.disabled = false; btn.textContent = originalText;
         }
 
-        // Init everything
-        initLED();
-        if (SHEET_CSV_URL.includes('http')) initPortfolio();
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            initLED();
+            if (SHEET_CSV_URL.includes('http')) initPortfolio();
 
-        // Attach form listener
-        document.getElementById('contact-form').addEventListener('submit', submitContactForm);
+            document.getElementById('contact-form').addEventListener('submit', submitContactForm);
 
-        console.log('%c🚀 Portfolio Rayn Scofield đã được sắp xếp gọn gàng + Glass mạnh + Moon + CRT + Form submit trực tiếp vào Sheet', 'color:#dc2626; font-size:13px');
+            // Keyboard ESC
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('project-modal');
+                    if (modal.classList.contains('flex')) closeModal();
+                }
+            });
+
+            console.log('%c🚀 Rayn Scofield Portfolio — ĐÃ NÂNG CẤP TOÀN DIỆN!', 'color:#dc2626; font-size:14px; font-weight:bold');
+        });
     </script>
 </body>
 </html>
