@@ -26,7 +26,7 @@
         ::selection { background-color: #dc2626; color: white; }
         body { background-color: #020203; color: #fff; overflow-x: hidden; scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
 
-        /* ================= PIXEL LED MATRIX - ĐÃ SỬA LỖI ================= */
+        /* PIXEL LED MATRIX */
         .pixel-board {
             display: grid;
             grid-template-columns: repeat(14, 1fr);
@@ -38,15 +38,12 @@
             height: 26px;
             border-radius: 2px;
         }
-        .pxl {
-            background: #0a0a0c;
-            border-radius: 1px;
-        }
+        .pxl { background: #0a0a0c; border-radius: 1px; }
         .pxl.r { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation: ledPulse 1.6s infinite; }
         .pxl.w { background: #fff; opacity: 0.85; }
         @keyframes ledPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-        /* ================= BACKGROUND - Sao nhấp nháy rõ ràng hơn ================= */
+        /* BACKGROUND */
         .stars-bg, .stars-layer, .moon-glow { position: fixed; inset: 0; z-index: -3; pointer-events: none; }
         .stars-bg { background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 55px 55px; }
         .stars-layer {
@@ -68,7 +65,7 @@
         }
         @keyframes moonBreath { from {opacity:0.6; transform:translateX(-50%) scale(0.9)} to {opacity:0.9; transform:translateX(-50%) scale(1.1)} }
 
-        /* CRT & Glass */
+        /* CRT */
         .crt-overlay {
             position: fixed; inset: 0; z-index: 99999; pointer-events: none;
             background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(220,38,38,0.18) 3px, rgba(220,38,38,0.18) 6px),
@@ -81,6 +78,7 @@
         @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
         @keyframes crt-flicker { 0%,100%{opacity:0.14} 50%{opacity:0.19} }
 
+        /* Glass */
         .glass-panel, .glass-strong { 
             background: rgba(10,10,12,0.72); 
             backdrop-filter: blur(32px); 
@@ -91,7 +89,7 @@
 
         .lux-text { font-weight: 900; letter-spacing: -0.045em; text-shadow: 0 12px 45px rgba(220,38,38,0.3); }
 
-        /* Card 3D */
+        /* 3D Card */
         .card-scene { perspective: 1600px; touch-action: none; }
         .card-inner {
             position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505;
@@ -100,9 +98,9 @@
             border: 1px solid rgba(255,255,255,0.09); border-radius: 0 !important;
             box-shadow: 0 30px 70px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
         }
-        .glare, .specular { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
-        .glare { opacity: 0; transition: opacity 0.4s cubic-bezier(0.23,1,0.32,1); background-size: 250% 250%; mix-blend-mode: color-dodge; filter: brightness(1.15); }
+        .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.23,1,0.32,1); background-size: 250% 250%; mix-blend-mode: color-dodge; filter: brightness(1.15); }
         .specular {
+            position: absolute; inset: 0; z-index: 6; pointer-events: none;
             background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.05) 42%, transparent 68%);
             mix-blend-mode: screen; opacity: 0; transition: opacity 0.45s cubic-bezier(0.23,1,0.32,1); filter: blur(6px);
         }
@@ -156,12 +154,272 @@
         </div>
     </header>
 
-    <!-- Phần còn lại giữ nguyên như code trước (hero, about, work, collection, contact, footer, modal) -->
-    <!-- (Tôi giữ nguyên để ngắn gọn, bạn chỉ cần thay phần <style> và <header> là đủ) -->
+    <!-- HERO -->
+    <section id="hero" class="hero-section pb-24 px-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-8 py-4 glass-panel text-xs font-bold tracking-[0.5em] text-brand-red mb-12 uppercase rounded-3xl">
+            <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+            NOW OPEN FOR FREELANCE
+        </div>
+        <h1 class="lux-text text-[13.5vw] md:text-[9.8rem] leading-[0.85] tracking-[-0.06em] flex flex-wrap justify-center gap-x-6">
+            <span class="text-white">RAYN</span>
+            <span class="text-brand-red">SCOFIELD</span>
+        </h1>
+        <div class="mt-6 mb-16 mx-auto max-w-xl px-8 py-6 border border-brand-red/20 bg-black/30 backdrop-blur-3xl rounded-3xl flex items-center justify-center gap-4 text-base font-bold tracking-[0.3em] text-white/90">
+            <span class="text-brand-red">◉</span>
+            VISUAL ARCHITECT • CYBERPUNK STORYTELLER • DIGITAL IMMORTALITY
+            <span class="text-brand-red">◉</span>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-10 text-gray-400 text-sm font-bold tracking-[0.45em] uppercase">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span id="p-country-name" class="text-white">Ho Chi Minh City, Vietnam</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <img id="p-school-logo" src="" alt="School" class="h-5 hidden" />
+                <span id="p-school-name" class="text-white"></span>
+            </div>
+        </div>
+        <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mt-14"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+        <div class="grid md:grid-cols-12 gap-16">
+            <div class="md:col-span-7">
+                <h2 class="lux-text text-5xl md:text-6xl mb-10">WHO IS RAYN?</h2>
+                <div class="text-[17.5px] leading-relaxed text-gray-200 space-y-7">
+                    <p>Visual Architect &amp; Motion Designer từ TP. Hồ Chí Minh. Chuyên cinematic visuals, 3D motion, branding identity và trải nghiệm kỹ thuật số tương tác.</p>
+                    <p>Kết hợp tinh thần cyberpunk với thiết kế tối giản để tạo nên những câu chuyện thị giác bất hủ.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-3 gap-8 text-sm">
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">BASED IN</div>
+                        <div class="text-3xl font-semibold">Ho Chi Minh City</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">EXPERIENCE</div>
+                        <div class="text-3xl font-semibold">6+ years</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">CLIENTS</div>
+                        <div class="text-3xl font-semibold">42+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-5">
+                <div class="glass-strong p-10 rounded-3xl h-full flex flex-col justify-between">
+                    <div>
+                        <h3 class="uppercase text-brand-red text-xs font-bold mb-8 tracking-[1.5px]">CURRENT FOCUS</h3>
+                        <ul class="space-y-8">
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">01</span><div class="flex-1"><strong>Cinematic Motion Design</strong><p class="text-gray-400 text-sm mt-1">Kể chuyện bằng chuyển động</p></div></li>
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">02</span><div class="flex-1"><strong>Immersive 3D Branding</strong><p class="text-gray-400 text-sm mt-1">Thương hiệu sống động</p></div></li>
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">03</span><div class="flex-1"><strong>Interactive Digital Experiences</strong><p class="text-gray-400 text-sm mt-1">Website &amp; installation tương tác</p></div></li>
+                        </ul>
+                    </div>
+                    <blockquote class="text-xs font-light italic border-t border-white/10 pt-8 text-gray-400">"Mỗi pixel đều mang một câu chuyện. Tôi chỉ là người kể nó."</blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex justify-between items-end mb-12">
+            <h2 class="lux-text text-5xl">SELECTED WORK</h2>
+            <div id="loading" class="flex items-center gap-3 text-xs font-bold text-gray-400"><div class="animate-spin h-5 w-5 border-t-2 border-brand-red rounded-full"></div>LOADING PROJECTS...</div>
+        </div>
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section id="collection" class="py-32 border-t border-white/10 bg-[#030303]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="lux-text text-5xl text-center mb-20">EXCLUSIVE COLLECTION</h2>
+            <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-20"></div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="lux-text text-5xl mb-6">LET'S CREATE SOMETHING ELITE</h2>
+            <p class="text-gray-400 mb-14">Điền thông tin bên dưới. Dữ liệu sẽ được ghi trực tiếp vào Google Sheet của tôi.</p>
+            <form id="contact-form" class="space-y-8">
+                <input type="text" id="name" placeholder="HỌ VÀ TÊN" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <input type="email" id="email" placeholder="EMAIL" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <textarea id="message" rows="6" placeholder="NỘI DUNG TIN NHẮN / DỰ ÁN BẠN MUỐN THẢO LUẬN..." required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base resize-none"></textarea>
+                <button type="submit" id="submit-btn" class="w-full py-8 bg-brand-red hover:brightness-110 transition-all font-bold text-sm tracking-[0.6em] uppercase rounded-3xl glass-panel">
+                    GỬI THÔNG TIN →
+                </button>
+            </form>
+            <div id="form-success" class="hidden mt-8 text-green-400 font-bold">✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.</div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-24 bg-black border-t border-white/10 text-center">
+        <img id="footer-signature" src="" alt="Signature" class="h-24 mx-auto mb-10 invert opacity-40 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+        <p class="text-[10px] tracking-[0.6em] text-gray-500 font-bold">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED</p>
+        <div class="mt-14 flex justify-center items-center gap-4">
+            <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-3 px-8 py-4 glass-panel rounded-3xl text-xs font-bold tracking-widest hover:bg-brand-red/10">
+                <span id="crt-status">CRT MOTION</span>
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-brand-red">ON</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- PROJECT MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center">
+        <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/80 backdrop-blur-3xl"></div>
+        <div id="modal-content-box" class="modal-glass max-w-[95vw] md:max-w-7xl w-full h-[90vh] md:h-[88vh] flex flex-col md:flex-row rounded-3xl overflow-hidden relative scale-95 transition-transform">
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red p-4 rounded-3xl text-white">✕</button>
+            <div class="flex-1 md:w-3/5 bg-black flex items-center justify-center p-8 relative">
+                <img id="modal-img" src="" class="max-h-full max-w-full object-contain" />
+            </div>
+            <div class="flex-1 md:w-2/5 p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto">
+                <span id="modal-category" class="text-brand-red uppercase text-xs font-bold tracking-widest mb-4 px-5 py-2 rounded-3xl border border-brand-red/30 self-start"></span>
+                <h2 id="modal-title" class="lux-text text-4xl md:text-5xl leading-tight mb-6"></h2>
+                <p id="modal-desc" class="text-gray-300 leading-relaxed flex-1"></p>
+                <a id="modal-link" href="#" target="_blank" class="mt-auto flex items-center justify-center gap-3 py-6 glass-panel rounded-3xl text-xs font-bold tracking-widest mt-10">LAUNCH PROJECT →</a>
+            </div>
+        </div>
+    </div>
 
     <script>
-        /* ... phần script giữ nguyên như code trước ... */
-        /* Chỉ cần đảm bảo initLED() chạy đúng */
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
+        const GOOGLE_APPS_SCRIPT_URL = '';
+
+        let globalProjects = [];
+        let crtEnabled = true;
+
+        function parseCSVRow(str) {
+            const result = [];
+            let current = '', inQuotes = false;
+            for (let i = 0; i < str.length; i++) {
+                const char = str[i];
+                if (char === '"') {
+                    if (inQuotes && str[i+1] === '"') { current += '"'; i++; }
+                    else inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else current += char;
+            }
+            result.push(current.trim());
+            return result.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
+        }
+
+        function showPortfolioSkeleton() {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = Array(6).fill(0).map(() => `
+                <div class="glass-panel rounded-3xl overflow-hidden animate-pulse">
+                    <div class="h-80 bg-gray-800"></div>
+                    <div class="p-8"><div class="h-6 bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-4 bg-gray-700 rounded w-1/2"></div></div>
+                </div>
+            `).join('');
+        }
+
+        async function initPortfolio() {
+            const loadingEl = document.getElementById('loading');
+            showPortfolioSkeleton();
+            try {
+                const res = await fetch(SHEET_CSV_URL);
+                const csv = await res.text();
+                const rows = csv.split('\n').filter(r => r.trim());
+                const headers = parseCSVRow(rows[0]);
+                const findCol = name => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name.toLowerCase()));
+                const idxKey = findCol('configkey'), idxVal = findCol('configvalue'), idxEff = findCol('effect');
+                const idxTitle = findCol('title'), idxCategory = findCol('category');
+                const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
+
+                const config = {}, cards = [], projects = [];
+                rows.slice(1).forEach(row => {
+                    const vals = parseCSVRow(row);
+                    const k = vals[idxKey] || '', v = vals[idxVal] || '';
+                    const eff = vals[idxEff] ? vals[idxEff].toLowerCase().trim() : 'metal';
+                    if (k) config[k] = v;
+                    if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) cards.push({img: v, eff});
+                    if (vals[idxTitle]) {
+                        projects.push({
+                            Title: vals[idxTitle], Category: vals[idxCategory] || '',
+                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
+                            Link: vals[idxLink] || ''
+                        });
+                    }
+                });
+
+                if (config.siteLogo) { 
+                    document.getElementById('site-logo').src = config.siteLogo; 
+                    document.getElementById('site-logo').classList.remove('opacity-0'); 
+                }
+                if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
+                document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, Vietnam';
+                if (config.schoolName) {
+                    document.getElementById('p-school-name').textContent = config.schoolName;
+                    const sl = document.getElementById('p-school-logo');
+                    if (config.schoolLogo) { sl.src = config.schoolLogo; sl.classList.remove('hidden'); }
+                }
+                if (config.skills) {
+                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag =>
+                        `<span class="glass-panel px-7 py-3 text-xs font-bold uppercase tracking-widest rounded-3xl">${tag.trim()}</span>`
+                    ).join('');
+                }
+
+                const cardsContainer = document.getElementById('cards-container');
+                cardsContainer.innerHTML = cards.map(c => `
+                    <div class="card-scene w-[300px] h-[420px] cursor-crosshair">
+                        <div class="card-inner w-full h-full relative overflow-hidden rounded-3xl">
+                            <div class="glare"></div>
+                            <div class="specular"></div>
+                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                `).join('');
+
+                const grid = document.getElementById('portfolio-grid');
+                grid.innerHTML = projects.map((p, i) => `
+                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-3xl group">
+                        <div class="h-80 relative">
+                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="font-black text-2xl group-hover:text-brand-red transition-colors">${p.Title}</h3>
+                            <p class="text-brand-red text-xs tracking-widest mt-2">${p.Category}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                globalProjects = projects;
+                loadingEl.classList.add('hidden');
+                attachCardListeners();
+            } catch (e) {
+                console.error(e);
+                loadingEl.innerHTML = `<span class="text-red-500">Lỗi tải dữ liệu</span>`;
+            }
+        }
+
+        function openModal(i) {
+            const p = globalProjects[i];
+            if (!p) return;
+            document.getElementById('modal-img').src = p.ImageUrl;
+            document.getElementById('modal-category').textContent = p.Category;
+            document.getElementById('modal-title').textContent = p.Title;
+            document.getElementById('modal-desc').textContent = p.Description;
+            const linkEl = document.getElementById('modal-link');
+            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            setTimeout(() => document.getElementById('modal-content-box').classList.add('scale-100'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('flex'); modal.classList.add('hidden');
+            document.getElementById('modal-content-box').classList.remove('scale-100');
+        }
+
         function initLED() {
             const matrix = document.getElementById('led-matrix');
             matrix.innerHTML = '';
@@ -174,12 +432,121 @@
             }
         }
 
-        /* Phần còn lại của script giữ nguyên */
+        let ticking = false;
+        function mv(e, el) {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const inner = el.querySelector('.card-inner');
+                    const glare = el.querySelector('.glare');
+                    const specular = el.querySelector('.specular');
+                    const r = el.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+
+                    inner.style.transform = `rotateX(${y * -30}deg) rotateY(${x * 30}deg)`;
+                    glare.style.opacity = '1';
+                    glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
+
+                    if (specular) {
+                        specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`);
+                        specular.style.setProperty('--my', `${(y + 0.5) * 100}%`);
+                        specular.style.opacity = '0.55';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        function ml(el) {
+            const inner = el.querySelector('.card-inner');
+            const glare = el.querySelector('.glare');
+            const specular = el.querySelector('.specular');
+            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+            if (specular) specular.style.opacity = '0';
+        }
+
+        function attachCardListeners() {
+            document.querySelectorAll('.card-scene').forEach(el => {
+                el.addEventListener('mousemove', e => mv(e, el));
+                el.addEventListener('mouseleave', () => ml(el));
+
+                let touching = false;
+                el.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+                el.addEventListener('touchmove', e => {
+                    if (!touching || e.touches.length !== 1) return;
+                    const touch = e.touches[0];
+                    const fakeEvent = { clientX: touch.clientX, clientY: touch.clientY };
+                    mv(fakeEvent, el);
+                }, { passive: true });
+                el.addEventListener('touchend', () => { touching = false; ml(el); });
+            });
+        }
+
+        function smoothScrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+
+        function toggleCRT() {
+            crtEnabled = !crtEnabled;
+            const overlay = document.getElementById('crt-overlay');
+            const btn = document.getElementById('crt-toggle-btn');
+            if (crtEnabled) {
+                overlay.style.display = 'block';
+                overlay.style.opacity = '0.14';
+                btn.innerHTML = `<span>CRT MOTION</span><div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div><span class="text-brand-red">ON</span>`;
+            } else {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 400);
+                btn.innerHTML = `<span>CRT MOTION</span><div class="w-3 h-3 bg-gray-400 rounded-full"></div><span class="text-gray-400">OFF</span>`;
+            }
+        }
+
+        async function submitContactForm(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            if (!name || !email || !message) return;
+
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.textContent;
+            btn.disabled = true; btn.textContent = 'ĐANG GỬI...';
+
+            const successBox = document.getElementById('form-success');
+            if (!GOOGLE_APPS_SCRIPT_URL) {
+                console.log('%c✅ [DEMO] Dữ liệu:', 'color:#dc2626', {name, email, message});
+                successBox.textContent = '✅ Đã gửi (demo mode)';
+                successBox.classList.remove('hidden');
+                e.target.reset();
+                setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.textContent = originalText; }, 4500);
+                return;
+            }
+            try {
+                const res = await fetch(GOOGLE_APPS_SCRIPT_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, email, message, timestamp: new Date().toISOString()}) });
+                if (res.ok) {
+                    successBox.textContent = '✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.';
+                    successBox.classList.remove('hidden');
+                    e.target.reset();
+                    setTimeout(() => successBox.classList.add('hidden'), 4500);
+                }
+            } catch (err) { alert('Có lỗi khi gửi. Vui lòng thử lại sau.'); }
+            btn.disabled = false; btn.textContent = originalText;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
             if (SHEET_CSV_URL.includes('http')) initPortfolio();
-            /* ... */
+            document.getElementById('contact-form').addEventListener('submit', submitContactForm);
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('project-modal');
+                    if (modal.classList.contains('flex')) closeModal();
+                }
+            });
+
+            console.log('%c🚀 Rayn Scofield Portfolio — HOÀN CHỈNH!', 'color:#dc2626; font-size:14px; font-weight:bold');
         });
     </script>
 </body>
