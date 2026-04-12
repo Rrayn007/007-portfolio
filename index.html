@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rayn Scofield — Visual Architect. Cinematic visuals & digital experience.">
+    <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
+    <meta property="og:title" content="Rayn Scofield // Visual Architect">
+    <meta property="og:description" content="Cinematic Motion • Immersive 3D • Cyberpunk Storyteller">
+    <meta property="og:image" content="https://i.imgur.com/your-og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Rayn Scofield // Visual Architect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,373 +24,574 @@
     </script>
     <style>
         ::selection { background-color: #dc2626; color: white; }
-        body { background-color: #020203; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+        body { 
+            background-color: #020203; 
+            color: #fff; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+            font-family: 'Inter', sans-serif; 
+        }
 
-        /* 1. Background System (Đã fix lỗi sao nhấp nháy) */
+        /* ================= BACKGROUND - Tối ưu hài hòa, không lấn át ================= */
         .stars-bg, .stars-layer, .moon-glow { position: fixed; inset: 0; z-index: -3; pointer-events: none; }
-        
-        .stars-bg { 
-            background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); 
-            background-size: 50px 50px; 
-        }
-        
+        .stars-bg { background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 55px 55px; }
         .stars-layer {
-            background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
-                              radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
-            background-size: 100px 100px, 250px 250px; 
-            background-position: 0 0, 40px 60px;
-            animation: starTwinkle 8s infinite alternate ease-in-out;
+            background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                              radial-gradient(rgba(255,255,255,0.025) 2px, transparent 2px);
+            background-size: 85px 85px, 170px 170px; background-position: 0 0, 35px 55px;
+            filter: blur(2px); animation: starTwinkle 25s infinite linear; opacity: 0.65;
         }
-        @keyframes starTwinkle { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
-
+        @keyframes starTwinkle { 0%,100% {opacity:0.4} 50% {opacity:0.9} }
         .moon-glow {
-            top: -40vh; left: 50%; transform: translateX(-50%);
-            width: 120vw; height: 120vw; max-width: 1500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 75%);
-            border-radius: 50%; z-index: -2; 
-            animation: moonBreath 12s infinite alternate ease-in-out;
+            top: -45vh; left: 50%; transform: translateX(-50%);
+            width: 140vw; height: 140vw; max-width: 1700px;
+            background: radial-gradient(circle, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.025) 40%, transparent 75%);
+            border-radius: 50%; z-index: -2; filter: blur(75px);
+            animation: moonBreath 18s infinite alternate ease-in-out; opacity: 0.75;
         }
-        @keyframes moonBreath { from {opacity: 0.7; transform: translateX(-50%) scale(0.95);} to {opacity: 1; transform: translateX(-50%) scale(1.05);} }
+        @keyframes moonBreath { from {opacity:0.55; transform:translateX(-50%) scale(0.88)} to {opacity:0.85; transform:translateX(-50%) scale(1.12)} }
 
-        /* 2. CRT Overlay (Tinh tế, không gây rối) */
+        /* CRT - Giữ nguyên nhưng tinh chỉnh nhẹ */
         .crt-overlay {
-            position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
-            opacity: 0.3; mix-blend-mode: overlay; display: none; /* Mặc định tắt cho clean */
+            position: fixed; inset: 0; z-index: 99999; pointer-events: none;
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(220,38,38,0.18) 3px, rgba(220,38,38,0.18) 6px),
+                        linear-gradient(rgba(255,255,255,0.035) 50%, transparent 50%);
+            background-size: 100% 6px, 100% 100%;
+            animation: crt-scan 4s linear infinite, crt-flicker 0.07s infinite alternate;
+            opacity: 0.14; mix-blend-mode: overlay;
+            box-shadow: inset 0 0 140px rgba(0,0,0,0.9), inset 0 0 45px rgba(220,38,38,0.2);
+        }
+        @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
+        @keyframes crt-flicker { 0%,100%{opacity:0.14} 50%{opacity:0.19} }
+
+        /* Glass + Nổi khối nhẹ chuyên nghiệp */
+        .glass-panel { 
+            background: rgba(10,10,12,0.72); 
+            backdrop-filter: blur(32px); 
+            border: 1px solid rgba(255,255,255,0.09); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .glass-strong { 
+            background: rgba(10,10,12,0.85); 
+            backdrop-filter: blur(40px); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.12);
         }
 
-        /* 3. Glassmorphism Panels */
-        .glass-panel { background: rgba(10, 10, 12, 0.75); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.06); }
-        .glass-nav { background: rgba(2, 2, 3, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .lux-text { 
+            font-weight: 900; 
+            letter-spacing: -0.045em; 
+            text-shadow: 0 12px 45px rgba(220,38,38,0.3); 
+        }
 
-        /* Typography Custom */
-        .lux-title { letter-spacing: -0.03em; line-height: 0.9; }
+        /* Header */
+        #main-header { box-shadow: 0 6px 25px rgba(0,0,0,0.6); }
 
-        /* 4. 3D Card System (Brutalist - Sắc lẹm) */
-        .card-scene { perspective: 1600px; }
+        /* 3D Card - Specular siêu mềm, không gắt */
+        .card-scene { perspective: 1600px; touch-action: none; }
         .card-inner {
-            position: relative; width: 100%; height: 100%; background: #050505;
-            transform-style: preserve-3d; transition: transform 0.1s linear;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505;
+            transform-style: preserve-3d; will-change: transform;
+            transition: transform 0.12s cubic-bezier(0.23,1,0.32,1);
+            border: 1px solid rgba(255,255,255,0.09); border-radius: 0 !important;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
         }
-        .glare { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: screen; }
-        
-        /* Textures */
-        .effect-holo { background: linear-gradient(115deg, transparent 10%, rgba(255,0,0,0.3) 30%, rgba(0,255,0,0.2) 50%, rgba(0,0,255,0.3) 70%, transparent 90%); background-size: 200% 200%; mix-blend-mode: color-dodge; }
-        .effect-gold { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba); mix-blend-mode: overlay; opacity: 0.8 !important; }
-        .effect-metal { background: linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 3px 100%; mix-blend-mode: overlay; opacity: 0.4; }
+        .glare {
+            position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.23,1,0.32,1);
+            background-size: 250% 250%; mix-blend-mode: color-dodge; filter: brightness(1.15);
+        }
+        .specular {
+            position: absolute; inset: 0; z-index: 6; pointer-events: none;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), 
+                        rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.05) 42%, transparent 68%);
+            mix-blend-mode: screen; opacity: 0; transition: opacity 0.45s cubic-bezier(0.23,1,0.32,1);
+            filter: blur(6px);
+        }
 
-        /* 5. Project Card Hover Line */
-        .project-card { transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); }
-        .project-card:hover { transform: translateY(-6px); }
+        /* Project Card - Hài hòa kích thước */
+        .project-card { 
+            transition: all 0.4s cubic-bezier(0.23,1,0.32,1); 
+        }
+        .project-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+        }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+        /* Modal - Chuyên nghiệp, chi tiết hơn */
+        .modal-glass {
+            background: rgba(10,10,12,0.82);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 0 90px rgba(0,0,0,0.75), inset 0 2px 0 rgba(255,255,255,0.1);
+        }
+
+        /* Responsive & Spacing hài hòa */
+        .hero-section { padding-top: 7rem; }
+        @media (min-width: 768px) { .hero-section { padding-top: 11rem; } }
+        section { scroll-margin-top: 88px; }
+
+        @media (max-width: 640px) {
+            .card-scene { width: 280px !important; height: 392px !important; }
+            h1 { font-size: 12.5vw !important; }
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #222; border-radius: 9999px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #dc2626; }
     </style>
 </head>
-<body class="antialiased">
-    
+<body>
+    <!-- Background -->
     <div class="stars-bg"></div>
     <div class="stars-layer"></div>
     <div class="moon-glow"></div>
     <div id="crt-overlay" class="crt-overlay"></div>
 
-    <header class="fixed top-0 w-full z-50 glass-nav h-20 flex items-center transition-all duration-300">
+    <!-- HEADER -->
+    <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
-            <a href="#" class="flex items-center gap-4 group">
-                <img id="site-logo" src="" alt="Logo" class="h-6 md:h-8 opacity-0 transition-opacity duration-1000 object-contain" />
-                <div class="hidden md:flex gap-[1px] p-1 bg-black border border-brand-border" id="led-matrix"></div>
-            </a>
-            
-            <nav class="hidden md:flex items-center gap-10 text-[11px] font-bold tracking-[0.25em] text-gray-400">
-                <a href="#about" class="hover:text-white transition-colors">ABOUT</a>
-                <a href="#work" class="hover:text-white transition-colors">WORK</a>
-                <a href="#collection" class="hover:text-white transition-colors">COLLECTION</a>
-                <a href="#contact" class="px-5 py-2 bg-white/5 border border-white/10 rounded-full hover:bg-brand-red hover:border-brand-red hover:text-white transition-all">CONTACT</a>
+            <div class="flex items-center gap-6">
+                <img id="site-logo" src="" alt="Rayn Scofield" class="h-9 opacity-0 transition-opacity duration-1000" />
+                <div class="pixel-board" id="led-matrix"></div>
+            </div>
+            <nav class="hidden md:flex items-center gap-10 text-sm font-bold tracking-[0.25em] uppercase">
+                <a href="#about" onclick="smoothScrollTo('about')" class="hover:text-brand-red transition-colors">ABOUT</a>
+                <a href="#work" onclick="smoothScrollTo('work')" class="hover:text-brand-red transition-colors">WORK</a>
+                <a href="#collection" onclick="smoothScrollTo('collection')" class="hover:text-brand-red transition-colors">COLLECTION</a>
+                <a href="#contact" onclick="smoothScrollTo('contact')" class="hover:text-brand-red transition-colors">CONTACT</a>
             </nav>
-
-            <button onclick="toggleMobileNav()" class="md:hidden text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <div class="hidden md:block text-[10px] tracking-[0.65em] font-bold text-gray-400 uppercase">
+                RAYN SCOFIELD <span class="text-brand-red">/</span> VISUAL ARCHITECT
+            </div>
+            <button onclick="toggleMobileNav()" class="md:hidden p-2 text-brand-red">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
 
-        <div id="mobile-nav" class="hidden absolute top-20 left-0 w-full bg-[#020203]/98 backdrop-blur-xl border-b border-white/10 py-10 flex flex-col gap-6 text-center shadow-2xl">
-            <a href="#about" onclick="toggleMobileNav()" class="text-sm font-bold tracking-widest text-gray-300 hover:text-white">ABOUT</a>
-            <a href="#work" onclick="toggleMobileNav()" class="text-sm font-bold tracking-widest text-gray-300 hover:text-white">WORK</a>
-            <a href="#collection" onclick="toggleMobileNav()" class="text-sm font-bold tracking-widest text-gray-300 hover:text-white">COLLECTION</a>
-            <a href="#contact" onclick="toggleMobileNav()" class="text-sm font-bold tracking-widest text-brand-red">CONTACT</a>
+        <!-- Mobile Nav -->
+        <div id="mobile-nav" class="hidden fixed top-20 inset-x-0 bg-[#020203]/95 backdrop-blur-3xl border-b border-white/10 py-8 px-8 md:hidden flex flex-col gap-8 text-center z-[999]">
+            <a href="#about" onclick="toggleMobileNav();smoothScrollTo('about')" class="text-xl font-bold hover:text-brand-red">ABOUT</a>
+            <a href="#work" onclick="toggleMobileNav();smoothScrollTo('work')" class="text-xl font-bold hover:text-brand-red">WORK</a>
+            <a href="#collection" onclick="toggleMobileNav();smoothScrollTo('collection')" class="text-xl font-bold hover:text-brand-red">COLLECTION</a>
+            <a href="#contact" onclick="toggleMobileNav();smoothScrollTo('contact')" class="text-xl font-bold hover:text-brand-red">CONTACT</a>
         </div>
     </header>
 
-    <section class="pt-48 pb-24 px-6 text-center relative z-10 min-h-[85vh] flex flex-col justify-center items-center">
-        
-        <div class="inline-flex items-center gap-2 px-5 py-2 glass-panel text-[9px] font-bold tracking-[0.35em] text-brand-red mb-12 uppercase rounded-full">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
-            Available For Freelance
+    <!-- HERO -->
+    <section id="hero" class="hero-section pb-24 px-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-8 py-4 glass-panel text-xs font-bold tracking-[0.5em] text-brand-red mb-12 uppercase rounded-3xl">
+            <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+            NOW OPEN FOR FREELANCE
         </div>
-
-        <h1 class="lux-title text-6xl md:text-8xl font-black text-white mb-6 uppercase flex flex-col md:flex-row gap-x-6 justify-center drop-shadow-2xl">
-            <span>Rayn</span>
-            <span class="text-brand-red">Scofield</span>
+        <h1 class="lux-text text-[13.5vw] md:text-[9.8rem] leading-[0.85] tracking-[-0.06em] flex flex-wrap justify-center gap-x-6">
+            <span class="text-white">RAYN</span>
+            <span class="text-brand-red">SCOFIELD</span>
         </h1>
-        
-        <p class="text-gray-400 text-xs md:text-sm font-medium tracking-[0.4em] uppercase mb-12 max-w-2xl mx-auto leading-relaxed">
-            Visual Architect <span class="text-brand-red mx-2">•</span> Cyberpunk Storyteller
-        </p>
-
-        <div class="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-500 text-[10px] font-bold tracking-[0.2em] uppercase">
-            <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
-                <span id="p-country-name">Vietnam</span>
+        <div class="mt-6 mb-16 mx-auto max-w-xl px-8 py-6 border border-brand-red/20 bg-black/30 backdrop-blur-3xl rounded-3xl flex items-center justify-center gap-4 text-base font-bold tracking-[0.3em] text-white/90">
+            <span class="text-brand-red">◉</span>
+            VISUAL ARCHITECT • CYBERPUNK STORYTELLER • DIGITAL IMMORTALITY
+            <span class="text-brand-red">◉</span>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-10 text-gray-400 text-sm font-bold tracking-[0.45em] uppercase">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span id="p-country-name" class="text-white">Ho Chi Minh City, Vietnam</span>
             </div>
-            <span class="hidden md:block w-1 h-1 rounded-full bg-gray-800"></span>
-            <div class="flex items-center gap-2">
-                <img id="p-school-logo" src="" class="h-4 w-auto hidden" />
-                <span id="p-school-name" class="hidden">University</span>
+            <div class="flex items-center gap-3">
+                <img id="p-school-logo" src="" alt="School" class="h-5 hidden" />
+                <span id="p-school-name" class="text-white"></span>
             </div>
         </div>
-
-        <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto mt-14"></div>
+        <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mt-14"></div>
     </section>
 
-    <section id="about" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5">
-        <div class="grid md:grid-cols-12 gap-16 md:gap-24">
-            <div class="md:col-span-6 flex flex-col justify-center">
-                <h2 class="text-xs font-bold tracking-[0.5em] text-brand-red mb-6 uppercase">Who is Rayn?</h2>
-                <h3 class="text-3xl md:text-5xl font-black lux-title mb-8 text-white">CRAFTING DIGITAL<br>IMMORTALITY.</h3>
-                <div class="text-sm md:text-base leading-loose text-gray-400 space-y-6 font-light">
-                    <p>Visual Architect & Motion Designer. Chuyên sâu về cinematic visuals, 3D motion, và nhận diện thương hiệu.</p>
-                    <p>Sự kết hợp giữa tinh thần Cyberpunk sắc lạnh và ngôn ngữ thiết kế tối giản (Minimalism) để tạo ra những trải nghiệm thị giác vượt thời gian.</p>
+    <!-- ABOUT -->
+    <section id="about" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+        <div class="grid md:grid-cols-12 gap-16">
+            <div class="md:col-span-7">
+                <h2 class="lux-text text-5xl md:text-6xl mb-10">WHO IS RAYN?</h2>
+                <div class="text-[17.5px] leading-relaxed text-gray-200 space-y-7">
+                    <p>Visual Architect &amp; Motion Designer từ TP. Hồ Chí Minh. Chuyên cinematic visuals, 3D motion, branding identity và trải nghiệm kỹ thuật số tương tác.</p>
+                    <p>Kết hợp tinh thần cyberpunk với thiết kế tối giản để tạo nên những câu chuyện thị giác bất hủ.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-3 gap-8 text-sm">
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">BASED IN</div>
+                        <div class="text-3xl font-semibold">Ho Chi Minh City</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">EXPERIENCE</div>
+                        <div class="text-3xl font-semibold">6+ years</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl text-center">
+                        <div class="text-brand-red text-xs font-bold tracking-widest mb-1">CLIENTS</div>
+                        <div class="text-3xl font-semibold">42+</div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="md:col-span-6">
-                <div class="glass-panel p-10 md:p-14 rounded-[2rem] h-full">
-                    <h4 class="text-[10px] font-bold tracking-[0.4em] text-brand-red mb-10 uppercase border-b border-white/10 pb-4">Current Focus</h4>
-                    <ul class="space-y-8">
-                        <li class="flex gap-6 items-start">
-                            <span class="text-2xl font-light text-gray-600">01</span>
-                            <div><strong class="text-white text-lg block mb-1">Cinematic Motion</strong><p class="text-gray-500 text-xs font-light">Kể chuyện bằng chuyển động mượt mà.</p></div>
-                        </li>
-                        <li class="flex gap-6 items-start">
-                            <span class="text-2xl font-light text-gray-600">02</span>
-                            <div><strong class="text-white text-lg block mb-1">Immersive 3D</strong><p class="text-gray-500 text-xs font-light">Kiến tạo không gian và vật liệu.</p></div>
-                        </li>
-                    </ul>
+            <div class="md:col-span-5">
+                <div class="glass-strong p-10 rounded-3xl h-full flex flex-col justify-between">
+                    <div>
+                        <h3 class="uppercase text-brand-red text-xs font-bold mb-8 tracking-[1.5px]">CURRENT FOCUS</h3>
+                        <ul class="space-y-8">
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">01</span><div class="flex-1"><strong>Cinematic Motion Design</strong><p class="text-gray-400 text-sm mt-1">Kể chuyện bằng chuyển động</p></div></li>
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">02</span><div class="flex-1"><strong>Immersive 3D Branding</strong><p class="text-gray-400 text-sm mt-1">Thương hiệu sống động</p></div></li>
+                            <li class="flex gap-5"><span class="text-4xl text-brand-red font-light">03</span><div class="flex-1"><strong>Interactive Digital Experiences</strong><p class="text-gray-400 text-sm mt-1">Website &amp; installation tương tác</p></div></li>
+                        </ul>
+                    </div>
+                    <blockquote class="text-xs font-light italic border-t border-white/10 pt-8 text-gray-400">"Mỗi pixel đều mang một câu chuyện. Tôi chỉ là người kể nó."</blockquote>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="work" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
-            <div>
-                <h2 class="text-xs font-bold tracking-[0.5em] text-brand-red mb-4 uppercase">Portfolio</h2>
-                <h3 class="text-4xl md:text-5xl font-black lux-title text-white">SELECTED WORK</h3>
-            </div>
-            <div id="loading" class="flex items-center gap-3 text-[10px] font-bold text-gray-500 tracking-[0.2em]"><div class="animate-spin h-4 w-4 border-t-2 border-brand-red rounded-full"></div>LOADING...</div>
+    <!-- WORK -->
+    <section id="work" class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex justify-between items-end mb-12">
+            <h2 class="lux-text text-5xl">SELECTED WORK</h2>
+            <div id="loading" class="flex items-center gap-3 text-xs font-bold text-gray-400"><div class="animate-spin h-5 w-5 border-t-2 border-brand-red rounded-full"></div>LOADING PROJECTS...</div>
         </div>
-        
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 hidden opacity-0 transition-opacity duration-1000"></div>
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </section>
 
-    <section id="collection" class="py-32 border-t border-white/5 bg-[#030303] relative">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-xs font-bold tracking-[0.5em] text-brand-red mb-6 uppercase">Vault</h2>
-            <h3 class="text-4xl md:text-5xl font-black lux-title text-white mb-24">EXCLUSIVE COLLECTION</h3>
-            <div id="cards-container" class="flex flex-wrap justify-center gap-16 md:gap-24"></div>
+    <!-- COLLECTION -->
+    <section id="collection" class="py-32 border-t border-white/10 bg-[#030303]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="lux-text text-5xl text-center mb-20">EXCLUSIVE COLLECTION</h2>
+            <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-20"></div>
         </div>
     </section>
 
-    <section id="contact" class="py-32 border-t border-white/5 relative bg-black">
-        <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-5xl font-black lux-title text-white mb-6">INITIATE SEQUENCE.</h2>
-            <p class="text-gray-500 text-sm mb-16 font-light">Sẵn sàng cho dự án tiếp theo? Dữ liệu của bạn sẽ được mã hóa và gửi trực tiếp đến hệ thống của tôi.</p>
-            
-            <form id="contact-form" class="space-y-6 text-left">
-                <input type="text" id="name" placeholder="Name" required class="w-full glass-panel px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red/50 transition-colors text-sm">
-                <input type="email" id="email" placeholder="Email" required class="w-full glass-panel px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red/50 transition-colors text-sm">
-                <textarea id="message" rows="5" placeholder="Project Details..." required class="w-full glass-panel px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red/50 transition-colors text-sm resize-none"></textarea>
-                <button type="submit" id="submit-btn" class="w-full py-5 bg-white text-black hover:bg-brand-red hover:text-white transition-colors font-bold text-[10px] tracking-[0.4em] uppercase rounded-2xl">
-                    Transmit Data
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="lux-text text-5xl mb-6">LET'S CREATE SOMETHING ELITE</h2>
+            <p class="text-gray-400 mb-14">Điền thông tin bên dưới. Dữ liệu sẽ được ghi trực tiếp vào Google Sheet của tôi.</p>
+            <form id="contact-form" class="space-y-8">
+                <input type="text" id="name" placeholder="HỌ VÀ TÊN" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <input type="email" id="email" placeholder="EMAIL" required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base">
+                <textarea id="message" rows="6" placeholder="NỘI DUNG TIN NHẮN / DỰ ÁN BẠN MUỐN THẢO LUẬN..." required class="w-full glass-panel px-8 py-7 rounded-3xl text-white placeholder:text-gray-400 focus:outline-none text-base resize-none"></textarea>
+                <button type="submit" id="submit-btn" class="w-full py-8 bg-brand-red hover:brightness-110 transition-all font-bold text-sm tracking-[0.6em] uppercase rounded-3xl glass-panel">
+                    GỬI THÔNG TIN →
                 </button>
             </form>
-            <div id="form-success" class="hidden mt-6 text-brand-red font-bold text-xs tracking-widest uppercase">✅ Transmission Successful.</div>
-        </div>
-
-        <div class="mt-32 pt-16 border-t border-white/5 flex flex-col items-center">
-            <img id="footer-signature" src="" alt="Signature" class="h-20 invert opacity-30 mb-8" />
-            <p class="text-[9px] tracking-[0.5em] text-gray-600 font-bold uppercase">&copy; <span id="current-year"></span> RAYN SCOFIELD // VISUAL ELITE</p>
-            
-            <button onclick="toggleCRT()" id="crt-toggle-btn" class="mt-10 flex items-center gap-3 px-6 py-2 border border-white/10 rounded-full text-[9px] font-bold tracking-widest text-gray-500 hover:text-white transition-colors">
-                <span id="crt-status">CRT EFFECT</span>
-                <div id="crt-dot" class="w-2 h-2 bg-gray-600 rounded-full"></div>
-            </button>
+            <div id="form-success" class="hidden mt-8 text-green-400 font-bold">✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.</div>
         </div>
     </section>
 
-    <div id="project-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-all duration-400">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl cursor-pointer" onclick="closeModal()"></div>
-        <div id="modal-content-box" class="relative glass-panel w-full max-w-[95vw] md:max-w-7xl h-[90vh] md:h-[85vh] flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-400 rounded-3xl">
-            
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/50 hover:bg-brand-red text-white p-3 rounded-full border border-white/10 backdrop-blur-md transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <!-- FOOTER -->
+    <footer class="py-24 bg-black border-t border-white/10 text-center">
+        <img id="footer-signature" src="" alt="Signature" class="h-24 mx-auto mb-10 invert opacity-40 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+        <p class="text-[10px] tracking-[0.6em] text-gray-500 font-bold">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED</p>
+        <div class="mt-14 flex justify-center items-center gap-4">
+            <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-3 px-8 py-4 glass-panel rounded-3xl text-xs font-bold tracking-widest hover:bg-brand-red/10">
+                <span id="crt-status">CRT MOTION</span>
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-brand-red">ON</span>
             </button>
-            
-            <div class="w-full md:w-[65%] h-[40vh] md:h-full bg-black flex items-center justify-center p-8 border-r border-white/5 relative group">
-                <img id="modal-img" src="" class="max-w-full max-h-full object-contain" />
+        </div>
+    </footer>
+
+    <!-- PROJECT MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center">
+        <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/80 backdrop-blur-3xl"></div>
+        <div id="modal-content-box" class="modal-glass max-w-[95vw] md:max-w-7xl w-full h-[90vh] md:h-[88vh] flex flex-col md:flex-row rounded-3xl overflow-hidden relative scale-95 transition-transform">
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red p-4 rounded-3xl text-white">✕</button>
+            <div class="flex-1 md:w-3/5 bg-black flex items-center justify-center p-8 relative">
+                <img id="modal-img" src="" class="max-h-full max-w-full object-contain" />
             </div>
-            
-            <div class="w-full md:w-[35%] p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-transparent">
-                <span id="modal-category" class="text-brand-red text-[9px] font-bold tracking-[0.4em] mb-6 uppercase glass-panel px-4 py-1.5 rounded-full self-start"></span>
-                <h2 id="modal-title" class="text-3xl md:text-4xl font-black text-white mb-8 tracking-tight lux-title"></h2>
-                <div class="w-10 h-0.5 bg-brand-red mb-8"></div>
-                <p id="modal-desc" class="text-gray-400 text-sm leading-relaxed mb-12 font-light whitespace-pre-line"></p>
-                <div class="mt-auto border-t border-white/5 pt-8">
-                    <a id="modal-link" href="#" target="_blank" class="block py-4 glass-panel text-center text-[10px] font-bold text-white hover:bg-white hover:text-black transition-colors tracking-[0.3em] uppercase hidden rounded-xl">
-                        Launch Project
-                    </a>
-                </div>
+            <div class="flex-1 md:w-2/5 p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto">
+                <span id="modal-category" class="text-brand-red uppercase text-xs font-bold tracking-widest mb-4 px-5 py-2 rounded-3xl border border-brand-red/30 self-start"></span>
+                <h2 id="modal-title" class="lux-text text-4xl md:text-5xl leading-tight mb-6"></h2>
+                <p id="modal-desc" class="text-gray-300 leading-relaxed flex-1"></p>
+                <a id="modal-link" href="#" target="_blank" class="mt-auto flex items-center justify-center gap-3 py-6 glass-panel rounded-3xl text-xs font-bold tracking-widest mt-10">LAUNCH PROJECT →</a>
             </div>
         </div>
     </div>
 
     <script>
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
+        const GOOGLE_APPS_SCRIPT_URL = ''; 
         let globalProjects = [];
+        let crtEnabled = true;
+
+        function parseCSVRow(str) {
+            const result = [];
+            let current = '', inQuotes = false;
+            for (let i = 0; i < str.length; i++) {
+                const char = str[i];
+                if (char === '"') {
+                    if (inQuotes && str[i+1] === '"') { current += '"'; i++; }
+                    else inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else current += char;
+            }
+            result.push(current.trim());
+            return result.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
+        }
+
+        function showPortfolioSkeleton() {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = Array(6).fill(0).map(() => `
+                <div class="glass-panel rounded-3xl overflow-hidden animate-pulse">
+                    <div class="h-80 bg-gray-800"></div>
+                    <div class="p-8"><div class="h-6 bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-4 bg-gray-700 rounded w-1/2"></div></div>
+                </div>
+            `).join('');
+        }
+
+        async function initPortfolio() {
+            const loadingEl = document.getElementById('loading');
+            showPortfolioSkeleton();
+            try {
+                const res = await fetch(SHEET_CSV_URL);
+                const csv = await res.text();
+                const rows = csv.split('\n').filter(r => r.trim());
+                const headers = parseCSVRow(rows[0]);
+                const findCol = name => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name.toLowerCase()));
+                const idxKey = findCol('configkey'), idxVal = findCol('configvalue'), idxEff = findCol('effect');
+                const idxTitle = findCol('title'), idxCategory = findCol('category');
+                const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
+
+                const config = {}, cards = [], projects = [];
+                rows.slice(1).forEach(row => {
+                    const vals = parseCSVRow(row);
+                    const k = vals[idxKey] || '', v = vals[idxVal] || '';
+                    const eff = vals[idxEff] ? vals[idxEff].toLowerCase().trim() : 'metal';
+                    if (k) config[k] = v;
+                    if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) cards.push({img: v, eff});
+                    if (vals[idxTitle]) {
+                        projects.push({
+                            Title: vals[idxTitle], Category: vals[idxCategory] || '',
+                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
+                            Link: vals[idxLink] || ''
+                        });
+                    }
+                });
+
+                // Profile
+                if (config.siteLogo) { 
+                    document.getElementById('site-logo').src = config.siteLogo; 
+                    document.getElementById('site-logo').classList.remove('opacity-0'); 
+                }
+                if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
+                document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, Vietnam';
+                if (config.schoolName) {
+                    document.getElementById('p-school-name').textContent = config.schoolName;
+                    const sl = document.getElementById('p-school-logo');
+                    if (config.schoolLogo) { sl.src = config.schoolLogo; sl.classList.remove('hidden'); }
+                }
+                if (config.skills) {
+                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag =>
+                        `<span class="glass-panel px-7 py-3 text-xs font-bold uppercase tracking-widest rounded-3xl">${tag.trim()}</span>`
+                    ).join('');
+                }
+
+                // Trading Cards (3D + specular mềm)
+                const cardsContainer = document.getElementById('cards-container');
+                cardsContainer.innerHTML = cards.map(c => `
+                    <div class="card-scene w-[300px] h-[420px] cursor-crosshair">
+                        <div class="card-inner w-full h-full relative overflow-hidden rounded-3xl">
+                            <div class="glare effect-${c.eff || 'holo'}"></div>
+                            <div class="specular"></div>
+                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                `).join('');
+
+                // Portfolio Grid
+                const grid = document.getElementById('portfolio-grid');
+                grid.innerHTML = projects.map((p, i) => `
+                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-3xl group">
+                        <div class="h-80 relative">
+                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="font-black text-2xl group-hover:text-brand-red transition-colors">${p.Title}</h3>
+                            <p class="text-brand-red text-xs tracking-widest mt-2">${p.Category}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                globalProjects = projects;
+                loadingEl.classList.add('hidden');
+                attachCardListeners();
+            } catch (e) {
+                console.error(e);
+                loadingEl.innerHTML = `<span class="text-red-500">Lỗi tải dữ liệu</span>`;
+            }
+        }
+
+        function openModal(i) {
+            const p = globalProjects[i];
+            if (!p) return;
+            document.getElementById('modal-img').src = p.ImageUrl;
+            document.getElementById('modal-category').textContent = p.Category;
+            document.getElementById('modal-title').textContent = p.Title;
+            document.getElementById('modal-desc').textContent = p.Description;
+            const linkEl = document.getElementById('modal-link');
+            if (p.Link) { 
+                linkEl.href = p.Link; 
+                linkEl.style.display = 'flex'; 
+            } else linkEl.style.display = 'none';
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden'); 
+            modal.classList.add('flex');
+            setTimeout(() => document.getElementById('modal-content-box').classList.add('scale-100'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('flex'); 
+            modal.classList.add('hidden');
+            document.getElementById('modal-content-box').classList.remove('scale-100');
+        }
 
         function initLED() {
             const matrix = document.getElementById('led-matrix');
-            const p = [0,1,2, 14,28,42, 56,57,58]; // Minimal Pattern
-            for(let i=0; i<60; i++) {
-                const px = document.createElement('div'); px.className = `w-1 h-1 bg-white/20`;
-                if(i===0||i===59) px.classList.add('bg-brand-red', 'animate-pulse');
+            matrix.innerHTML = '';
+            const pattern = [0,13,42,55,16,17,20,21,30,31,34,35];
+            for (let i = 0; i < 56; i++) {
+                const px = document.createElement('div');
+                const isRed = [0,13,42,55].includes(i);
+                px.className = `inline-block w-1.5 h-1.5 mx-px my-px transition-colors ${isRed ? 'bg-red-500 animate-pulse' : pattern.includes(i) ? 'bg-white' : 'bg-transparent'}`;
                 matrix.appendChild(px);
             }
         }
 
-        function parseCSVRow(str) {
-            const result = []; let cur = '', inQuote = false;
-            for (let i = 0; i < str.length; i++) {
-                if (str[i] === '"') inQuote = !inQuote;
-                else if (str[i] === ',' && !inQuote) { result.push(cur); cur = ''; }
-                else cur += str[i];
-            }
-            result.push(cur); return result.map(v => v.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
-        }
-
-        async function initPortfolio() {
-            const yt = document.getElementById('yt-loader'); yt.style.width = '30%';
-            try {
-                const res = await fetch(SHEET_CSV_URL); const csv = await res.text(); yt.style.width = '80%';
-                const rows = csv.split('\n').filter(r => r.trim()); const headers = parseCSVRow(rows[0]);
-                const findCol = n => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(n.toLowerCase()));
-                
-                const idxKey = findCol('configkey'), idxVal = findCol('configvalue'), idxEff = findCol('effect');
-                const config = {}, cards = [], projects = [];
-                
-                rows.slice(1).forEach(row => {
-                    const vals = parseCSVRow(row); const k = vals[idxKey] || '', v = vals[idxVal] || '';
-                    if(k) config[k] = v;
-                    if(k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) cards.push({img: v, eff: vals[idxEff] ? vals[idxEff].toLowerCase().trim() : 'metal'});
-                    const tIdx = findCol('title');
-                    if(tIdx !== -1 && vals[tIdx]) projects.push({Title: vals[tIdx], Category: vals[findCol('category')]||'', ImageUrl: vals[findCol('imageurl')]||'', Description: vals[findCol('description')]||'', Link: vals[findCol('link')]||''});
-                });
-
-                // Populate Info
-                if(config.siteLogo) { document.getElementById('site-logo').src = config.siteLogo; document.getElementById('site-logo').classList.remove('opacity-0'); }
-                if(config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
-                document.getElementById('p-country-name').textContent = config.country || 'Vietnam';
-                if(config.schoolName) { document.getElementById('p-school-name').textContent = config.schoolName; document.getElementById('p-school-name').classList.remove('hidden'); }
-                if(config.schoolLogo) { document.getElementById('p-school-logo').src = config.schoolLogo; document.getElementById('p-school-logo').classList.remove('hidden'); }
-
-                if(config.skills) {
-                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(s => `<span class="px-5 py-2 glass-panel text-[10px] font-bold text-gray-400 uppercase tracking-widest rounded-full">${s.trim()}</span>`).join('');
-                }
-
-                // Render Cards (Vuông góc)
-                document.getElementById('cards-container').innerHTML = cards.map(c => `<div class="card-scene w-[300px] h-[420px] md:w-[320px] md:h-[448px] cursor-crosshair" onmousemove="mv(event, this)" onmouseleave="ml(this)"><div class="card-inner"><div class="glare effect-${c.eff}"></div><img src="${c.img}" class="w-full h-full object-cover" /></div></div>`).join('');
-
-                // Render Projects (Bo góc, Có Màu, Hover Line)
-                const grid = document.getElementById('portfolio-grid');
-                grid.innerHTML = projects.map((p, i) => `
-                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-[2rem] group relative">
-                        <div class="h-64 relative bg-black">
-                            <img src="${p.ImageUrl}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" loading="lazy" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 p-8 w-full">
-                            <p class="text-brand-red text-[9px] font-bold tracking-widest mb-2 uppercase">${p.Category}</p>
-                            <h3 class="font-black text-xl text-white truncate">${p.Title}</h3>
-                        </div>
-                        <div class="absolute bottom-0 left-0 h-1 w-0 bg-brand-red group-hover:w-full transition-all duration-500"></div>
-                    </div>`).join('');
-
-                globalProjects = projects;
-                document.getElementById('loading').classList.add('hidden'); grid.classList.remove('hidden');
-                setTimeout(() => grid.classList.remove('opacity-0'), 50); yt.style.width = '100%'; setTimeout(() => yt.style.opacity = '0', 500);
-
-            } catch(e) { document.getElementById('loading').innerHTML = "<span class='text-brand-red'>Lỗi dữ liệu</span>"; }
-        }
-
-        // RAF 3D
         let ticking = false;
         function mv(e, el) {
-            if(!ticking) {
+            if (!ticking) {
                 requestAnimationFrame(() => {
-                    const inner = el.querySelector('.card-inner'), glare = el.querySelector('.glare'), r = el.getBoundingClientRect();
-                    const x = (e.clientX - r.left)/r.width - 0.5, y = (e.clientY - r.top)/r.height - 0.5;
-                    inner.style.transform = `rotateX(${y * -20}deg) rotateY(${x * 20}deg)`;
-                    glare.style.opacity = '1'; glare.style.backgroundPosition = `${(x+0.5)*100}% ${(y+0.5)*100}%`;
+                    const inner = el.querySelector('.card-inner');
+                    const glare = el.querySelector('.glare');
+                    const specular = el.querySelector('.specular');
+                    const r = el.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+
+                    inner.style.transform = `rotateX(${y * -30}deg) rotateY(${x * 30}deg)`;
+                    glare.style.opacity = '1';
+                    glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
+
+                    if (specular) {
+                        specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`);
+                        specular.style.setProperty('--my', `${(y + 0.5) * 100}%`);
+                        specular.style.opacity = '0.55';
+                    }
                     ticking = false;
-                }); ticking = true;
+                });
+                ticking = true;
             }
         }
-        function ml(el) { el.querySelector('.card-inner').style.transform = 'rotateX(0) rotateY(0)'; el.querySelector('.glare').style.opacity = '0'; }
+        function ml(el) {
+            const inner = el.querySelector('.card-inner');
+            const glare = el.querySelector('.glare');
+            const specular = el.querySelector('.specular');
+            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+            if (specular) specular.style.opacity = '0';
+        }
 
-        // Modal
-        function openModal(i) {
-            const p = globalProjects[i]; if(!p) return;
-            document.getElementById('modal-img').src = p.ImageUrl; document.getElementById('modal-category').textContent = p.Category;
-            document.getElementById('modal-title').textContent = p.Title; document.getElementById('modal-desc').textContent = p.Description;
-            const l = document.getElementById('modal-link'); if(p.Link) { l.href = p.Link; l.classList.remove('hidden'); } else l.classList.add('hidden');
-            const m = document.getElementById('project-modal'), c = document.getElementById('modal-content-box');
-            m.classList.remove('hidden'); document.body.style.overflow = 'hidden';
-            setTimeout(() => { m.classList.remove('opacity-0'); c.classList.remove('scale-95'); c.classList.add('scale-100'); }, 10);
+        function attachCardListeners() {
+            document.querySelectorAll('.card-scene').forEach(el => {
+                el.addEventListener('mousemove', e => mv(e, el));
+                el.addEventListener('mouseleave', () => ml(el));
+
+                let touching = false;
+                el.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+                el.addEventListener('touchmove', e => {
+                    if (!touching || e.touches.length !== 1) return;
+                    const touch = e.touches[0];
+                    const fakeEvent = { clientX: touch.clientX, clientY: touch.clientY };
+                    mv(fakeEvent, el);
+                }, { passive: true });
+                el.addEventListener('touchend', () => { touching = false; ml(el); });
+            });
         }
-        function closeModal() {
-            const m = document.getElementById('project-modal'), c = document.getElementById('modal-content-box');
-            m.classList.add('opacity-0'); c.classList.remove('scale-100'); c.classList.add('scale-95');
-            setTimeout(() => { m.classList.add('hidden'); document.body.style.overflow = ''; }, 400);
+
+        function smoothScrollTo(id) { 
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); 
         }
-        function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
-        
-        // CRT Toggle
-        let crtOn = false;
+        function toggleMobileNav() { 
+            document.getElementById('mobile-nav').classList.toggle('hidden'); 
+        }
         function toggleCRT() {
-            crtOn = !crtOn;
-            document.getElementById('crt-overlay').style.display = crtOn ? 'block' : 'none';
-            const dot = document.getElementById('crt-dot');
-            if(crtOn) { dot.classList.replace('bg-gray-600', 'bg-green-500'); dot.classList.add('animate-pulse'); }
-            else { dot.classList.replace('bg-green-500', 'bg-gray-600'); dot.classList.remove('animate-pulse'); }
+            crtEnabled = !crtEnabled;
+            const overlay = document.getElementById('crt-overlay');
+            const btn = document.getElementById('crt-toggle-btn');
+            if (crtEnabled) {
+                overlay.style.display = 'block';
+                overlay.style.opacity = '0.14';
+                btn.innerHTML = `<span>CRT MOTION</span><div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div><span class="text-brand-red">ON</span>`;
+            } else {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 400);
+                btn.innerHTML = `<span>CRT MOTION</span><div class="w-3 h-3 bg-gray-400 rounded-full"></div><span class="text-gray-400">OFF</span>`;
+            }
         }
 
-        // Form Submit
-        document.getElementById('contact-form').addEventListener('submit', (e) => {
+        async function submitContactForm(e) {
             e.preventDefault();
-            document.getElementById('submit-btn').textContent = "TRANSMITTING...";
-            setTimeout(() => {
-                document.getElementById('form-success').classList.remove('hidden');
-                document.getElementById('submit-btn').textContent = "TRANSMIT DATA";
-                e.target.reset();
-            }, 1000);
-        });
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            if (!name || !email || !message) return;
 
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        initLED(); if(SHEET_CSV_URL.includes("http")) initPortfolio();
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.textContent;
+            btn.disabled = true; 
+            btn.textContent = 'ĐANG GỬI...';
+
+            const successBox = document.getElementById('form-success');
+            if (!GOOGLE_APPS_SCRIPT_URL) {
+                console.log('%c✅ [DEMO] Dữ liệu:', 'color:#dc2626', {name, email, message});
+                successBox.textContent = '✅ Đã gửi (demo mode)';
+                successBox.classList.remove('hidden');
+                e.target.reset();
+                setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.textContent = originalText; }, 4500);
+                return;
+            }
+
+            try {
+                const res = await fetch(GOOGLE_APPS_SCRIPT_URL, { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify({name, email, message, timestamp: new Date().toISOString()}) 
+                });
+                if (res.ok) {
+                    successBox.textContent = '✅ Đã gửi thành công! Dữ liệu đã được ghi vào Google Sheet.';
+                    successBox.classList.remove('hidden');
+                    e.target.reset();
+                    setTimeout(() => successBox.classList.add('hidden'), 4500);
+                }
+            } catch (err) { 
+                alert('Có lỗi khi gửi. Vui lòng thử lại sau.'); 
+            }
+            btn.disabled = false; 
+            btn.textContent = originalText;
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            initLED();
+            if (SHEET_CSV_URL.includes('http')) initPortfolio();
+            document.getElementById('contact-form').addEventListener('submit', submitContactForm);
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('project-modal');
+                    if (modal.classList.contains('flex')) closeModal();
+                }
+            });
+
+            console.log('%c🚀 Rayn Scofield Portfolio — ĐÃ HOÀN THIỆN & TỐI ƯU!', 'color:#dc2626; font-size:14px; font-weight:bold');
+        });
     </script>
 </body>
 </html>
