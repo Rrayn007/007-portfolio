@@ -6,16 +6,16 @@
     <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
     <title>Rayn Scofield // Space CRT</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Courier+New&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { brand: { red: '#dc2626', dark: '#020203', surface: '#0a0a0c', border: '#1f1f2e', crt: '#33ff00' } },
+                    colors: { brand: { red: '#dc2626', dark: '#030305', surface: '#0c0c12', border: '#1f1f2e', crt: '#33ff00' } },
                     fontFamily: { 
                         sans: ['Inter', 'sans-serif'],
-                        mono: ['"Courier New"', 'Courier', 'monospace']
+                        mono: ['"JetBrains Mono"', 'monospace']
                     }
                 }
             }
@@ -25,81 +25,103 @@
     <style>
         /* CSS Reset & Cơ bản */
         ::selection { background-color: #dc2626; color: white; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #020203; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-        .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 9999px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #dc2626; }
-        body::-webkit-scrollbar { width: 8px; }
-        body::-webkit-scrollbar-thumb { background: #1f1f2e; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030305; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* Scrollbar hiện đại */
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-track { background: #030305; }
+        body::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 10px; }
         body::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
         /* THEME: Background Sao Bay (Canvas) */
-        /* Đã fix z-index lên 0 để không bị nền của body che khuất */
-        #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.7; }
         
         .moon-glow {
-            position: fixed; top: -45vh; left: 50%; transform: translateX(-50%); width: 140vw; height: 140vw; max-width: 1700px;
-            background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 75%);
-            border-radius: 50%; z-index: 1; filter: blur(75px); animation: moonBreath 18s infinite alternate ease-in-out; opacity: 0.8; pointer-events: none;
+            position: fixed; top: -50vh; left: 50%; transform: translateX(-50%); width: 150vw; height: 150vw; max-width: 1800px;
+            background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, rgba(255,255,255,0.01) 35%, transparent 70%);
+            border-radius: 50%; z-index: 1; filter: blur(90px); animation: moonBreath 12s infinite alternate ease-in-out; pointer-events: none;
         }
-        @keyframes moonBreath { from {opacity:0.5; transform:translateX(-50%) scale(0.95)} to {opacity:0.8; transform:translateX(-50%) scale(1.05)} }
+        @keyframes moonBreath { from {opacity:0.6; transform:translateX(-50%) scale(0.98)} to {opacity:0.9; transform:translateX(-50%) scale(1.02)} }
 
-        /* THEME: Các thực thể trôi nổi */
-        .floating-element { position: fixed; z-index: 2; font-size: 4rem; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)) saturate(0.8); user-select: none; opacity: 0.6; pointer-events: none; }
-        .astronaut { top: 15%; left: 10%; animation: float-astro 15s ease-in-out infinite, spin-slow 40s linear infinite; }
-        .sunflower { bottom: 15%; right: 10%; font-size: 5rem; animation: float-flower 12s ease-in-out infinite alternate, glow-flower 4s ease-in-out infinite alternate; }
-        @keyframes float-astro { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-50px) translateX(30px); } }
+        /* THEME: Abstract Floating Elements thay cho Emoji */
+        .floating-element { position: fixed; z-index: 2; pointer-events: none; user-select: none; }
+        .abstract-ring { 
+            top: 20%; left: 8%; width: 120px; height: 120px; 
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 50%;
+            animation: float-slow 15s ease-in-out infinite, spin-slow 20s linear infinite;
+        }
+        .abstract-ring::before {
+            content: ''; position: absolute; top: -2px; left: 50%; width: 4px; height: 4px; background: #dc2626; border-radius: 50%; box-shadow: 0 0 15px #dc2626;
+        }
+        .abstract-grid {
+            bottom: 15%; right: 10%; width: 100px; height: 100px;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 20px 20px; opacity: 0.3;
+            animation: float-flower 12s ease-in-out infinite alternate;
+        }
+        
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-40px) rotate(180deg); } }
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes float-flower { 0% { transform: translateY(0px) rotate(-15deg); } 100% { transform: translateY(-30px) rotate(15deg); } }
-        @keyframes glow-flower { from { filter: drop-shadow(0 0 10px rgba(255, 200, 0, 0.2)); } to { filter: drop-shadow(0 0 30px rgba(255, 200, 0, 0.5)); } }
+        @keyframes float-flower { 0% { transform: translateY(0px) skewX(0deg); } 100% { transform: translateY(-30px) skewX(5deg); } }
 
-        /* THEME: Hiệu ứng CRT Overlay */
+        /* THEME: Hiệu ứng CRT Overlay Tinh tế hơn */
         .crt-overlay {
             position: fixed; inset: 0; z-index: 99999; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px),
-                        linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03));
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
+                        linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,0,0.01), rgba(0,0,255,0.02));
             background-size: 100% 4px, 100% 100%;
-            animation: crt-scan 8s linear infinite, crt-flicker 0.1s infinite alternate;
-            opacity: 1; mix-blend-mode: overlay;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.8); transition: opacity 0.4s ease;
+            animation: crt-scan 10s linear infinite; opacity: 1; mix-blend-mode: overlay;
+            box-shadow: inset 0 0 120px rgba(0,0,0,0.9); transition: opacity 0.5s ease;
         }
         @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
-        @keyframes crt-flicker { 0%,100%{opacity:0.85} 50%{opacity:0.95} }
 
         /* GIAO DIỆN CHÍNH */
         #main-interface { position: relative; z-index: 10; }
 
-        /* Thành phần giao diện (Glass, Card, v.v) */
-        .glass-panel { background: rgba(10,10,12,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; }
-        .glass-strong { background: rgba(5,5,7,0.85); backdrop-filter: blur(30px); border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .lux-text { font-weight: 900; letter-spacing: -0.04em; text-shadow: 0 10px 30px rgba(220,38,38,0.4); }
+        /* Scroll Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Glassmorphism Panels */
+        .glass-panel { 
+            background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); 
+            transition: all 0.4s ease; 
+        }
+        .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .lux-text { font-weight: 900; letter-spacing: -0.03em; text-shadow: 0 10px 30px rgba(220,38,38,0.3); }
         
         /* Hover Nav */
-        .nav-link { position: relative; transition: color 0.3s, text-shadow 0.3s; }
-        .nav-link:hover { color: #dc2626; text-shadow: 0 0 15px rgba(220, 38, 38, 0.6); }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #dc2626; transition: width 0.3s ease; box-shadow: 0 0 8px #dc2626;}
+        .nav-link { position: relative; transition: color 0.3s; padding-bottom: 4px; }
+        .nav-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #dc2626; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 10px #dc2626;}
         .nav-link:hover::after { width: 100%; }
 
-        /* Project Card */
-        .project-card { transition: all 0.4s cubic-bezier(0.23,1,0.32,1); border: 1px solid transparent; }
-        .project-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 20px rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3); }
+        /* Project Card Focus */
+        .project-card { transition: all 0.5s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.02); }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
         /* PIXEL LED MATRIX */
-        .pixel-board { display: grid; grid-template-columns: repeat(14, 1fr); gap: 1px; padding: 3px; background: #000; border: 2px solid #1f1f2e; width: 72px; height: 26px; border-radius: 2px; }
-        .pxl { background: #0a0a0c; border-radius: 1px; }
-        .pxl.r { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation: ledPulse 1.6s infinite; }
-        .pxl.w { background: #fff; opacity: 0.85; }
-        @keyframes ledPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .pixel-board { display: grid; grid-template-columns: repeat(14, 1fr); gap: 1px; padding: 4px; background: #000; border: 1px solid #1f1f2e; width: 76px; height: 28px; border-radius: 4px; }
+        .pxl { background: #0c0c12; border-radius: 1px; }
+        .pxl.r { background: #dc2626; box-shadow: 0 0 6px #dc2626; animation: ledPulse 2s infinite; }
+        .pxl.w { background: #fff; opacity: 0.9; }
+        @keyframes ledPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* 3D Card */
-        .card-scene { perspective: 1600px; touch-action: none; }
-        .card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; transform-style: preserve-3d; will-change: transform; transition: transform 0.12s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.09); box-shadow: 0 30px 70px rgba(0,0,0,0.95); }
-        .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: color-dodge; filter: brightness(1.15); }
-        .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.2) 18%, transparent 68%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.45s; filter: blur(6px); }
+        /* 3D Card Premium */
+        .card-scene { perspective: 2000px; touch-action: none; }
+        .card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; transform-style: preserve-3d; will-change: transform; transition: transform 0.15s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%); }
+        .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 10%, transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.4s; }
 
-        .hero-section { padding-top: 10rem; }
-        section { scroll-margin-top: 88px; }
-        @media (max-width: 640px) { .card-scene { width: 280px !important; height: 392px !important; } }
+        .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        section { scroll-margin-top: 100px; }
+        @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
     </style>
 </head>
 <body>
@@ -107,181 +129,234 @@
 
     <canvas id="space-canvas"></canvas>
     <div class="moon-glow"></div>
-    <div class="floating-element astronaut">👨‍🚀</div>
-    <div class="floating-element sunflower">🌻</div>
+    <div class="floating-element abstract-ring"></div>
+    <div class="floating-element abstract-grid"></div>
 
     <div id="main-interface">
         
-        <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center">
+        <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center transition-transform duration-300">
             <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
-                <div class="flex items-center gap-6">
-                    <img id="site-logo" src="" alt="Rayn Scofield" class="h-9 opacity-0 transition-opacity duration-1000" />
-                    <div class="pixel-board" id="led-matrix"></div>
+                <div class="flex items-center gap-5">
+                    <img id="site-logo" src="" alt="Rayn Scofield" class="h-8 opacity-0 transition-opacity duration-1000" />
+                    <div class="pixel-board" id="led-matrix" title="Core System Online"></div>
                 </div>
-                <nav class="hidden md:flex items-center gap-10 text-sm font-bold tracking-[0.25em] uppercase">
+                <nav class="hidden md:flex items-center gap-10 text-[13px] font-bold tracking-[0.2em] text-gray-400">
                     <a href="#about" onclick="smoothScrollTo('about')" class="nav-link">ABOUT</a>
                     <a href="#work" onclick="smoothScrollTo('work')" class="nav-link">WORK</a>
                     <a href="#collection" onclick="smoothScrollTo('collection')" class="nav-link">COLLECTION</a>
                     <a href="#contact" onclick="smoothScrollTo('contact')" class="nav-link">CONTACT</a>
                 </nav>
-                <div class="hidden md:block text-[10px] tracking-[0.65em] font-bold text-gray-400 uppercase">
-                    RAYN SCOFIELD <span class="text-brand-red">/</span> VISUAL ARCHITECT
+                <div class="hidden md:block text-[10px] tracking-[0.5em] font-mono text-gray-500">
+                    STATUS: <span class="text-brand-crt animate-pulse">ONLINE</span>
                 </div>
                 <button onclick="toggleMobileNav()" class="md:hidden p-2 text-brand-red hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
 
-            <div id="mobile-nav" class="hidden fixed top-20 inset-x-0 bg-[#020203]/95 backdrop-blur-3xl border-b border-white/10 py-8 px-8 md:hidden flex flex-col gap-8 text-center z-[999]">
-                <a href="#about" onclick="toggleMobileNav();smoothScrollTo('about')" class="text-xl font-bold hover:text-brand-red">ABOUT</a>
-                <a href="#work" onclick="toggleMobileNav();smoothScrollTo('work')" class="text-xl font-bold hover:text-brand-red">WORK</a>
-                <a href="#collection" onclick="toggleMobileNav();smoothScrollTo('collection')" class="text-xl font-bold hover:text-brand-red">COLLECTION</a>
-                <a href="#contact" onclick="toggleMobileNav();smoothScrollTo('contact')" class="text-xl font-bold hover:text-brand-red">CONTACT</a>
+            <div id="mobile-nav" class="hidden fixed top-20 inset-x-0 bg-[#030305]/95 backdrop-blur-2xl border-b border-white/5 py-8 px-8 md:hidden flex flex-col gap-6 text-center z-[999] shadow-2xl">
+                <a href="#about" onclick="toggleMobileNav();smoothScrollTo('about')" class="text-lg font-bold tracking-widest hover:text-brand-red">ABOUT</a>
+                <a href="#work" onclick="toggleMobileNav();smoothScrollTo('work')" class="text-lg font-bold tracking-widest hover:text-brand-red">WORK</a>
+                <a href="#collection" onclick="toggleMobileNav();smoothScrollTo('collection')" class="text-lg font-bold tracking-widest hover:text-brand-red">COLLECTION</a>
+                <a href="#contact" onclick="toggleMobileNav();smoothScrollTo('contact')" class="text-lg font-bold tracking-widest hover:text-brand-red">CONTACT</a>
             </div>
         </header>
 
         <section id="hero" class="hero-section pb-24 px-6 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-8 py-4 glass-panel text-xs font-bold tracking-[0.5em] text-brand-red mb-12 uppercase rounded-3xl hover:bg-brand-red/10 cursor-default">
-                <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse box-shadow-glow"></span>
-                NOW OPEN FOR FREELANCE
+            <div class="reveal">
+                <div class="inline-flex items-center gap-3 px-6 py-3 glass-panel text-[11px] font-mono font-bold tracking-[0.4em] text-gray-300 mb-10 rounded-full border-brand-red/20 hover:border-brand-red/50 cursor-default transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shadow-[0_0_8px_#dc2626]"></span>
+                    OPEN FOR FREELANCE
+                </div>
             </div>
-            <h1 class="lux-text text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] tracking-[-0.04em] flex flex-wrap justify-center gap-x-6">
-                <span class="text-white">RAYN</span>
+            
+            <h1 class="reveal delay-100 lux-text text-[clamp(3.5rem,10vw,8.5rem)] leading-[0.9] flex flex-col justify-center items-center mb-6">
+                <span class="text-white drop-shadow-2xl">RAYN</span>
                 <span class="text-brand-red">SCOFIELD</span>
             </h1>
-            <div class="mt-8 mb-16 mx-auto max-w-xl px-8 py-6 border border-brand-red/20 bg-black/40 backdrop-blur-md rounded-3xl flex items-center justify-center gap-4 text-sm font-bold tracking-[0.2em] text-white/90">
-                <span class="text-brand-red">◉</span>
-                VISUAL ARCHITECT • CYBERPUNK STORYTELLER
-                <span class="text-brand-red">◉</span>
+            
+            <div class="reveal delay-200 mt-6 mb-12 mx-auto max-w-xl px-8 py-5 border border-white/5 bg-black/30 backdrop-blur-md rounded-2xl flex items-center justify-center gap-4 text-xs font-mono tracking-[0.15em] text-gray-400">
+                <span class="text-brand-red/50">///</span>
+                VISUAL ARCHITECT & CYBERPUNK STORYTELLER
+                <span class="text-brand-red/50">///</span>
             </div>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-10 text-gray-400 text-sm font-bold tracking-[0.45em] uppercase">
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5 text-brand-red drop-shadow-[0_0_8px_rgba(220,38,38,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span id="p-country-name" class="text-white">Ho Chi Minh City, Vietnam</span>
+            
+            <div class="reveal delay-300 flex flex-col md:flex-row items-center justify-center gap-8 text-gray-500 text-xs font-mono tracking-[0.2em] uppercase">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span id="p-country-name">Ho Chi Minh City, VN</span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <img id="p-school-logo" src="" alt="School" class="h-5 hidden" />
-                    <span id="p-school-name" class="text-white"></span>
+                <div class="flex items-center gap-2">
+                    <img id="p-school-logo" src="" alt="School" class="h-4 hidden grayscale opacity-70" />
+                    <span id="p-school-name"></span>
                 </div>
             </div>
-            <div id="p-skills-tags" class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mt-14"></div>
-        </section>
-
-        <section id="about" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10 relative">
-            <div class="grid md:grid-cols-12 gap-16">
-                <div class="md:col-span-7 relative z-10">
-                    <h2 class="lux-text text-[clamp(2.5rem,5vw,4rem)] mb-10">WHO IS RAYN?</h2>
-                    <div class="text-[17.5px] leading-relaxed text-gray-300 space-y-7">
-                        <p>Visual Architect & Motion Designer từ TP. Hồ Chí Minh. Chuyên cinematic visuals, 3D motion, branding identity và trải nghiệm kỹ thuật số tương tác.</p>
-                        <p>Kết hợp tinh thần cyberpunk với thiết kế tối giản để tạo nên những câu chuyện thị giác bất hủ.</p>
-                    </div>
-                    <div class="mt-16 grid grid-cols-3 gap-6 text-sm">
-                        <div class="glass-panel p-6 rounded-3xl text-center hover:border-brand-red/50">
-                            <div class="text-brand-red text-xs font-bold tracking-widest mb-2">BASED IN</div>
-                            <div class="text-2xl font-semibold">Vietnam</div>
-                        </div>
-                        <div class="glass-panel p-6 rounded-3xl text-center hover:border-brand-red/50">
-                            <div class="text-brand-red text-xs font-bold tracking-widest mb-2">EXPERIENCE</div>
-                            <div class="text-2xl font-semibold">6+ years</div>
-                        </div>
-                        <div class="glass-panel p-6 rounded-3xl text-center hover:border-brand-red/50">
-                            <div class="text-brand-red text-xs font-bold tracking-widest mb-2">CLIENTS</div>
-                            <div class="text-2xl font-semibold">42+</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="md:col-span-5 relative z-10">
-                    <div class="glass-strong p-10 rounded-3xl h-full flex flex-col justify-between border-brand-red/20">
-                        <div>
-                            <h3 class="uppercase text-brand-red text-xs font-bold mb-8 tracking-[1.5px] flex items-center gap-2">
-                                <div class="w-2 h-2 bg-brand-red rounded-full animate-ping"></div>
-                                CURRENT FOCUS
-                            </h3>
-                            <ul class="space-y-8">
-                                <li class="flex gap-5 group"><span class="text-4xl text-brand-red font-light group-hover:scale-110 transition-transform">01</span><div class="flex-1"><strong class="group-hover:text-brand-red transition-colors">Cinematic Motion Design</strong><p class="text-gray-400 text-sm mt-1">Kể chuyện bằng chuyển động</p></div></li>
-                                <li class="flex gap-5 group"><span class="text-4xl text-brand-red font-light group-hover:scale-110 transition-transform">02</span><div class="flex-1"><strong class="group-hover:text-brand-red transition-colors">Immersive 3D Branding</strong><p class="text-gray-400 text-sm mt-1">Thương hiệu sống động</p></div></li>
-                                <li class="flex gap-5 group"><span class="text-4xl text-brand-red font-light group-hover:scale-110 transition-transform">03</span><div class="flex-1"><strong class="group-hover:text-brand-red transition-colors">Digital Experiences</strong><p class="text-gray-400 text-sm mt-1">Website & installation tương tác</p></div></li>
-                            </ul>
-                        </div>
-                        <blockquote class="text-sm font-mono italic border-t border-brand-red/20 pt-8 text-gray-400 mt-8">
-                            <span class="text-brand-red">>_</span> "Mỗi pixel đều mang một câu chuyện. Tôi chỉ là người kể nó."
-                        </blockquote>
-                    </div>
-                </div>
+            
+            <div id="p-skills-tags" class="reveal delay-300 flex flex-wrap justify-center gap-2 max-w-4xl mx-auto mt-12"></div>
+            
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
             </div>
         </section>
 
-        <section id="work" class="max-w-7xl mx-auto px-6 py-20 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-                <h2 class="lux-text text-[clamp(2.5rem,5vw,4rem)]">SELECTED WORK</h2>
-                <div id="loading" class="flex items-center gap-3 text-xs font-bold text-gray-400 glass-panel px-6 py-3 rounded-full">
-                    <div class="animate-spin h-4 w-4 border-t-2 border-brand-red rounded-full"></div>
-                    FETCHING DATABASE...
+        <section id="about" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5 relative">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-6 relative z-10 reveal">
+                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-4">/// SYS.PROFILE</div>
+                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)] mb-8 leading-tight">THE ARCHITECT<br>BEHIND THE PIXELS</h2>
+                    <div class="text-base leading-relaxed text-gray-400 space-y-6 font-light">
+                        <p>Một Visual Architect và Motion Designer với niềm đam mê sâu sắc dành cho thế giới Cyberpunk, nghệ thuật số và trải nghiệm không gian mạng.</p>
+                        <p>Tôi không chỉ thiết kế đồ họa; tôi xây dựng các hệ sinh thái thị giác. Từ định dạng 3D Immersive, Cinematic Motion đến những bộ nhận diện thương hiệu mang hơi thở của tương lai.</p>
+                    </div>
+                    <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 font-mono">
+                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group">
+                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">EXP</div>
+                            <div class="text-xl font-bold text-white">6+ YRS</div>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group">
+                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">CLIENTS</div>
+                            <div class="text-xl font-bold text-white">42+</div>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group col-span-2 md:col-span-1">
+                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">BASED</div>
+                            <div class="text-xl font-bold text-white">VN</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-6 relative z-10 reveal delay-200">
+                    <div class="glass-strong p-10 rounded-[2rem] border border-brand-red/10 relative overflow-hidden shadow-2xl">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-red/10 blur-[50px] rounded-full pointer-events-none"></div>
+                        
+                        <h3 class="font-mono text-white text-sm mb-8 tracking-[0.2em] flex items-center gap-3">
+                            <div class="w-1.5 h-1.5 bg-brand-red rounded-full"></div>
+                            CORE CAPABILITIES
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <div class="group border-b border-white/5 pb-4">
+                                <div class="flex justify-between items-end mb-2">
+                                    <strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Cinematic Motion</strong>
+                                    <span class="font-mono text-xs text-gray-600">01</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">Chuyển động kể chuyện, tối ưu nhịp điệu thị giác.</p>
+                            </div>
+                            <div class="group border-b border-white/5 pb-4">
+                                <div class="flex justify-between items-end mb-2">
+                                    <strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Immersive 3D Identity</strong>
+                                    <span class="font-mono text-xs text-gray-600">02</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">Xây dựng thế giới thương hiệu đa chiều.</p>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-end mb-2">
+                                    <strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Digital Interactive UX</strong>
+                                    <span class="font-mono text-xs text-gray-600">03</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">Giao diện tương tác, WebGL & Creative Coding.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </section>
 
-        <section id="collection" class="py-32 mt-10 border-y border-white/10 bg-gradient-to-b from-transparent to-black/80 relative z-10 backdrop-blur-sm">
+        <section id="work" class="max-w-7xl mx-auto px-6 py-24 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6 reveal">
+                <div>
+                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-2">/// DATABASE.QUERY</div>
+                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)]">SELECTED WORK</h2>
+                </div>
+                <div id="loading" class="flex items-center gap-3 text-xs font-mono text-brand-crt glass-panel px-5 py-2.5 rounded-md border border-brand-crt/30 shadow-[0_0_15px_rgba(51,255,0,0.1)]">
+                    <div class="w-2 h-2 bg-brand-crt rounded-full animate-ping"></div>
+                    FETCHING FROM MAINFRAME...
+                </div>
+            </div>
+            
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </section>
+
+        <section id="collection" class="py-32 mt-10 border-y border-white/5 bg-[#030305]/80 relative z-10 backdrop-blur-xl">
             <div class="max-w-7xl mx-auto px-6">
-                <h2 class="lux-text text-[clamp(2.5rem,5vw,4rem)] text-center mb-20">EXCLUSIVE COLLECTION</h2>
-                <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-20"></div>
+                <div class="text-center reveal">
+                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-2">/// VAULT.ACCESS</div>
+                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)] mb-16">EXCLUSIVE COLLECTION</h2>
+                </div>
+                <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-16 reveal delay-200">
+                    </div>
             </div>
         </section>
 
         <section id="contact" class="max-w-7xl mx-auto px-6 py-32 relative z-10">
-            <div class="max-w-2xl mx-auto text-center glass-panel p-10 md:p-14 rounded-[40px] border-brand-red/20 shadow-[0_0_50px_rgba(220,38,38,0.05)]">
-                <h2 class="lux-text text-[clamp(2rem,4vw,3rem)] mb-4">LET'S CREATE SOMETHING ELITE</h2>
-                <p class="text-gray-400 mb-10 text-sm font-mono">> Ghi đè dữ liệu trực tiếp vào hệ thống Core của Rayn.</p>
-                <form id="contact-form" class="space-y-6 text-left">
-                    <input type="text" id="name" placeholder="[ HỌ VÀ TÊN ]" required class="w-full bg-black/50 border border-white/10 px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red transition-colors text-sm font-mono">
-                    <input type="email" id="email" placeholder="[ EMAIL ]" required class="w-full bg-black/50 border border-white/10 px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red transition-colors text-sm font-mono">
-                    <textarea id="message" rows="5" placeholder="[ NỘI DUNG TIN NHẮN / DỰ ÁN ]" required class="w-full bg-black/50 border border-white/10 px-8 py-5 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-red transition-colors text-sm font-mono resize-none"></textarea>
-                    <button type="submit" id="submit-btn" class="w-full py-6 bg-brand-red hover:bg-white hover:text-brand-red transition-all font-bold text-sm tracking-[0.4em] uppercase rounded-2xl flex justify-center items-center gap-3">
-                        GỬI THÔNG TIN <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <div class="max-w-3xl mx-auto glass-panel p-8 md:p-16 rounded-[2rem] border border-white/5 relative overflow-hidden reveal">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-red/5 blur-[80px] rounded-full pointer-events-none"></div>
+                
+                <div class="text-center mb-12">
+                    <h2 class="lux-text text-[clamp(2rem,3.5vw,3rem)] mb-4">INITIATE CONNECTION</h2>
+                    <p class="text-gray-500 font-mono text-sm">> System ready to receive transmission.</p>
+                </div>
+                
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Entity Name</label>
+                            <input type="text" id="name" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red focus:shadow-[0_0_15px_rgba(220,38,38,0.2)] transition-all text-sm font-mono">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Comms Link (Email)</label>
+                            <input type="email" id="email" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red focus:shadow-[0_0_15px_rgba(220,38,38,0.2)] transition-all text-sm font-mono">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Encrypted Message</label>
+                        <textarea id="message" rows="4" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red focus:shadow-[0_0_15px_rgba(220,38,38,0.2)] transition-all text-sm font-mono resize-none"></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full py-5 bg-white text-black hover:bg-brand-red hover:text-white transition-all font-bold text-xs tracking-[0.3em] uppercase rounded-xl flex justify-center items-center gap-3 relative overflow-hidden group">
+                        <span class="relative z-10 flex items-center gap-2">TRANSMIT DATA <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></span>
                     </button>
                 </form>
-                <div id="form-success" class="hidden mt-8 text-brand-crt font-mono text-sm">> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
+                <div id="form-success" class="hidden mt-6 text-brand-crt font-mono text-sm text-center bg-brand-crt/10 py-3 rounded-lg border border-brand-crt/20">> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
             </div>
         </section>
 
-        <footer class="py-20 border-t border-white/10 text-center relative z-10 bg-black/50 backdrop-blur-md">
-            <img id="footer-signature" src="" alt="Signature" class="h-20 mx-auto mb-8 invert opacity-30 hover:opacity-100 transition-all grayscale hover:grayscale-0 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
-            <p class="text-[11px] tracking-[0.5em] text-gray-500 font-bold">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED</p>
-            <div class="mt-12 flex justify-center items-center gap-4">
-                <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold tracking-widest hover:border-brand-red/50 transition-colors bg-black/80">
-                    <span id="crt-status">CRT OVERLAY</span>
-                    <div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>
-                    <span class="text-green-500">ON</span>
+        <footer class="py-12 border-t border-white/5 text-center relative z-10 bg-[#020203]">
+            <img id="footer-signature" src="" alt="Signature" class="h-16 mx-auto mb-8 invert opacity-40 hover:opacity-100 transition-all grayscale hover:grayscale-0" />
+            <p class="text-[10px] tracking-[0.4em] text-gray-600 font-mono uppercase">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED.</p>
+            <div class="mt-8 flex justify-center items-center">
+                <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-md text-[10px] font-mono tracking-widest hover:bg-white/5 transition-colors bg-black">
+                    <span id="crt-status" class="text-gray-400">CRT FILTER</span>
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>
                 </button>
             </div>
         </footer>
 
         <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center">
-            <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/90 backdrop-blur-xl"></div>
-            <div id="modal-content-box" class="glass-strong border border-brand-red/30 max-w-[95vw] md:max-w-[85vw] lg:max-w-7xl w-full h-[90vh] md:h-[85vh] flex flex-col md:flex-row rounded-3xl overflow-hidden relative scale-95 transition-transform duration-300 shadow-[0_0_100px_rgba(220,38,38,0.15)]">
-                <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-black/60 hover:bg-brand-red p-3 rounded-full text-white transition-colors border border-white/10">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
+            <div id="modal-content-box" class="glass-strong border border-white/10 max-w-[95vw] md:max-w-[85vw] lg:max-w-6xl w-full h-[90vh] md:h-[80vh] flex flex-col md:flex-row rounded-2xl overflow-hidden relative scale-95 transition-transform duration-400 shadow-[0_0_50px_rgba(0,0,0,1)]">
+                <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-black/50 hover:bg-brand-red p-2.5 rounded-full text-white transition-colors border border-white/10 group">
+                    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-                <div class="flex-1 md:w-3/5 bg-black/50 flex items-center justify-center p-6 relative">
-                    <img id="modal-img" src="" class="max-h-full max-w-full object-contain rounded-xl shadow-2xl" />
+                <div class="flex-1 md:w-3/5 bg-[#050508] flex items-center justify-center p-8 relative border-r border-white/5">
+                    <img id="modal-img" src="" class="max-h-full max-w-full object-contain rounded-lg drop-shadow-2xl" />
                 </div>
-                <div class="flex-1 md:w-2/5 p-10 md:p-14 flex flex-col custom-scroll overflow-y-auto bg-gradient-to-b from-transparent to-[#050505]">
-                    <span id="modal-category" class="text-brand-red font-mono text-[10px] font-bold tracking-[0.2em] mb-4 px-4 py-2 rounded-full border border-brand-red/30 self-start bg-brand-red/5"></span>
-                    <h2 id="modal-title" class="lux-text text-3xl md:text-5xl leading-tight mb-6"></h2>
-                    <p id="modal-desc" class="text-gray-300 leading-relaxed flex-1 text-sm md:text-base"></p>
-                    <a id="modal-link" href="#" target="_blank" class="mt-auto flex items-center justify-center gap-3 py-5 bg-white text-black hover:bg-brand-red hover:text-white transition-all rounded-2xl text-xs font-bold tracking-[0.3em] mt-10">
-                        LAUNCH PROJECT <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                <div class="flex-1 md:w-2/5 p-8 md:p-12 flex flex-col custom-scroll overflow-y-auto bg-[#0a0a0f]">
+                    <span id="modal-category" class="text-brand-red font-mono text-[10px] tracking-[0.2em] mb-4 uppercase"></span>
+                    <h2 id="modal-title" class="text-2xl md:text-4xl font-bold tracking-tight mb-6 text-white"></h2>
+                    <p id="modal-desc" class="text-gray-400 leading-relaxed font-light text-sm md:text-base mb-10"></p>
+                    <a id="modal-link" href="#" target="_blank" class="mt-auto flex items-center justify-center gap-2 py-4 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-xl text-xs font-bold tracking-[0.2em] uppercase">
+                        VIEW PROJECT <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
                 </div>
             </div>
         </div>
-    </div> <script>
+    </div> 
+
+    <script>
         /* --- HỆ THỐNG VẼ SAO (CANVAS BACKGROUND) --- */
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
-        let width, height;
-        let stars = [];
+        let width, height, stars = [];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -290,54 +365,54 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Tạo 200 hạt sao giống hệt logic gốc
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 150; i++) {
             stars.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 1.5,
-                speed: Math.random() * 0.5 + 0.1
+                x: Math.random() * width, y: Math.random() * height,
+                radius: Math.random() * 1.2, speed: Math.random() * 0.3 + 0.05
             });
         }
 
-        // Animation sao trôi ngang
         function animateStars() {
             ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
             stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Sao bay ngang qua trái
+                ctx.beginPath(); ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2); ctx.fill();
                 star.x -= star.speed;
-                if (star.x < 0) {
-                    star.x = width;
-                    star.y = Math.random() * height;
-                }
+                if (star.x < 0) { star.x = width; star.y = Math.random() * height; }
             });
             requestAnimationFrame(animateStars);
         }
         animateStars();
 
+        /* --- SCROLL REVEAL OBSERVER --- */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Không unobserve để scroll lên xuống vẫn mượt, hoặc unobserve để chỉ chạy 1 lần
+                    revealObserver.unobserve(entry.target); 
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        function initScrollReveals() {
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        }
+
         /* --- HỆ THỐNG DATA PORTFOLIO --- */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        const GOOGLE_APPS_SCRIPT_URL = '';
         let globalProjects = [];
         let crtEnabled = true;
 
         function parseCSVRow(str) {
-            const result = [];
-            let current = '', inQuotes = false;
+            const result = []; let current = '', inQuotes = false;
             for (let i = 0; i < str.length; i++) {
                 const char = str[i];
                 if (char === '"') {
                     if (inQuotes && str[i+1] === '"') { current += '"'; i++; }
                     else inQuotes = !inQuotes;
                 } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
+                    result.push(current.trim()); current = '';
                 } else current += char;
             }
             result.push(current.trim());
@@ -346,10 +421,10 @@
 
         function showPortfolioSkeleton() {
             const grid = document.getElementById('portfolio-grid');
-            grid.innerHTML = Array(6).fill(0).map(() => `
-                <div class="glass-panel rounded-3xl overflow-hidden animate-pulse border border-white/5">
-                    <div class="h-80 bg-white/5"></div>
-                    <div class="p-8"><div class="h-6 bg-white/10 rounded w-3/4 mb-4"></div><div class="h-3 bg-white/10 rounded w-1/3"></div></div>
+            grid.innerHTML = Array(6).fill(0).map((_, i) => `
+                <div class="glass-panel rounded-2xl overflow-hidden animate-pulse border border-white/5 reveal delay-${(i%3)*100}">
+                    <div class="h-64 bg-white/5"></div>
+                    <div class="p-6"><div class="h-4 bg-white/10 rounded w-1/4 mb-4"></div><div class="h-6 bg-white/10 rounded w-3/4"></div></div>
                 </div>
             `).join('');
         }
@@ -359,6 +434,7 @@
             showPortfolioSkeleton();
             try {
                 const res = await fetch(SHEET_CSV_URL);
+                if(!res.ok) throw new Error("Network response was not ok");
                 const csv = await res.text();
                 const rows = csv.split('\n').filter(r => r.trim());
                 const headers = parseCSVRow(rows[0]);
@@ -375,7 +451,7 @@
                     if (k.toLowerCase().startsWith('tradingcard') && v.startsWith('http')) cards.push({img: v});
                     if (vals[idxTitle]) {
                         projects.push({
-                            Title: vals[idxTitle], Category: vals[idxCategory] || '',
+                            Title: vals[idxTitle], Category: vals[idxCategory] || 'Project',
                             ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
                             Link: vals[idxLink] || ''
                         });
@@ -387,7 +463,7 @@
                     document.getElementById('site-logo').classList.remove('opacity-0'); 
                 }
                 if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
-                document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, Vietnam';
+                document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, VN';
                 if (config.schoolName) {
                     document.getElementById('p-school-name').textContent = config.schoolName;
                     const sl = document.getElementById('p-school-logo');
@@ -395,14 +471,14 @@
                 }
                 if (config.skills) {
                     document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag =>
-                        `<span class="glass-panel px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-brand-red hover:text-white transition-colors cursor-default border-brand-red/10">${tag.trim()}</span>`
+                        `<span class="px-4 py-2 text-[10px] font-mono border border-white/10 rounded-md hover:bg-brand-red hover:border-brand-red transition-colors cursor-default text-gray-400 hover:text-white">${tag.trim()}</span>`
                     ).join('');
                 }
 
                 const cardsContainer = document.getElementById('cards-container');
-                cardsContainer.innerHTML = cards.map(c => `
-                    <div class="card-scene w-[280px] h-[400px] cursor-crosshair">
-                        <div class="card-inner relative overflow-hidden rounded-2xl shadow-[0_10px_40px_rgba(220,38,38,0.1)]">
+                cardsContainer.innerHTML = cards.map((c, i) => `
+                    <div class="card-scene w-[260px] h-[364px] cursor-crosshair reveal delay-${(i%3)*100}">
+                        <div class="card-inner relative overflow-hidden rounded-xl">
                             <div class="glare"></div>
                             <div class="specular"></div>
                             <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
@@ -412,13 +488,13 @@
 
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => `
-                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-3xl group">
-                        <div class="h-72 relative overflow-hidden">
-                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-110 group-hover:opacity-80 transition-all duration-700" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                            <div class="absolute bottom-6 left-6 right-6">
-                                <p class="text-brand-red font-mono text-[10px] font-bold tracking-[0.2em] mb-2 drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]">> ${p.Category}</p>
-                                <h3 class="font-black text-2xl group-hover:text-brand-red transition-colors text-white drop-shadow-md">${p.Title}</h3>
+                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-2xl group reveal delay-${(i%3)*100}">
+                        <div class="h-64 relative overflow-hidden bg-black">
+                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 group-hover:opacity-60 transition-all duration-700" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="absolute bottom-6 left-6 right-6 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                <p class="text-brand-red font-mono text-[10px] tracking-[0.2em] mb-2">> ${p.Category}</p>
+                                <h3 class="font-bold text-xl text-white drop-shadow-md line-clamp-2">${p.Title}</h3>
                             </div>
                         </div>
                     </div>
@@ -426,10 +502,16 @@
 
                 globalProjects = projects;
                 loadingEl.classList.add('hidden');
+                
+                // Cần re-init observer cho các phần tử mới được render
+                setTimeout(initScrollReveals, 100);
                 attachCardListeners();
             } catch (e) {
                 console.error(e);
-                loadingEl.innerHTML = `<span class="text-red-500 font-mono">ERR: DATA_FETCH_FAILED</span>`;
+                loadingEl.innerHTML = `<span class="text-red-500 font-mono">ERR: FETCH_FAILED [OFFLINE MODE]</span>`;
+                loadingEl.classList.remove('border-brand-crt/30', 'text-brand-crt');
+                loadingEl.classList.add('border-red-500/30');
+                document.getElementById('portfolio-grid').innerHTML = '<p class="text-gray-500 font-mono text-sm col-span-full">Hệ thống đang bảo trì kết nối cơ sở dữ liệu. Vui lòng quay lại sau.</p>';
             }
         }
 
@@ -445,12 +527,15 @@
             if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
             const modal = document.getElementById('project-modal');
             modal.classList.remove('hidden'); modal.classList.add('flex');
+            // Cấm cuộn body
+            document.body.style.overflow = 'hidden';
             setTimeout(() => document.getElementById('modal-content-box').classList.add('scale-100'), 10);
         }
 
         function closeModal() {
             const modal = document.getElementById('project-modal');
             document.getElementById('modal-content-box').classList.remove('scale-100');
+            document.body.style.overflow = ''; // Mở lại cuộn
             setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
         }
 
@@ -477,14 +562,14 @@
                     const x = (e.clientX - r.left) / r.width - 0.5;
                     const y = (e.clientY - r.top) / r.height - 0.5;
 
-                    inner.style.transform = `rotateX(${y * -25}deg) rotateY(${x * 25}deg) scale(1.02)`;
+                    inner.style.transform = `rotateX(${y * -15}deg) rotateY(${x * 15}deg) scale(1.02)`;
                     glare.style.opacity = '1';
                     glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
 
                     if (specular) {
                         specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`);
                         specular.style.setProperty('--my', `${(y + 0.5) * 100}%`);
-                        specular.style.opacity = '0.6';
+                        specular.style.opacity = '0.4';
                     }
                     ticking = false;
                 });
@@ -507,7 +592,14 @@
             });
         }
 
-        function smoothScrollTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function smoothScrollTo(id) { 
+            const element = document.getElementById(id);
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+        
         function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
 
         function toggleCRT() {
@@ -516,10 +608,10 @@
             const btn = document.getElementById('crt-toggle-btn');
             if (crtEnabled) {
                 overlay.style.opacity = '1';
-                btn.innerHTML = `<span>CRT OVERLAY</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div><span class="text-green-500">ON</span>`;
+                btn.innerHTML = `<span class="text-gray-400">CRT FILTER</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>`;
             } else {
                 overlay.style.opacity = '0';
-                btn.innerHTML = `<span>CRT OVERLAY</span><div class="w-2 h-2 bg-gray-600 rounded-full"></div><span class="text-gray-500">OFF</span>`;
+                btn.innerHTML = `<span class="text-gray-600">CRT FILTER</span><div class="w-1.5 h-1.5 bg-gray-600 rounded-full"></div>`;
             }
         }
 
@@ -527,22 +619,34 @@
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
             const originalText = btn.innerHTML;
-            btn.disabled = true; btn.innerHTML = 'TRANSMITTING...';
+            btn.disabled = true; btn.innerHTML = '<span class="animate-pulse">TRANSMITTING...</span>';
 
             const successBox = document.getElementById('form-success');
-            if (!GOOGLE_APPS_SCRIPT_URL) {
+            // Mô phỏng độ trễ truyền dữ liệu
+            setTimeout(() => {
                 successBox.classList.remove('hidden');
                 e.target.reset();
                 setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.innerHTML = originalText; }, 4000);
-                return;
-            }
-            // Logic fetch thật nếu có URL...
+            }, 1000);
         }
+
+        /* Logic làm mờ Header khi scroll xuống */
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg', 'bg-opacity-90');
+                header.style.borderBottomColor = "rgba(220, 38, 38, 0.2)";
+            } else {
+                header.classList.remove('shadow-lg', 'bg-opacity-90');
+                header.style.borderBottomColor = "rgba(255, 255, 255, 0.05)";
+            }
+        });
 
         /* --- KHỞI CHẠY --- */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
+            initScrollReveals();
             if (SHEET_CSV_URL.includes('http')) initPortfolio();
 
             document.getElementById('contact-form').addEventListener('submit', submitContactForm);
