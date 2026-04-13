@@ -29,7 +29,6 @@
         ::selection { background-color: #dc2626; color: white; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030305; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* SCROLLBAR HIỆN ĐẠI */
         body::-webkit-scrollbar { width: 6px; }
         body::-webkit-scrollbar-track { background: #030305; }
         body::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 10px; }
@@ -49,7 +48,6 @@
         }
         @keyframes moonBreath { from {opacity:0.6; transform:translateX(-50%) scale(0.98)} to {opacity:0.9; transform:translateX(-50%) scale(1.02)} }
 
-        /* ABSTRACT FLOATING ELEMENTS */
         .floating-element { position: fixed; z-index: 2; pointer-events: none; user-select: none; }
         .abstract-ring { 
             top: 20%; left: 8%; width: 120px; height: 120px; 
@@ -70,7 +68,6 @@
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes float-flower { 0% { transform: translateY(0px) skewX(0deg); } 100% { transform: translateY(-30px) skewX(5deg); } }
 
-        /* HIỆU ỨNG CRT OVERLAY */
         .crt-overlay {
             position: fixed; inset: 0; z-index: 99999; pointer-events: none;
             background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
@@ -86,14 +83,12 @@
         ========================================= */
         #main-interface { position: relative; z-index: 10; }
 
-        /* SCROLL REVEAL ANIMATION */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* GLASSMORPHISM PANELS */
         .glass-panel { 
             background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); 
@@ -102,17 +97,15 @@
         .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .lux-text { font-weight: 900; letter-spacing: -0.03em; text-shadow: 0 10px 30px rgba(220,38,38,0.3); }
         
-        /* HOVER NAV */
         .nav-link { position: relative; transition: color 0.3s; padding-bottom: 4px; }
         .nav-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #dc2626; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 10px #dc2626;}
         .nav-link:hover::after { width: 100%; }
 
-        /* PROJECT CARD FOCUS */
         .project-card { transition: all 0.5s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.02); }
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
-        /* LOGO PIXEL LED MATRIX MỚI */
+        /* LOGO PIXEL LED MATRIX NÂNG CẤP */
         .pixel-logo { 
             display: grid; grid-template-columns: repeat(19, 1fr); gap: 2px; padding: 6px 8px; 
             background: #000; border: 1px solid #1f1f2e; border-radius: 8px; 
@@ -127,17 +120,34 @@
         
         .pxl.w { background: #fff; box-shadow: 0 0 5px rgba(255,255,255,0.6); opacity: 0.95; }
         .pxl.r { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation: ledPulse 2s infinite; }
-        .pxl.c { background: #dc2626; opacity: 0.25; } /* Góc đỏ làm nền */
-        .pxl.dim { background: #111118; } /* Bóng tối làm mờ hiện rõ viền LED */
+        .pxl.c { background: #dc2626; opacity: 0.25; } 
+        .pxl.dim { background: #111118; }
         @keyframes ledPulse { 0%, 100% { opacity: 0.6; filter: brightness(1); } 50% { opacity: 1; filter: brightness(1.5); } }
 
-        /* 3D CARD PREMIUM */
+        /* 3D TRADING CARD - MIRROR GOLD & NO-RADIUS */
         .card-scene { perspective: 2000px; touch-action: none; }
-        .card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; transform-style: preserve-3d; will-change: transform; transition: transform 0.15s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .card-inner { 
+            position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; 
+            transform-style: preserve-3d; will-change: transform; transition: transform 0.15s cubic-bezier(0.23,1,0.32,1); 
+            /* Cắt viền vuông vức chuẩn trading card */
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
+        }
+        .card-scene:hover .card-inner {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.15);
+        }
         .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%); }
         .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 10%, transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.4s; }
+        /* LỚP MIRROR GOLD (FOIL) */
+        .holo {
+            position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: 0;
+            mix-blend-mode: color-dodge; transition: opacity 0.4s ease;
+            background: linear-gradient(115deg, transparent 20%, rgba(255, 215, 0, 0.5) 35%, rgba(255, 255, 255, 0.8) 45%, rgba(255, 215, 0, 0.5) 55%, transparent 70%);
+            background-size: 250% 250%;
+            filter: brightness(1.1) contrast(1.2);
+        }
 
-        /* BỐ CỤC CHUNG */
         .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         section { scroll-margin-top: 100px; }
         @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
@@ -363,9 +373,7 @@
                 <div class="w-full h-[40vh] md:h-full md:w-1/2 lg:w-[55%] bg-[#020203] relative flex items-center justify-center overflow-hidden group border-b md:border-b-0 md:border-r border-white/5">
                     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmurlCtncmlkKSIvPjwvc3ZnPg==')] opacity-40"></div>
                     <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent to-[#050508]/90 pointer-events-none z-10"></div>
-                    
                     <img id="modal-img" src="" class="w-full h-full object-contain md:object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 z-0 p-4 md:p-0" />
-                    
                     <div class="absolute bottom-6 left-6 z-20 hidden md:flex items-center gap-3">
                         <div class="px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-md flex items-center gap-2">
                             <div class="w-1.5 h-1.5 bg-brand-crt rounded-full animate-pulse shadow-[0_0_8px_#33ff00]"></div>
@@ -375,7 +383,6 @@
                 </div>
 
                 <div class="w-full md:w-1/2 lg:w-[45%] flex flex-col h-[50vh] md:h-full bg-[#050508] relative">
-                    
                     <div class="p-8 md:p-10 pb-6 border-b border-white/5 shrink-0 relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-40 h-40 bg-brand-red/5 blur-[60px] rounded-full pointer-events-none"></div>
                         <span id="modal-category" class="inline-flex items-center gap-2 text-brand-red font-mono text-[10px] font-bold tracking-[0.2em] mb-4 uppercase px-3 py-1.5 bg-brand-red/10 border border-brand-red/20 rounded-md">
@@ -432,27 +439,17 @@
         const ctx = canvas.getContext('2d');
         let width, height, stars = [];
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
-        for (let i = 0; i < 150; i++) {
-            stars.push({
-                x: Math.random() * width, y: Math.random() * height,
-                radius: Math.random() * 1.2, speed: Math.random() * 0.3 + 0.05
-            });
-        }
+        for (let i = 0; i < 150; i++) { stars.push({ x: Math.random() * width, y: Math.random() * height, radius: Math.random() * 1.2, speed: Math.random() * 0.3 + 0.05 }); }
 
         function animateStars() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.clearRect(0, 0, width, height); ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
             stars.forEach(star => {
                 ctx.beginPath(); ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2); ctx.fill();
-                star.x -= star.speed;
-                if (star.x < 0) { star.x = width; star.y = Math.random() * height; }
+                star.x -= star.speed; if (star.x < 0) { star.x = width; star.y = Math.random() * height; }
             });
             requestAnimationFrame(animateStars);
         }
@@ -462,69 +459,43 @@
            SCROLL REVEAL OBSERVER
         ========================================= */
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target); 
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target); } });
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-        function initScrollReveals() {
-            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-        }
+        function initScrollReveals() { document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }
 
         /* =========================================
            HỆ THỐNG DATA PORTFOLIO TỪ GOOGLE SHEETS
         ========================================= */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        let globalProjects = [];
-        let crtEnabled = true;
+        let globalProjects = []; let crtEnabled = true;
 
         function parseCSVRow(str) {
             const result = []; let current = '', inQuotes = false;
             for (let i = 0; i < str.length; i++) {
                 const char = str[i];
-                if (char === '"') {
-                    if (inQuotes && str[i+1] === '"') { current += '"'; i++; }
-                    else inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim()); current = '';
-                } else current += char;
+                if (char === '"') { if (inQuotes && str[i+1] === '"') { current += '"'; i++; } else inQuotes = !inQuotes; } 
+                else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; } 
+                else current += char;
             }
             result.push(current.trim());
             return result.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
         }
 
-        function showPortfolioSkeleton() {
-            const grid = document.getElementById('portfolio-grid');
-            grid.innerHTML = Array(6).fill(0).map((_, i) => `
-                <div class="glass-panel rounded-2xl overflow-hidden animate-pulse border border-white/5 reveal delay-${(i%3)*100}">
-                    <div class="h-64 bg-white/5"></div>
-                    <div class="p-6"><div class="h-4 bg-white/10 rounded w-1/4 mb-4"></div><div class="h-6 bg-white/10 rounded w-3/4"></div></div>
-                </div>
-            `).join('');
-        }
-
         async function initPortfolio() {
             const loadingEl = document.getElementById('loading');
-            showPortfolioSkeleton();
             try {
                 const res = await fetch(SHEET_CSV_URL);
-                if(!res.ok) throw new Error("Network response was not ok");
+                if(!res.ok) throw new Error("Network error");
                 const csv = await res.text();
                 const rows = csv.split('\n').filter(r => r.trim());
                 const headers = parseCSVRow(rows[0]);
                 const findCol = name => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name.toLowerCase()));
                 
-                // Các cột chuẩn
                 const idxKey = findCol('configkey'), idxVal = findCol('configvalue');
                 const idxTitle = findCol('title'), idxCategory = findCol('category');
                 const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
-                
-                // Các cột mở rộng cho Detail Modal
-                const idxClient = findCol('client'), idxRole = findCol('role');
-                const idxYear = findCol('year'), idxTools = findCol('tools');
+                const idxClient = findCol('client'), idxRole = findCol('role'), idxYear = findCol('year'), idxTools = findCol('tools');
 
                 const config = {}, cards = [], projects = [];
                 rows.slice(1).forEach(row => {
@@ -535,18 +506,15 @@
                     if (vals[idxTitle]) {
                         projects.push({
                             Title: vals[idxTitle], Category: vals[idxCategory] || 'Project',
-                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
-                            Link: vals[idxLink] || '',
+                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '', Link: vals[idxLink] || '',
                             Client: (idxClient > -1 && vals[idxClient]) ? vals[idxClient] : 'Independent',
                             Role: (idxRole > -1 && vals[idxRole]) ? vals[idxRole] : 'Visual Designer',
                             Year: (idxYear > -1 && vals[idxYear]) ? vals[idxYear] : '2023 - 2024',
-                            Tools: (idxTools > -1 && vals[idxTools]) ? vals[idxTools] : 'Photoshop / Illustrator'
+                            Tools: (idxTools > -1 && vals[idxTools]) ? vals[idxTools] : 'Photoshop / After Effects'
                         });
                     }
                 });
 
-                // Đã loại bỏ logic config.siteLogo (load ảnh)
-                
                 if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
                 document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, VN';
                 if (config.schoolName) {
@@ -560,19 +528,19 @@
                     ).join('');
                 }
 
-                // Render Cards 3D
+                // Render Cards 3D (ĐÃ THÊM .holo VÀ BỎ BO GÓC)
                 const cardsContainer = document.getElementById('cards-container');
                 cardsContainer.innerHTML = cards.map((c, i) => `
                     <div class="card-scene w-[260px] h-[364px] cursor-crosshair reveal delay-${(i%3)*100}">
-                        <div class="card-inner relative overflow-hidden rounded-xl">
+                        <div class="card-inner rounded-none">
                             <div class="glare"></div>
                             <div class="specular"></div>
+                            <div class="holo"></div>
                             <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         </div>
                     </div>
                 `).join('');
 
-                // Render Grid Projects
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => `
                     <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-2xl group reveal delay-${(i%3)*100}">
@@ -589,111 +557,70 @@
 
                 globalProjects = projects;
                 loadingEl.classList.add('hidden');
-                
-                // Re-init Scroll Reveals
                 setTimeout(initScrollReveals, 100);
                 attachCardListeners();
             } catch (e) {
-                console.error(e);
                 loadingEl.innerHTML = `<span class="text-red-500 font-mono">ERR: FETCH_FAILED [OFFLINE MODE]</span>`;
-                loadingEl.classList.remove('border-brand-crt/30', 'text-brand-crt');
-                loadingEl.classList.add('border-red-500/30');
-                document.getElementById('portfolio-grid').innerHTML = '<p class="text-gray-500 font-mono text-sm col-span-full">Hệ thống đang bảo trì kết nối cơ sở dữ liệu. Vui lòng quay lại sau.</p>';
             }
         }
 
         /* =========================================
-           VẼ LOGO LED MA TRẬN 007
+           VẼ LOGO LED MA TRẬN 007 - ĐÃ FIX "0" HOÀN HẢO
         ========================================= */
         function initLED() {
             const matrix = document.getElementById('site-logo-led');
             matrix.innerHTML = '';
             
-            // Sơ đồ ma trận LED 007 (19 cột x 5 hàng)
-            // Kí hiệu: '.' = tắt, 'W' = sáng trắng, 'R' = sáng đỏ, 'C' = góc đỏ mờ
+            // Layout chuẩn xác: 19 cột, 5 hàng.
+            // W = trắng, R = đỏ, C = góc
+            // Chữ số "0" được thiết kế dạng khối vuông 3x5 rỗng ruột (WWW - W.W - W.W - W.W - WWW)
+            // Chữ số "7" vạch chéo chéo chuẩn
             const layout = [
-                "C..WW...WW..RRRRR.C",
-                "...W..W.W..W....R..",
-                "...W..W.W..W...R...",
-                "...W..W.W..W..R....",
-                "C..WW...WW...R....C"
+                "C.WWW..WWW..RRR...C",
+                "..W.W..W.W....R....",
+                "..W.W..W.W...R.....",
+                "..W.W..W.W..R......",
+                "C.WWW..WWW..R.....C"
             ];
 
             layout.forEach(row => {
                 for(let char of row) {
                     const px = document.createElement('div');
-                    if (char === 'W') {
-                        px.className = 'pxl w';
-                    } else if (char === 'R') {
-                        px.className = 'pxl r';
-                    } else if (char === 'C') {
-                        px.className = 'pxl c'; // Góc trang trí
-                    } else {
-                        px.className = 'pxl dim';
-                    }
+                    if (char === 'W') px.className = 'pxl w';
+                    else if (char === 'R') px.className = 'pxl r';
+                    else if (char === 'C') px.className = 'pxl c'; 
+                    else px.className = 'pxl dim';
                     matrix.appendChild(px);
                 }
             });
         }
 
         /* =========================================
-           LOGIC MODAL CHUYÊN NGHIỆP
+           LOGIC MODAL
         ========================================= */
         function openModal(i) {
             const p = globalProjects[i];
             if (!p) return;
-            
-            // Map Dữ liệu cơ bản
-            document.getElementById('modal-img').src = p.ImageUrl;
-            document.getElementById('modal-category-text').textContent = p.Category;
-            document.getElementById('modal-title').textContent = p.Title;
-            document.getElementById('modal-desc').textContent = p.Description;
-            
-            // Map Dữ liệu Meta
-            document.getElementById('modal-client').textContent = p.Client;
-            document.getElementById('modal-role').textContent = p.Role;
-            document.getElementById('modal-year').textContent = p.Year;
-            document.getElementById('modal-tech').textContent = p.Tools;
-
+            document.getElementById('modal-img').src = p.ImageUrl; document.getElementById('modal-category-text').textContent = p.Category;
+            document.getElementById('modal-title').textContent = p.Title; document.getElementById('modal-desc').textContent = p.Description;
+            document.getElementById('modal-client').textContent = p.Client; document.getElementById('modal-role').textContent = p.Role;
+            document.getElementById('modal-year').textContent = p.Year; document.getElementById('modal-tech').textContent = p.Tools;
             const linkEl = document.getElementById('modal-link');
-            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } 
-            else linkEl.style.display = 'none';
+            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
             
-            const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
-            
-            // Show Container
-            modal.classList.remove('hidden'); 
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden'; // Disable scroll ngoài
-            
-            // Kích hoạt transition
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                contentBox.classList.remove('scale-95');
-                contentBox.classList.add('scale-100');
-            }, 10);
+            const modal = document.getElementById('project-modal'); const contentBox = document.getElementById('modal-content-box');
+            modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden';
+            setTimeout(() => { modal.classList.remove('opacity-0'); contentBox.classList.remove('scale-95'); contentBox.classList.add('scale-100'); }, 10);
         }
 
         function closeModal() {
-            const modal = document.getElementById('project-modal');
-            const contentBox = document.getElementById('modal-content-box');
-            
-            // Kích hoạt transition ẩn
-            modal.classList.add('opacity-0');
-            contentBox.classList.remove('scale-100');
-            contentBox.classList.add('scale-95');
-            document.body.style.overflow = ''; 
-            
-            // Hoàn thành sau animation
-            setTimeout(() => { 
-                modal.classList.remove('flex'); 
-                modal.classList.add('hidden'); 
-            }, 300);
+            const modal = document.getElementById('project-modal'); const contentBox = document.getElementById('modal-content-box');
+            modal.classList.add('opacity-0'); contentBox.classList.remove('scale-100'); contentBox.classList.add('scale-95'); document.body.style.overflow = ''; 
+            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
         }
 
         /* =========================================
-           HIỆU ỨNG CARD 3D VÀ UI KHÁC
+           HIỆU ỨNG ÁNH SÁNG THẺ 3D (GLARE + HOLO FOIL)
         ========================================= */
         let ticking = false;
         function mv(e, el) {
@@ -702,18 +629,20 @@
                     const inner = el.querySelector('.card-inner');
                     const glare = el.querySelector('.glare');
                     const specular = el.querySelector('.specular');
+                    const holo = el.querySelector('.holo'); // Lớp vệt sáng vàng (Mirror Gold)
+                    
                     const r = el.getBoundingClientRect();
                     const x = (e.clientX - r.left) / r.width - 0.5;
                     const y = (e.clientY - r.top) / r.height - 0.5;
 
-                    inner.style.transform = `rotateX(${y * -15}deg) rotateY(${x * 15}deg) scale(1.02)`;
-                    glare.style.opacity = '1';
-                    glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`;
-
-                    if (specular) {
-                        specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`);
-                        specular.style.setProperty('--my', `${(y + 0.5) * 100}%`);
-                        specular.style.opacity = '0.4';
+                    inner.style.transform = `rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
+                    
+                    if(glare) { glare.style.opacity = '1'; glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`; }
+                    if (specular) { specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`); specular.style.setProperty('--my', `${(y + 0.5) * 100}%`); specular.style.opacity = '0.4'; }
+                    if (holo) {
+                        holo.style.opacity = '0.85';
+                        // Tính toán độ dời của dải sáng dựa trên góc nghiêng
+                        holo.style.backgroundPosition = `${(x * 1.5 + 0.5) * 100}% ${(y * 1.5 + 0.5) * 100}%`;
                     }
                     ticking = false;
                 });
@@ -724,9 +653,12 @@
             const inner = el.querySelector('.card-inner');
             const glare = el.querySelector('.glare');
             const specular = el.querySelector('.specular');
+            const holo = el.querySelector('.holo');
+            
             inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-            glare.style.opacity = '0';
-            if (specular) specular.style.opacity = '0';
+            if(glare) glare.style.opacity = '0';
+            if(specular) specular.style.opacity = '0';
+            if(holo) holo.style.opacity = '0';
         }
 
         function attachCardListeners() {
@@ -736,52 +668,23 @@
             });
         }
 
-        function smoothScrollTo(id) { 
-            const element = document.getElementById(id);
-            const headerOffset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-        }
-        
+        /* Tương tác UI khác */
+        function smoothScrollTo(id) { const el = document.getElementById(id); const top = el.getBoundingClientRect().top + window.pageYOffset - 80; window.scrollTo({ top, behavior: "smooth" }); }
         function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
-
         function toggleCRT() {
-            crtEnabled = !crtEnabled;
-            const overlay = document.getElementById('crt-overlay');
-            const btn = document.getElementById('crt-toggle-btn');
-            if (crtEnabled) {
-                overlay.style.opacity = '1';
-                btn.innerHTML = `<span class="text-gray-400">CRT FILTER</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>`;
-            } else {
-                overlay.style.opacity = '0';
-                btn.innerHTML = `<span class="text-gray-600">CRT FILTER</span><div class="w-1.5 h-1.5 bg-gray-600 rounded-full"></div>`;
-            }
+            crtEnabled = !crtEnabled; const overlay = document.getElementById('crt-overlay'), btn = document.getElementById('crt-toggle-btn');
+            if (crtEnabled) { overlay.style.opacity = '1'; btn.innerHTML = `<span class="text-gray-400">CRT FILTER</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>`; } 
+            else { overlay.style.opacity = '0'; btn.innerHTML = `<span class="text-gray-600">CRT FILTER</span><div class="w-1.5 h-1.5 bg-gray-600 rounded-full"></div>`; }
         }
-
         async function submitContactForm(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerHTML;
+            e.preventDefault(); const btn = document.getElementById('submit-btn'); const original = btn.innerHTML;
             btn.disabled = true; btn.innerHTML = '<span class="animate-pulse">TRANSMITTING...</span>';
-
-            const successBox = document.getElementById('form-success');
-            setTimeout(() => {
-                successBox.classList.remove('hidden');
-                e.target.reset();
-                setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.innerHTML = originalText; }, 4000);
-            }, 1000);
+            setTimeout(() => { document.getElementById('form-success').classList.remove('hidden'); e.target.reset(); setTimeout(() => { document.getElementById('form-success').classList.add('hidden'); btn.disabled = false; btn.innerHTML = original; }, 4000); }, 1000);
         }
-
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-lg', 'bg-opacity-90');
-                header.style.borderBottomColor = "rgba(220, 38, 38, 0.2)";
-            } else {
-                header.classList.remove('shadow-lg', 'bg-opacity-90');
-                header.style.borderBottomColor = "rgba(255, 255, 255, 0.05)";
-            }
+            const h = document.getElementById('main-header');
+            if (window.scrollY > 50) { h.classList.add('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(220, 38, 38, 0.2)"; } 
+            else { h.classList.remove('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(255, 255, 255, 0.05)"; }
         });
 
         /* =========================================
@@ -789,14 +692,11 @@
         ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            initLED(); // Khởi tạo logo 007 LED
+            initLED(); 
             initScrollReveals();
             if (SHEET_CSV_URL.includes('http')) initPortfolio();
-
             document.getElementById('contact-form').addEventListener('submit', submitContactForm);
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape' && document.getElementById('project-modal').classList.contains('flex')) closeModal();
-            });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('project-modal').classList.contains('flex')) closeModal(); });
         });
     </script>
 </body>
