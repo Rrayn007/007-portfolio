@@ -23,11 +23,13 @@
     </script>
 
     <style>
-        /* CSS Reset & Cơ bản */
+        /* =========================================
+           CSS RESET & CƠ BẢN
+        ========================================= */
         ::selection { background-color: #dc2626; color: white; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030305; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* Scrollbar hiện đại */
+        /* SCROLLBAR HIỆN ĐẠI */
         body::-webkit-scrollbar { width: 6px; }
         body::-webkit-scrollbar-track { background: #030305; }
         body::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 10px; }
@@ -35,7 +37,9 @@
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
-        /* THEME: Background Sao Bay (Canvas) */
+        /* =========================================
+           THEME & BACKGROUND (CANVAS + CRT)
+        ========================================= */
         #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.7; }
         
         .moon-glow {
@@ -45,7 +49,7 @@
         }
         @keyframes moonBreath { from {opacity:0.6; transform:translateX(-50%) scale(0.98)} to {opacity:0.9; transform:translateX(-50%) scale(1.02)} }
 
-        /* THEME: Abstract Floating Elements thay cho Emoji */
+        /* ABSTRACT FLOATING ELEMENTS */
         .floating-element { position: fixed; z-index: 2; pointer-events: none; user-select: none; }
         .abstract-ring { 
             top: 20%; left: 8%; width: 120px; height: 120px; 
@@ -66,7 +70,7 @@
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes float-flower { 0% { transform: translateY(0px) skewX(0deg); } 100% { transform: translateY(-30px) skewX(5deg); } }
 
-        /* THEME: Hiệu ứng CRT Overlay Tinh tế hơn */
+        /* HIỆU ỨNG CRT OVERLAY */
         .crt-overlay {
             position: fixed; inset: 0; z-index: 99999; pointer-events: none;
             background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
@@ -77,17 +81,19 @@
         }
         @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
 
-        /* GIAO DIỆN CHÍNH */
+        /* =========================================
+           GIAO DIỆN CHÍNH & COMPONENT
+        ========================================= */
         #main-interface { position: relative; z-index: 10; }
 
-        /* Scroll Reveal Animation */
+        /* SCROLL REVEAL ANIMATION */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Glassmorphism Panels */
+        /* GLASSMORPHISM PANELS */
         .glass-panel { 
             background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); 
@@ -96,13 +102,13 @@
         .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .lux-text { font-weight: 900; letter-spacing: -0.03em; text-shadow: 0 10px 30px rgba(220,38,38,0.3); }
         
-        /* Hover Nav */
+        /* HOVER NAV */
         .nav-link { position: relative; transition: color 0.3s; padding-bottom: 4px; }
         .nav-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #dc2626; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 10px #dc2626;}
         .nav-link:hover::after { width: 100%; }
 
-        /* Project Card Focus */
+        /* PROJECT CARD FOCUS */
         .project-card { transition: all 0.5s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.02); }
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
@@ -113,12 +119,13 @@
         .pxl.w { background: #fff; opacity: 0.9; }
         @keyframes ledPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* 3D Card Premium */
+        /* 3D CARD PREMIUM */
         .card-scene { perspective: 2000px; touch-action: none; }
         .card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; transform-style: preserve-3d; will-change: transform; transition: transform 0.15s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%); }
         .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 10%, transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.4s; }
 
+        /* BỐ CỤC CHUNG */
         .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         section { scroll-margin-top: 100px; }
         @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
@@ -331,29 +338,83 @@
             </div>
         </footer>
 
-        <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center">
-            <div onclick="if(event.target.id==='project-modal')closeModal()" class="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
-            <div id="modal-content-box" class="glass-strong border border-white/10 max-w-[95vw] md:max-w-[85vw] lg:max-w-6xl w-full h-[90vh] md:h-[80vh] flex flex-col md:flex-row rounded-2xl overflow-hidden relative scale-95 transition-transform duration-400 shadow-[0_0_50px_rgba(0,0,0,1)]">
-                <button onclick="closeModal()" class="absolute top-4 right-4 z-50 bg-black/50 hover:bg-brand-red p-2.5 rounded-full text-white transition-colors border border-white/10 group">
-                    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center opacity-0 transition-opacity duration-300">
+            <div onclick="closeModal()" class="absolute inset-0 bg-[#020203]/90 backdrop-blur-xl"></div>
+            
+            <div id="modal-content-box" class="glass-strong border border-brand-red/20 max-w-[95vw] md:max-w-[90vw] lg:max-w-[75rem] w-full max-h-[90vh] md:h-[85vh] flex flex-col md:flex-row rounded-[2rem] overflow-hidden relative scale-95 transition-all duration-500 shadow-[0_0_80px_rgba(220,38,38,0.15)]">
+                
+                <button onclick="closeModal()" class="absolute top-5 right-5 md:top-8 md:right-8 z-50 bg-black/60 hover:bg-brand-red p-3 rounded-full text-white transition-all duration-300 border border-white/10 group hover:scale-110 hover:shadow-[0_0_20px_#dc2626]">
+                    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-                <div class="flex-1 md:w-3/5 bg-[#050508] flex items-center justify-center p-8 relative border-r border-white/5">
-                    <img id="modal-img" src="" class="max-h-full max-w-full object-contain rounded-lg drop-shadow-2xl" />
+
+                <div class="w-full h-[40vh] md:h-full md:w-1/2 lg:w-[55%] bg-[#020203] relative flex items-center justify-center overflow-hidden group border-b md:border-b-0 md:border-r border-white/5">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmurlCtncmlkKSIvPjwvc3ZnPg==')] opacity-40"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent to-[#050508]/90 pointer-events-none z-10"></div>
+                    
+                    <img id="modal-img" src="" class="w-full h-full object-contain md:object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 z-0 p-4 md:p-0" />
+                    
+                    <div class="absolute bottom-6 left-6 z-20 hidden md:flex items-center gap-3">
+                        <div class="px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-md flex items-center gap-2">
+                            <div class="w-1.5 h-1.5 bg-brand-crt rounded-full animate-pulse shadow-[0_0_8px_#33ff00]"></div>
+                            <span class="text-[10px] font-mono text-gray-300 tracking-widest">ASSET_LOADED</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex-1 md:w-2/5 p-8 md:p-12 flex flex-col custom-scroll overflow-y-auto bg-[#0a0a0f]">
-                    <span id="modal-category" class="text-brand-red font-mono text-[10px] tracking-[0.2em] mb-4 uppercase"></span>
-                    <h2 id="modal-title" class="text-2xl md:text-4xl font-bold tracking-tight mb-6 text-white"></h2>
-                    <p id="modal-desc" class="text-gray-400 leading-relaxed font-light text-sm md:text-base mb-10"></p>
-                    <a id="modal-link" href="#" target="_blank" class="mt-auto flex items-center justify-center gap-2 py-4 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-xl text-xs font-bold tracking-[0.2em] uppercase">
-                        VIEW PROJECT <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    </a>
+
+                <div class="w-full md:w-1/2 lg:w-[45%] flex flex-col h-[50vh] md:h-full bg-[#050508] relative">
+                    
+                    <div class="p-8 md:p-10 pb-6 border-b border-white/5 shrink-0 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-brand-red/5 blur-[60px] rounded-full pointer-events-none"></div>
+                        <span id="modal-category" class="inline-flex items-center gap-2 text-brand-red font-mono text-[10px] font-bold tracking-[0.2em] mb-4 uppercase px-3 py-1.5 bg-brand-red/10 border border-brand-red/20 rounded-md">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                            <span id="modal-category-text">CATEGORY</span>
+                        </span>
+                        <h2 id="modal-title" class="lux-text text-3xl md:text-4xl font-bold tracking-tight text-white leading-[1.1] drop-shadow-md">Title</h2>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto custom-scroll p-8 md:p-10 relative">
+                        <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-10 p-6 bg-[#0a0a0f] border border-white/5 rounded-2xl">
+                            <div>
+                                <div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Client / Project</div>
+                                <div id="modal-client" class="text-sm font-semibold text-gray-200">Independent</div>
+                            </div>
+                            <div>
+                                <div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Role</div>
+                                <div id="modal-role" class="text-sm font-semibold text-gray-200">Visual Designer</div>
+                            </div>
+                            <div>
+                                <div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Timeline</div>
+                                <div id="modal-year" class="text-sm font-semibold text-gray-200">2023 - Present</div>
+                            </div>
+                            <div>
+                                <div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Tech / Software</div>
+                                <div id="modal-tech" class="text-sm font-semibold text-brand-red">Photoshop, Illustrator</div>
+                            </div>
+                        </div>
+
+                        <div class="prose prose-invert prose-sm max-w-none">
+                            <h3 class="text-white font-mono text-[11px] tracking-[0.2em] mb-4 flex items-center gap-3 uppercase">
+                                <span class="w-1.5 h-4 bg-brand-red inline-block"></span> Project Overview
+                            </h3>
+                            <p id="modal-desc" class="text-gray-400 leading-[1.8] font-light text-[14px] md:text-[15px] whitespace-pre-line"></p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-8 border-t border-white/5 shrink-0 bg-[#050508]">
+                        <a id="modal-link" href="#" target="_blank" class="flex items-center justify-between w-full py-4 px-6 border border-brand-red/30 bg-brand-red/10 text-white hover:bg-brand-red hover:shadow-[0_0_30px_rgba(220,38,38,0.3)] transition-all duration-300 rounded-xl text-xs font-bold tracking-[0.2em] uppercase group">
+                            <span>LAUNCH LIVE PROJECT</span>
+                            <svg class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div> 
 
     <script>
-        /* --- HỆ THỐNG VẼ SAO (CANVAS BACKGROUND) --- */
+        /* =========================================
+           HỆ THỐNG VẼ SAO (CANVAS BACKGROUND)
+        ========================================= */
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, stars = [];
@@ -384,12 +445,13 @@
         }
         animateStars();
 
-        /* --- SCROLL REVEAL OBSERVER --- */
+        /* =========================================
+           SCROLL REVEAL OBSERVER
+        ========================================= */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    // Không unobserve để scroll lên xuống vẫn mượt, hoặc unobserve để chỉ chạy 1 lần
                     revealObserver.unobserve(entry.target); 
                 }
             });
@@ -399,7 +461,9 @@
             document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
         }
 
-        /* --- HỆ THỐNG DATA PORTFOLIO --- */
+        /* =========================================
+           HỆ THỐNG DATA PORTFOLIO TỪ GOOGLE SHEETS
+        ========================================= */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
         let globalProjects = [];
         let crtEnabled = true;
@@ -439,9 +503,15 @@
                 const rows = csv.split('\n').filter(r => r.trim());
                 const headers = parseCSVRow(rows[0]);
                 const findCol = name => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name.toLowerCase()));
+                
+                // Các cột chuẩn
                 const idxKey = findCol('configkey'), idxVal = findCol('configvalue');
                 const idxTitle = findCol('title'), idxCategory = findCol('category');
                 const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
+                
+                // Các cột mở rộng cho Detail Modal
+                const idxClient = findCol('client'), idxRole = findCol('role');
+                const idxYear = findCol('year'), idxTools = findCol('tools');
 
                 const config = {}, cards = [], projects = [];
                 rows.slice(1).forEach(row => {
@@ -453,11 +523,16 @@
                         projects.push({
                             Title: vals[idxTitle], Category: vals[idxCategory] || 'Project',
                             ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '',
-                            Link: vals[idxLink] || ''
+                            Link: vals[idxLink] || '',
+                            Client: (idxClient > -1 && vals[idxClient]) ? vals[idxClient] : 'Independent',
+                            Role: (idxRole > -1 && vals[idxRole]) ? vals[idxRole] : 'Visual Designer',
+                            Year: (idxYear > -1 && vals[idxYear]) ? vals[idxYear] : '2023 - 2024',
+                            Tools: (idxTools > -1 && vals[idxTools]) ? vals[idxTools] : 'Photoshop / Illustrator'
                         });
                     }
                 });
 
+                // Cập nhật thông tin cấu hình
                 if (config.siteLogo) { 
                     document.getElementById('site-logo').src = config.siteLogo; 
                     document.getElementById('site-logo').classList.remove('opacity-0'); 
@@ -475,6 +550,7 @@
                     ).join('');
                 }
 
+                // Render Cards 3D
                 const cardsContainer = document.getElementById('cards-container');
                 cardsContainer.innerHTML = cards.map((c, i) => `
                     <div class="card-scene w-[260px] h-[364px] cursor-crosshair reveal delay-${(i%3)*100}">
@@ -486,6 +562,7 @@
                     </div>
                 `).join('');
 
+                // Render Grid Projects
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => `
                     <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-2xl group reveal delay-${(i%3)*100}">
@@ -503,7 +580,7 @@
                 globalProjects = projects;
                 loadingEl.classList.add('hidden');
                 
-                // Cần re-init observer cho các phần tử mới được render
+                // Re-init Scroll Reveals
                 setTimeout(initScrollReveals, 100);
                 attachCardListeners();
             } catch (e) {
@@ -515,30 +592,65 @@
             }
         }
 
-        /* --- LOGIC MODAL & TƯƠNG TÁC --- */
+        /* =========================================
+           LOGIC MODAL CHUYÊN NGHIỆP
+        ========================================= */
         function openModal(i) {
             const p = globalProjects[i];
             if (!p) return;
+            
+            // Map Dữ liệu cơ bản
             document.getElementById('modal-img').src = p.ImageUrl;
-            document.getElementById('modal-category').textContent = "> " + p.Category;
+            document.getElementById('modal-category-text').textContent = p.Category;
             document.getElementById('modal-title').textContent = p.Title;
             document.getElementById('modal-desc').textContent = p.Description;
+            
+            // Map Dữ liệu Meta
+            document.getElementById('modal-client').textContent = p.Client;
+            document.getElementById('modal-role').textContent = p.Role;
+            document.getElementById('modal-year').textContent = p.Year;
+            document.getElementById('modal-tech').textContent = p.Tools;
+
             const linkEl = document.getElementById('modal-link');
-            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
+            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } 
+            else linkEl.style.display = 'none';
+            
             const modal = document.getElementById('project-modal');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            // Cấm cuộn body
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => document.getElementById('modal-content-box').classList.add('scale-100'), 10);
+            const contentBox = document.getElementById('modal-content-box');
+            
+            // Show Container
+            modal.classList.remove('hidden'); 
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Disable scroll ngoài
+            
+            // Kích hoạt transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                contentBox.classList.remove('scale-95');
+                contentBox.classList.add('scale-100');
+            }, 10);
         }
 
         function closeModal() {
             const modal = document.getElementById('project-modal');
-            document.getElementById('modal-content-box').classList.remove('scale-100');
-            document.body.style.overflow = ''; // Mở lại cuộn
-            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
+            const contentBox = document.getElementById('modal-content-box');
+            
+            // Kích hoạt transition ẩn
+            modal.classList.add('opacity-0');
+            contentBox.classList.remove('scale-100');
+            contentBox.classList.add('scale-95');
+            document.body.style.overflow = ''; 
+            
+            // Hoàn thành sau animation
+            setTimeout(() => { 
+                modal.classList.remove('flex'); 
+                modal.classList.add('hidden'); 
+            }, 300);
         }
 
+        /* =========================================
+           HIỆU ỨNG CARD 3D VÀ UI KHÁC
+        ========================================= */
         function initLED() {
             const matrix = document.getElementById('led-matrix');
             matrix.innerHTML = '';
@@ -622,7 +734,6 @@
             btn.disabled = true; btn.innerHTML = '<span class="animate-pulse">TRANSMITTING...</span>';
 
             const successBox = document.getElementById('form-success');
-            // Mô phỏng độ trễ truyền dữ liệu
             setTimeout(() => {
                 successBox.classList.remove('hidden');
                 e.target.reset();
@@ -630,7 +741,6 @@
             }, 1000);
         }
 
-        /* Logic làm mờ Header khi scroll xuống */
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 50) {
@@ -642,7 +752,9 @@
             }
         });
 
-        /* --- KHỞI CHẠY --- */
+        /* =========================================
+           KHỞI TẠO
+        ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
