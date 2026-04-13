@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
-    <title>Rayn Scofield // Space Terminal</title>
+    <title>Rayn Scofield // Space CRT</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Courier+New&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,8 +33,9 @@
         body::-webkit-scrollbar-thumb { background: #1f1f2e; }
         body::-webkit-scrollbar-thumb:hover { background: #dc2626; }
 
-        /* THEME: Không gian & Môi trường */
+        /* THEME: Background Sao Bay (Canvas) */
         #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -4; pointer-events: none; }
+        
         .moon-glow {
             position: fixed; top: -45vh; left: 50%; transform: translateX(-50%); width: 140vw; height: 140vw; max-width: 1700px;
             background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 75%);
@@ -51,7 +52,7 @@
         @keyframes float-flower { 0% { transform: translateY(0px) rotate(-15deg); } 100% { transform: translateY(-30px) rotate(15deg); } }
         @keyframes glow-flower { from { filter: drop-shadow(0 0 10px rgba(255, 200, 0, 0.2)); } to { filter: drop-shadow(0 0 30px rgba(255, 200, 0, 0.5)); } }
 
-        /* THEME: Hiệu ứng CRT Overlay (Bao phủ toàn web) */
+        /* THEME: Hiệu ứng CRT Overlay */
         .crt-overlay {
             position: fixed; inset: 0; z-index: 99999; pointer-events: none;
             background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px),
@@ -64,33 +65,21 @@
         @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
         @keyframes crt-flicker { 0%,100%{opacity:0.85} 50%{opacity:0.95} }
 
-        /* HỆ THỐNG BOOT (Preloader) */
-        #boot-terminal {
-            position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-color: transparent; transition: opacity 1s ease-in-out, visibility 1s; padding: 2rem;
-        }
-        .terminal-text {
-            width: 100%; max-width: 800px; text-shadow: 0 0 5px #33ff00, 0 0 10px #33ff00; font-size: 1.2rem; line-height: 1.6; color: #33ff00;
-        }
-        .cursor { display: inline-block; width: 12px; height: 1.2rem; background-color: #33ff00; animation: blink 1s step-end infinite; vertical-align: bottom; box-shadow: 0 0 8px #33ff00;}
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* GIAO DIỆN CHÍNH (Ẩn lúc đầu) */
-        #main-interface { opacity: 0; visibility: hidden; transition: opacity 1.5s ease-in-out, visibility 1.5s; position: relative; z-index: 10; }
-        #main-interface.active { opacity: 1; visibility: visible; }
+        /* GIAO DIỆN CHÍNH */
+        #main-interface { position: relative; z-index: 10; }
 
         /* Thành phần giao diện (Glass, Card, v.v) */
         .glass-panel { background: rgba(10,10,12,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; }
         .glass-strong { background: rgba(5,5,7,0.85); backdrop-filter: blur(30px); border-bottom: 1px solid rgba(255,255,255,0.08); }
         .lux-text { font-weight: 900; letter-spacing: -0.04em; text-shadow: 0 10px 30px rgba(220,38,38,0.4); }
         
-        /* Cải thiện Hover Nav */
+        /* Hover Nav */
         .nav-link { position: relative; transition: color 0.3s, text-shadow 0.3s; }
         .nav-link:hover { color: #dc2626; text-shadow: 0 0 15px rgba(220, 38, 38, 0.6); }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #dc2626; transition: width 0.3s ease; box-shadow: 0 0 8px #dc2626;}
         .nav-link:hover::after { width: 100%; }
 
-        /* Cải thiện Project Card */
+        /* Project Card */
         .project-card { transition: all 0.4s cubic-bezier(0.23,1,0.32,1); border: 1px solid transparent; }
         .project-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 20px rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3); }
 
@@ -101,7 +90,7 @@
         .pxl.w { background: #fff; opacity: 0.85; }
         @keyframes ledPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-        /* 3D Card (Giữ nguyên) */
+        /* 3D Card */
         .card-scene { perspective: 1600px; touch-action: none; }
         .card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; transform-style: preserve-3d; will-change: transform; transition: transform 0.12s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.09); box-shadow: 0 30px 70px rgba(0,0,0,0.95); }
         .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: color-dodge; filter: brightness(1.15); }
@@ -119,12 +108,6 @@
     <div class="moon-glow"></div>
     <div class="floating-element astronaut">👨‍🚀</div>
     <div class="floating-element sunflower">🌻</div>
-
-    <div id="boot-terminal">
-        <div class="terminal-text font-mono">
-            <span id="typewriter"></span><span class="cursor"></span>
-        </div>
-    </div>
 
     <div id="main-interface">
         
@@ -293,7 +276,7 @@
             </div>
         </div>
     </div> <script>
-        // --- 1. HỆ THỐNG VẼ SAO (STARFIELD) ---
+        /* --- HỆ THỐNG VẼ SAO (CANVAS BACKGROUND) --- */
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -306,30 +289,28 @@
         window.addEventListener('resize', resize);
         resize();
 
-        for (let i = 0; i < 250; i++) {
+        // Tạo 200 hạt sao giống hệt logic gốc của bạn
+        for (let i = 0; i < 200; i++) {
             stars.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 1.2 + 0.3,
-                speed: Math.random() * 0.4 + 0.1,
-                alpha: Math.random()
+                radius: Math.random() * 1.5,
+                speed: Math.random() * 0.5 + 0.1
             });
         }
 
+        // Animation sao trôi ngang
         function animateStars() {
             ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            
             stars.forEach(star => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
                 ctx.fill();
                 
+                // Sao bay ngang qua trái
                 star.x -= star.speed;
-                // Nhấp nháy nhẹ
-                star.alpha += (Math.random() - 0.5) * 0.05;
-                if(star.alpha < 0.2) star.alpha = 0.2;
-                if(star.alpha > 0.9) star.alpha = 0.9;
-
                 if (star.x < 0) {
                     star.x = width;
                     star.y = Math.random() * height;
@@ -339,52 +320,7 @@
         }
         animateStars();
 
-        // --- 2. HIỆU ỨNG BOOT TERMINAL (TYPEWRITER) ---
-        const textContent = `> SYSTEM BOOT SEQ: INITIATED...
-> LOADING SPACE PROTOCOLS... [OK]
-> CRT MONITOR SYNC... [OK]
-> RAYN_SCOFIELD_CORE.EXE ... [LOADING]
-> DETECTING ENTITIES:
-  - 1x ASTRONAUT (STATUS: DRIFTING)
-  - 1x HELIANTHUS ANNUUS (STATUS: BLOOMING)
-> 
-> INCOMING MESSAGE:
-> "Trong vũ trụ vô tận, hãy luôn hướng về phía ánh sáng."
-> 
-> LAUNCHING VISUAL ARCHITECT INTERFACE...`;
-
-        const typeWriterElement = document.getElementById('typewriter');
-        const bootTerminal = document.getElementById('boot-terminal');
-        const mainInterface = document.getElementById('main-interface');
-        let typeIndex = 0;
-        let text = "";
-
-        function type() {
-            text = textContent.slice(0, ++typeIndex);
-            
-            // Render text
-            typeWriterElement.innerHTML = text.replace(/\n/g, '<br>');
-            
-            if (text === textContent) {
-                // Đã gõ xong, chuyển cảnh
-                setTimeout(() => {
-                    bootTerminal.style.opacity = '0';
-                    setTimeout(() => {
-                        bootTerminal.style.display = 'none';
-                        mainInterface.classList.add('active');
-                    }, 1000);
-                }, 1200);
-                return;
-            }
-
-            const char = text.slice(-1);
-            let delay = Math.random() * 40 + 10; 
-            if (char === '\n') delay = 400; // Delay lâu hơn khi xuống dòng
-            
-            setTimeout(type, delay);
-        }
-
-        // --- 3. HỆ THỐNG DATA PORTFOLIO ---
+        /* --- HỆ THỐNG DATA PORTFOLIO --- */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
         const GOOGLE_APPS_SCRIPT_URL = '';
         let globalProjects = [];
@@ -496,7 +432,7 @@
             }
         }
 
-        // --- 4. LOGIC MODAL & TƯƠNG TÁC ---
+        /* --- LOGIC MODAL & TƯƠNG TÁC --- */
         function openModal(i) {
             const p = globalProjects[i];
             if (!p) return;
@@ -529,7 +465,6 @@
             }
         }
 
-        // Logic 3D Hover cho Card (Giữ nguyên tối ưu)
         let ticking = false;
         function mv(e, el) {
             if (!ticking) {
@@ -600,19 +535,14 @@
                 setTimeout(() => { successBox.classList.add('hidden'); btn.disabled = false; btn.innerHTML = originalText; }, 4000);
                 return;
             }
-            // Code fetch G-Sheet thật...
+            // Logic fetch thật nếu có URL...
         }
 
-        // --- KHỞI CHẠY HỆ THỐNG ---
+        /* --- KHỞI CHẠY --- */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
-            
-            // Bắt đầu Fetch Data ngầm trong lúc Terminal đang Boot
             if (SHEET_CSV_URL.includes('http')) initPortfolio();
-            
-            // Bắt đầu gõ Terminal sau 0.8s
-            setTimeout(type, 800);
 
             document.getElementById('contact-form').addEventListener('submit', submitContactForm);
             document.addEventListener('keydown', e => {
