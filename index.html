@@ -24,7 +24,7 @@
 
     <style>
         /* =========================================
-           CSS RESET & CƠ BẢN
+           1. CSS RESET & CƠ BẢN
         ========================================= */
         ::selection { background-color: #dc2626; color: white; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030305; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; }
@@ -37,7 +37,7 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
         /* =========================================
-           THEME & BACKGROUND
+           2. THEME & BACKGROUND TƯƠNG TÁC
         ========================================= */
         #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.7; }
         
@@ -68,7 +68,7 @@
         @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
 
         /* =========================================
-           GIAO DIỆN CHÍNH
+           3. GIAO DIỆN CHUNG & HIỆU ỨNG TRƯỢT
         ========================================= */
         #main-interface { position: relative; z-index: 10; }
 
@@ -91,10 +91,10 @@
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
         /* =========================================
-           LOGO PIXEL LED MATRIX (17 CỘT x 4 HÀNG)
+           4. LOGO PIXEL LED MATRIX 007 (Đã fix 15 cột)
         ========================================= */
         .pixel-logo { 
-            display: grid; grid-template-columns: repeat(17, 1fr); gap: 3px; padding: 6px 10px; 
+            display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; padding: 6px 10px; 
             background: #000; border: 1px solid #1f1f2e; border-radius: 8px; 
             box-shadow: inset 0 0 15px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s ease;
         }
@@ -109,7 +109,7 @@
         @keyframes ledPulse { 0%, 100% { opacity: 0.7; filter: brightness(1); } 50% { opacity: 1; filter: brightness(1.5); } }
 
         /* =========================================
-           THỂ BÀI 3D & HIỆU ỨNG VẬT LÝ TƯƠNG TÁC
+           5. THỂ BÀI 3D & VẬT LÝ ÁNH SÁNG
         ========================================= */
         .card-scene { perspective: 2000px; touch-action: none; }
         .card-inner { 
@@ -118,15 +118,18 @@
             border: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important; box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
         }
         .card-scene:hover .card-inner { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
+        
+        /* Hiệu ứng chói sáng (Glare & Specular) */
         .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%); }
         .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 10%, transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.4s; }
         
-        /* CÁC LỚP ÁNH SÁNG HIỆU ỨNG (Google Sheets Control) */
+        /* Hiệu ứng chất liệu bề mặt (Đọc từ Google Sheets) */
         .card-effect { position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: 0; mix-blend-mode: color-dodge; transition: opacity 0.4s ease; }
         .effect-mirrorgold { background: linear-gradient(115deg, transparent 20%, rgba(255, 215, 0, 0.6) 35%, rgba(255, 255, 255, 0.8) 45%, rgba(255, 215, 0, 0.6) 55%, transparent 70%); background-size: 250% 250%; filter: brightness(1.1) contrast(1.2); }
         .effect-holo { background: linear-gradient(115deg, transparent 20%, rgba(255, 0, 128, 0.4) 30%, rgba(0, 255, 255, 0.5) 45%, rgba(255, 255, 0, 0.4) 60%, transparent 80%); background-size: 250% 250%; filter: brightness(1.2) contrast(1.1); }
         .effect-silver { background: linear-gradient(115deg, transparent 20%, rgba(220, 220, 220, 0.5) 35%, rgba(255, 255, 255, 0.9) 45%, rgba(220, 220, 220, 0.5) 55%, transparent 70%); background-size: 250% 250%; filter: brightness(1.1) contrast(1.2); }
 
+        /* Bố cục Sections */
         .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         section { scroll-margin-top: 100px; }
         @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
@@ -134,7 +137,6 @@
 </head>
 <body>
     <div id="crt-overlay" class="crt-overlay"></div>
-
     <canvas id="space-canvas"></canvas>
     <div class="moon-glow"></div>
     <div class="floating-element abstract-ring"></div>
@@ -155,7 +157,11 @@
                     <a href="#collection" onclick="smoothScrollTo('collection')" class="nav-link">COLLECTION</a>
                     <a href="#contact" onclick="smoothScrollTo('contact')" class="nav-link">CONTACT</a>
                 </nav>
-                <div class="hidden md:block text-[10px] tracking-[0.5em] font-mono text-gray-500">STATUS: <span class="text-brand-crt animate-pulse">ONLINE</span></div>
+
+                <div class="hidden md:block text-[10px] tracking-[0.5em] font-mono text-gray-500">
+                    STATUS: <span class="text-brand-crt animate-pulse">ONLINE</span>
+                </div>
+
                 <button onclick="toggleMobileNav()" class="md:hidden p-2 text-brand-red hover:text-white transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
@@ -292,6 +298,7 @@
         <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center opacity-0 transition-opacity duration-300">
             <div onclick="closeModal()" class="absolute inset-0 bg-[#020203]/90 backdrop-blur-xl"></div>
             <div id="modal-content-box" class="glass-strong border border-brand-red/20 max-w-[95vw] md:max-w-[90vw] lg:max-w-[75rem] w-full max-h-[90vh] md:h-[85vh] flex flex-col md:flex-row rounded-[2rem] overflow-hidden relative scale-95 transition-all duration-500 shadow-[0_0_80px_rgba(220,38,38,0.15)]">
+                
                 <button onclick="closeModal()" class="absolute top-5 right-5 md:top-8 md:right-8 z-50 bg-black/60 hover:bg-brand-red p-3 rounded-full text-white transition-all duration-300 border border-white/10 group hover:scale-110">
                     <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -334,9 +341,7 @@
     </div> 
 
     <script>
-        /* =========================================
-           HỆ THỐNG VẼ SAO (CANVAS BACKGROUND)
-        ========================================= */
+        /* --- 1. CANVAS VẼ SAO --- */
         const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let width, height, stars = [];
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
@@ -348,15 +353,11 @@
         }
         animateStars();
 
-        /* =========================================
-           SCROLL REVEAL OBSERVER
-        ========================================= */
+        /* --- 2. HIỆU ỨNG CUỘN TRANG (SCROLL REVEAL) --- */
         const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         function initScrollReveals() { document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }
 
-        /* =========================================
-           HỆ THỐNG DỮ LIỆU TỪ GOOGLE SHEETS
-        ========================================= */
+        /* --- 3. KẾT NỐI VÀ XỬ LÝ DỮ LIỆU TỪ GOOGLE SHEETS --- */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
         let globalProjects = []; let crtEnabled = true;
 
@@ -385,7 +386,7 @@
                 const idxTitle = findCol('title'), idxCategory = findCol('category');
                 const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
                 const idxClient = findCol('client'), idxRole = findCol('role'), idxYear = findCol('year'), idxTools = findCol('tools');
-                const idxEffect = findCol('effect'); // Tìm Cột Effect trong sheet
+                const idxEffect = findCol('effect');
 
                 const config = {}, cards = [], projects = [];
                 
@@ -394,13 +395,13 @@
                     const k = vals[idxKey] || '', v = vals[idxVal] || '';
                     if (k) config[k] = v;
                     
-                    // Logic lọc thẻ bài TRADING CARD (cùng class effect)
+                    // Xử lý nạp Trading Card
                     if (k.toLowerCase().startsWith('tradingcard') && !k.toLowerCase().includes('_effect') && v.startsWith('http')) {
                         let rowEffect = (idxEffect > -1 && vals[idxEffect]) ? vals[idxEffect].toLowerCase() : null;
                         cards.push({ id: k, img: v, effect: rowEffect });
                     }
                     
-                    // Logic load PROJECT CHÍNH
+                    // Xử lý nạp Dự án chính
                     if (vals[idxTitle]) {
                         projects.push({
                             Title: vals[idxTitle], Category: vals[idxCategory] || 'Project',
@@ -413,7 +414,7 @@
                     }
                 });
 
-                // Xử lý hiệu ứng động cho Trading Card (nếu chưa có từ cột effect thì tìm trong config_effect)
+                // Khớp hiệu ứng Card từ cấu hình (Nếu cột trống)
                 const processedCards = cards.map(c => {
                     if (!c.effect) {
                         const effectKey = Object.keys(config).find(key => key.toLowerCase() === c.id.toLowerCase() + '_effect');
@@ -421,31 +422,22 @@
                     }
                     if (c.effect.includes('gold')) c.effect = 'mirrorgold';
                     else if (c.effect.includes('silver')) c.effect = 'silver';
-                    else c.effect = 'holo'; // Fallback mặc định
+                    else c.effect = 'holo';
                     return c;
                 });
 
-                if (config.skills) {
-                    document.getElementById('p-skills-tags').innerHTML = config.skills.split(',').map(tag =>
-                        `<span class="px-4 py-2 text-[10px] font-mono border border-white/10 rounded-md hover:bg-brand-red hover:border-brand-red transition-colors cursor-default text-gray-400 hover:text-white">${tag.trim()}</span>`
-                    ).join('');
-                }
-
-                // TẠO THẺ TRADING CARD (Tự động gắn class effect từ Google Sheets)
-                const cardsContainer = document.getElementById('cards-container');
-                cardsContainer.innerHTML = processedCards.map((c, i) => `
+                // Gắn dữ liệu hiển thị (Thẻ bài 3D và Grid Dự án)
+                document.getElementById('cards-container').innerHTML = processedCards.map((c, i) => `
                     <div class="card-scene w-[260px] h-[364px] cursor-crosshair reveal delay-${(i%3)*100}">
                         <div class="card-inner rounded-none">
-                            <div class="glare"></div>
-                            <div class="specular"></div>
+                            <div class="glare"></div><div class="specular"></div>
                             <div class="card-effect effect-${c.effect}"></div>
-                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy">
                         </div>
                     </div>
                 `).join('');
 
-                const grid = document.getElementById('portfolio-grid');
-                grid.innerHTML = projects.map((p, i) => `
+                document.getElementById('portfolio-grid').innerHTML = projects.map((p, i) => `
                     <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-2xl group reveal delay-${(i%3)*100}">
                         <div class="h-64 relative overflow-hidden bg-black">
                             <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 group-hover:opacity-60 transition-all duration-700" loading="lazy">
@@ -458,29 +450,24 @@
                     </div>
                 `).join('');
 
-                globalProjects = projects;
-                loadingEl.classList.add('hidden');
-                setTimeout(initScrollReveals, 100);
-                attachCardListeners();
+                globalProjects = projects; loadingEl.classList.add('hidden');
+                setTimeout(initScrollReveals, 100); attachCardListeners();
             } catch (e) {
                 loadingEl.innerHTML = `<span class="text-red-500 font-mono">ERR: FETCH_FAILED [OFFLINE MODE]</span>`;
             }
         }
 
-        /* =========================================
-           VẼ LOGO LED MA TRẬN 007 - FIX CHIỀU CAO (4 ROWS)
-        ========================================= */
+        /* --- 4. TẠO LOGO LED MA TRẬN 007 - FIX CHUẨN 15 CỘT --- */
         function initLED() {
             const matrix = document.getElementById('site-logo-led');
             matrix.innerHTML = '';
             
-            // Layout chuẩn xác: 17 cột, 4 hàng. Giảm chiều cao 1 ô để giống logo gốc nhất.
-            // C: góc đỏ trang trí, W: pixel trắng (chữ 0), R: pixel đỏ (chữ 7)
+            // Bản đồ chuỗi 15 cột x 4 hàng (Khoảng cách giữa các số đúng 1 cột)
             const layout = [
-                "C.WWW..WWW..RRR.C",
-                "..W.W..W.W....R..",
-                "..W.W..W.W...R...",
-                "C.WWW..WWW..R...C"
+                "C.WWW.WWW.RRR.C",
+                "..W.W.W.W...R..",
+                "..W.W.W.W..R...",
+                "C.WWW.WWW.R...C"
             ];
 
             layout.forEach(row => {
@@ -495,9 +482,7 @@
             });
         }
 
-        /* =========================================
-           HIỆU ỨNG VẬT LÝ KHI RÊ CHUỘT (THẺ BÀI)
-        ========================================= */
+        /* --- 5. TÍNH TOÁN HIỆU ỨNG VẬT LÝ KHI RÊ CHUỘT --- */
         let ticking = false;
         function mv(e, el) {
             if (!ticking) {
@@ -505,19 +490,17 @@
                     const inner = el.querySelector('.card-inner');
                     const glare = el.querySelector('.glare');
                     const specular = el.querySelector('.specular');
-                    const effectLayer = el.querySelector('.card-effect'); // Lớp hiệu ứng ánh sáng (Gold/Holo)
+                    const effectLayer = el.querySelector('.card-effect'); 
                     
                     const r = el.getBoundingClientRect();
                     const x = (e.clientX - r.left) / r.width - 0.5;
                     const y = (e.clientY - r.top) / r.height - 0.5;
 
-                    // Nghiêng thẻ 3D
                     inner.style.transform = `rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
                     
                     if(glare) { glare.style.opacity = '1'; glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`; }
                     if (specular) { specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`); specular.style.setProperty('--my', `${(y + 0.5) * 100}%`); specular.style.opacity = '0.4'; }
                     
-                    // Di chuyển mượt mà dải sáng hiệu ứng qua lại trên mặt thẻ
                     if (effectLayer) {
                         effectLayer.style.opacity = '0.85';
                         effectLayer.style.backgroundPosition = `${(x * 1.5 + 0.5) * 100}% ${(y * 1.5 + 0.5) * 100}%`;
@@ -528,28 +511,18 @@
             }
         }
         function ml(el) {
-            const inner = el.querySelector('.card-inner');
-            const glare = el.querySelector('.glare');
-            const specular = el.querySelector('.specular');
-            const effectLayer = el.querySelector('.card-effect');
-            
-            // Trả thẻ bài về trạng thái mặc định
+            const inner = el.querySelector('.card-inner'), glare = el.querySelector('.glare');
+            const specular = el.querySelector('.specular'), effectLayer = el.querySelector('.card-effect');
             inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-            if(glare) glare.style.opacity = '0';
-            if(specular) specular.style.opacity = '0';
-            if(effectLayer) effectLayer.style.opacity = '0';
+            if(glare) glare.style.opacity = '0'; if(specular) specular.style.opacity = '0'; if(effectLayer) effectLayer.style.opacity = '0';
         }
-
         function attachCardListeners() {
             document.querySelectorAll('.card-scene').forEach(el => {
-                el.addEventListener('mousemove', e => mv(e, el));
-                el.addEventListener('mouseleave', () => ml(el));
+                el.addEventListener('mousemove', e => mv(e, el)); el.addEventListener('mouseleave', () => ml(el));
             });
         }
 
-        /* =========================================
-           LOGIC MODAL & CÁC HÀM PHỤ
-        ========================================= */
+        /* --- 6. LOGIC ĐIỀU KHIỂN GIAO DIỆN KHÁC (Modal, Scroll...) --- */
         function openModal(i) {
             const p = globalProjects[i]; if (!p) return;
             document.getElementById('modal-img').src = p.ImageUrl; document.getElementById('modal-category-text').textContent = p.Category;
@@ -586,12 +559,12 @@
             else { h.classList.remove('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(255, 255, 255, 0.05)"; }
         });
 
-        /* KHỞI TẠO */
+        /* --- 7. KHỞI CHẠY HỆ THỐNG --- */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            initLED(); 
-            initScrollReveals();
-            if (SHEET_CSV_URL.includes('http')) initPortfolio();
+            initLED(); // Khởi tạo logo ma trận
+            initScrollReveals(); // Kích hoạt hiệu ứng cuộn
+            if (SHEET_CSV_URL.includes('http')) initPortfolio(); // Tải dữ liệu từ Sheet
             document.getElementById('contact-form').addEventListener('submit', submitContactForm);
             document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('project-modal').classList.contains('flex')) closeModal(); });
         });
