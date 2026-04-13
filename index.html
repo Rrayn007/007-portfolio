@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
-    <title>Rayn Scofield // Space CRT</title>
+    <title>Rayn Scofield // 007 SYSTEM</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -112,12 +112,24 @@
         .project-card { transition: all 0.5s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.02); }
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
-        /* PIXEL LED MATRIX */
-        .pixel-board { display: grid; grid-template-columns: repeat(14, 1fr); gap: 1px; padding: 4px; background: #000; border: 1px solid #1f1f2e; width: 76px; height: 28px; border-radius: 4px; }
-        .pxl { background: #0c0c12; border-radius: 1px; }
-        .pxl.r { background: #dc2626; box-shadow: 0 0 6px #dc2626; animation: ledPulse 2s infinite; }
-        .pxl.w { background: #fff; opacity: 0.9; }
-        @keyframes ledPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        /* LOGO PIXEL LED MATRIX MỚI */
+        .pixel-logo { 
+            display: grid; grid-template-columns: repeat(19, 1fr); gap: 2px; padding: 6px 8px; 
+            background: #000; border: 1px solid #1f1f2e; border-radius: 8px; 
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s ease;
+        }
+        .pixel-logo:hover { 
+            border-color: rgba(220, 38, 38, 0.5); 
+            box-shadow: 0 0 20px rgba(220,38,38,0.15), inset 0 0 15px rgba(0,0,0,0.9); 
+        }
+        .pxl { width: 4px; height: 4px; border-radius: 1px; transition: all 0.3s; }
+        @media (min-width: 768px) { .pxl { width: 6px; height: 6px; } }
+        
+        .pxl.w { background: #fff; box-shadow: 0 0 5px rgba(255,255,255,0.6); opacity: 0.95; }
+        .pxl.r { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation: ledPulse 2s infinite; }
+        .pxl.c { background: #dc2626; opacity: 0.25; } /* Góc đỏ làm nền */
+        .pxl.dim { background: #111118; } /* Bóng tối làm mờ hiện rõ viền LED */
+        @keyframes ledPulse { 0%, 100% { opacity: 0.6; filter: brightness(1); } 50% { opacity: 1; filter: brightness(1.5); } }
 
         /* 3D CARD PREMIUM */
         .card-scene { perspective: 2000px; touch-action: none; }
@@ -143,10 +155,11 @@
         
         <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center transition-transform duration-300">
             <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+                
                 <div class="flex items-center gap-5">
-                    <img id="site-logo" src="" alt="Rayn Scofield" class="h-8 opacity-0 transition-opacity duration-1000" />
-                    <div class="pixel-board" id="led-matrix" title="Core System Online"></div>
+                    <div class="pixel-logo" id="site-logo-led" onclick="smoothScrollTo('hero')" title="Rayn Scofield - 007 Core"></div>
                 </div>
+
                 <nav class="hidden md:flex items-center gap-10 text-[13px] font-bold tracking-[0.2em] text-gray-400">
                     <a href="#about" onclick="smoothScrollTo('about')" class="nav-link">ABOUT</a>
                     <a href="#work" onclick="smoothScrollTo('work')" class="nav-link">WORK</a>
@@ -532,11 +545,8 @@
                     }
                 });
 
-                // Cập nhật thông tin cấu hình
-                if (config.siteLogo) { 
-                    document.getElementById('site-logo').src = config.siteLogo; 
-                    document.getElementById('site-logo').classList.remove('opacity-0'); 
-                }
+                // Đã loại bỏ logic config.siteLogo (load ảnh)
+                
                 if (config.siteSignature) document.getElementById('footer-signature').src = config.siteSignature;
                 document.getElementById('p-country-name').textContent = config.country || 'Ho Chi Minh City, VN';
                 if (config.schoolName) {
@@ -590,6 +600,40 @@
                 loadingEl.classList.add('border-red-500/30');
                 document.getElementById('portfolio-grid').innerHTML = '<p class="text-gray-500 font-mono text-sm col-span-full">Hệ thống đang bảo trì kết nối cơ sở dữ liệu. Vui lòng quay lại sau.</p>';
             }
+        }
+
+        /* =========================================
+           VẼ LOGO LED MA TRẬN 007
+        ========================================= */
+        function initLED() {
+            const matrix = document.getElementById('site-logo-led');
+            matrix.innerHTML = '';
+            
+            // Sơ đồ ma trận LED 007 (19 cột x 5 hàng)
+            // Kí hiệu: '.' = tắt, 'W' = sáng trắng, 'R' = sáng đỏ, 'C' = góc đỏ mờ
+            const layout = [
+                "C..WW...WW..RRRRR.C",
+                "...W..W.W..W....R..",
+                "...W..W.W..W...R...",
+                "...W..W.W..W..R....",
+                "C..WW...WW...R....C"
+            ];
+
+            layout.forEach(row => {
+                for(let char of row) {
+                    const px = document.createElement('div');
+                    if (char === 'W') {
+                        px.className = 'pxl w';
+                    } else if (char === 'R') {
+                        px.className = 'pxl r';
+                    } else if (char === 'C') {
+                        px.className = 'pxl c'; // Góc trang trí
+                    } else {
+                        px.className = 'pxl dim';
+                    }
+                    matrix.appendChild(px);
+                }
+            });
         }
 
         /* =========================================
@@ -651,18 +695,6 @@
         /* =========================================
            HIỆU ỨNG CARD 3D VÀ UI KHÁC
         ========================================= */
-        function initLED() {
-            const matrix = document.getElementById('led-matrix');
-            matrix.innerHTML = '';
-            const pattern = [0,13,42,55,16,17,20,21,30,31,34,35];
-            for (let i = 0; i < 56; i++) {
-                const px = document.createElement('div');
-                const isRed = [0,13,42,55].includes(i);
-                px.className = `pxl ${isRed ? 'r' : pattern.includes(i) ? 'w' : ''}`;
-                matrix.appendChild(px);
-            }
-        }
-
         let ticking = false;
         function mv(e, el) {
             if (!ticking) {
@@ -757,7 +789,7 @@
         ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            initLED();
+            initLED(); // Khởi tạo logo 007 LED
             initScrollReveals();
             if (SHEET_CSV_URL.includes('http')) initPortfolio();
 
