@@ -91,10 +91,10 @@
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
         /* =========================================
-           4. LOGO PIXEL LED MATRIX 007
+           4. LOGO PIXEL LED MATRIX 007 (15 Columns)
         ========================================= */
         .pixel-logo { 
-            display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; padding: 6px 10px; 
+            display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; padding: 6px 10px; 
             background: #000; border: 1px solid #1f1f2e; border-radius: 8px; 
             box-shadow: inset 0 0 15px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s ease;
         }
@@ -292,7 +292,7 @@
                     </div>
                     <div class="space-y-2"><label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Encrypted Message</label><textarea id="message" rows="4" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red transition-all text-sm font-mono resize-none"></textarea></div>
                     <button type="submit" id="submit-btn" class="w-full py-5 bg-white text-black hover:bg-brand-red hover:text-white transition-all font-bold text-xs tracking-[0.3em] uppercase rounded-xl flex justify-center items-center gap-3 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center gap-2">TRANSMIT DATA <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7-7m7-7H3"></path></svg></span>
+                        <span class="relative z-10 flex items-center gap-2">TRANSMIT DATA <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></span>
                     </button>
                 </form>
                 <div id="form-success" class="hidden mt-6 text-brand-crt font-mono text-sm text-center bg-brand-crt/10 py-3 rounded-lg border border-brand-crt/20">> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
@@ -300,9 +300,9 @@
         </section>
 
         <footer class="py-12 border-t border-white/5 text-center relative z-10 bg-[#020203]">
-            <div id="site-signature" class="mb-4">
-                <h4 class="text-brand-red font-mono text-[12px] tracking-[0.5em] font-bold">SYSTEM BY RAYN SCOFIELD</h4>
-                <p class="text-[10px] text-gray-500 font-mono tracking-widest mt-1">v.007 // CYBER_CORE_ONLINE</p>
+            <div id="footer-signature-container" class="mb-6 flex flex-col items-center">
+                <div id="site-signature-img-box" class="h-16 opacity-70 hover:opacity-100 transition-opacity"></div>
+                <p class="text-[9px] text-gray-600 font-mono tracking-[0.3em] uppercase mt-3">v.007 // CYBER_CORE_ONLINE</p>
             </div>
             <p class="text-[10px] tracking-[0.4em] text-gray-600 font-mono uppercase">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED.</p>
             <div class="mt-8 flex justify-center items-center">
@@ -358,9 +358,6 @@
     </div> 
 
     <script>
-        /* --- SITE SIGNATURE CONSOLE --- */
-        console.log("%c/// SYSTEM 007 INITIALIZED ///\n%cDesigned by Rayn Scofield.", "color: #dc2626; font-size: 16px; font-weight: bold; font-family: monospace;", "color: #33ff00; font-size: 12px; font-family: monospace;");
-
         /* --- 1. CANVAS VẼ SAO --- */
         const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let width, height, stars = [];
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
@@ -432,7 +429,7 @@
                     }
                 });
 
-                // --- LOGIC SETUP NHẠC NỀN & AUTOPLAY LÁCH LUẬT ---
+                // --- LOGIC NHẠC (SỬ DỤNG LINK TRỰC TIẾP TỪ SHEET) ---
                 const bgmUrl = config['audio_bgm'];
                 if (bgmUrl) {
                     const audioEl = document.getElementById('bg-audio');
@@ -441,22 +438,11 @@
                     const statusDiv = document.getElementById('music-status');
                     const eqBars = document.getElementById('eq-bars');
                     
+                    audioEl.src = bgmUrl; // Chấp nhận link dán trực tiếp
+                    audioEl.load();
+                    toggleBtn.classList.remove('hidden');
+
                     let isPlaying = false;
-
-                    let fileId = "";
-                    if (bgmUrl.includes('/d/')) {
-                        fileId = bgmUrl.split('/d/')[1].split('/')[0];
-                    } else if (bgmUrl.includes('id=')) {
-                        fileId = bgmUrl.split('id=')[1].split('&')[0];
-                    }
-
-                    if (fileId) {
-                        audioEl.src = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                        audioEl.load(); 
-                        toggleBtn.classList.remove('hidden');
-                    }
-
-                    // Hàm đóng mở nhạc
                     const toggleMusic = () => {
                         if (isPlaying) {
                             audioEl.pause();
@@ -472,27 +458,31 @@
                                 statusDiv.className = "text-[10px] font-bold text-brand-crt font-mono tracking-widest leading-none";
                                 eqBars.classList.replace('hidden', 'flex');
                                 isPlaying = true;
-                            }).catch(e => console.log("Hệ thống chặn Audio"));
+                            }).catch(e => console.log("Hệ thống chặn Autoplay"));
                         }
                     };
 
-                    // Nút bấm on/off
                     toggleBtn.addEventListener('click', toggleMusic);
 
-                    // --- AUTOPLAY HACK --- 
-                    // Chờ tương tác đầu tiên của user (click, cuộn chuột hoặc bấm phím) để đá nhạc lên
-                    const forceAutoplay = () => {
-                        if (!isPlaying && audioEl.src) {
+                    // --- AUTOPLAY TRÊN USER INTERACTION ---
+                    const startOnInteraction = () => {
+                        if (!isPlaying) {
                             toggleMusic();
-                            // Kích hoạt xong thì xóa event để không bị đè lệnh
-                            document.removeEventListener('click', forceAutoplay);
-                            document.removeEventListener('scroll', forceAutoplay);
-                            document.removeEventListener('keydown', forceAutoplay);
+                            document.removeEventListener('click', startOnInteraction);
+                            document.removeEventListener('scroll', startOnInteraction);
+                            document.removeEventListener('keydown', startOnInteraction);
                         }
                     };
-                    document.addEventListener('click', forceAutoplay);
-                    document.addEventListener('scroll', forceAutoplay, { once: true });
-                    document.addEventListener('keydown', forceAutoplay, { once: true });
+                    document.addEventListener('click', startOnInteraction);
+                    document.addEventListener('scroll', startOnInteraction, { once: true });
+                    document.addEventListener('keydown', startOnInteraction, { once: true });
+                }
+
+                // --- LOAD SITE SIGNATURE ẢNH TỪ SHEET ---
+                if (config['site_signature']) {
+                    document.getElementById('site-signature-img-box').innerHTML = `
+                        <img src="${config['site_signature']}" alt="Rayn Scofield Signature" class="h-full w-auto object-contain">
+                    `;
                 }
 
                 // Khớp hiệu ứng Card
@@ -537,17 +527,17 @@
             }
         }
 
-        /* --- 4. TẠO LOGO LED MA TRẬN 007 - CHUẨN FORM KHỐI VUÔNG --- */
+        /* --- 4. TẠO LOGO LED MA TRẬN 007 - KHÔI PHỤC 15 CỘT --- */
         function initLED() {
             const matrix = document.getElementById('site-logo-led');
             matrix.innerHTML = '';
             
-            // Layout 11 cột, render số 0 chuẩn khối vuông, không bo tròn
+            // Bản đồ 15 cột chuẩn
             const layout = [
-                "WWW.WWW.RRR",
-                "W.W.W.W...R",
-                "W.W.W.W..R.",
-                "WWW.WWW.R.."
+                "WWW.WWW.RRR....",
+                "W.W.W.W...R....",
+                "W.W.W.W..R.....",
+                "WWW.WWW.R......"
             ];
 
             layout.forEach(row => {
@@ -601,7 +591,7 @@
             });
         }
 
-        /* --- 6. LOGIC ĐIỀU KHIỂN GIAO DIỆN KHÁC (Modal, Scroll...) --- */
+        /* --- 6. LOGIC MODAL & UI --- */
         function openModal(i) {
             const p = globalProjects[i]; if (!p) return;
             document.getElementById('modal-img').src = p.ImageUrl; document.getElementById('modal-category-text').textContent = p.Category;
@@ -632,18 +622,13 @@
             btn.disabled = true; btn.innerHTML = '<span class="animate-pulse">TRANSMITTING...</span>';
             setTimeout(() => { document.getElementById('form-success').classList.remove('hidden'); e.target.reset(); setTimeout(() => { document.getElementById('form-success').classList.add('hidden'); btn.disabled = false; btn.innerHTML = original; }, 4000); }, 1000);
         }
-        window.addEventListener('scroll', () => {
-            const h = document.getElementById('main-header');
-            if (window.scrollY > 50) { h.classList.add('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(220, 38, 38, 0.2)"; } 
-            else { h.classList.remove('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(255, 255, 255, 0.05)"; }
-        });
 
-        /* --- 7. KHỞI CHẠY HỆ THỐNG --- */
+        /* --- 7. KHỞI CHẠY --- */
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            initLED(); // Khởi tạo logo ma trận
-            initScrollReveals(); // Kích hoạt hiệu ứng cuộn
-            if (SHEET_CSV_URL.includes('http')) initPortfolio(); // Tải dữ liệu từ Sheet
+            initLED();
+            initScrollReveals();
+            if (SHEET_CSV_URL.includes('http')) initPortfolio();
             document.getElementById('contact-form').addEventListener('submit', submitContactForm);
             document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('project-modal').classList.contains('flex')) closeModal(); });
         });
