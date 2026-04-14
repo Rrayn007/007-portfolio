@@ -78,8 +78,8 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        .glass-panel { background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); transition: all 0.4s ease; }
-        .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .glass-panel { background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); transition: all 0.4s ease; }
+        .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .lux-text { font-weight: 900; letter-spacing: -0.03em; text-shadow: 0 10px 30px rgba(220,38,38,0.3); }
         
         .nav-link { position: relative; transition: color 0.3s; padding-bottom: 4px; }
@@ -91,7 +91,7 @@
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
         /* =========================================
-           4. LOGO PIXEL LED MATRIX 007 (Đã fix 15 cột)
+           4. LOGO PIXEL LED MATRIX 007
         ========================================= */
         .pixel-logo { 
             display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; padding: 6px 10px; 
@@ -133,6 +133,19 @@
         .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         section { scroll-margin-top: 100px; }
         @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
+
+        /* =========================================
+           6. AUDIO PLAYER ANIMATION
+        ========================================= */
+        @keyframes eq-wave {
+            0% { transform: scaleY(0.2); }
+            100% { transform: scaleY(1); }
+        }
+        .eq-bar { transform-origin: bottom; animation: eq-wave 0.5s ease-in-out infinite alternate; }
+        .eq-bar-1 { animation-duration: 0.6s; }
+        .eq-bar-2 { animation-duration: 0.4s; }
+        .eq-bar-3 { animation-duration: 0.8s; }
+        .eq-bar-4 { animation-duration: 0.5s; }
     </style>
 </head>
 <body>
@@ -141,6 +154,23 @@
     <div class="moon-glow"></div>
     <div class="floating-element abstract-ring"></div>
     <div class="floating-element abstract-grid"></div>
+
+    <audio id="bg-audio" loop preload="auto"></audio>
+    <button id="music-toggle" class="fixed bottom-6 right-6 z-[100] glass-panel border border-brand-red/20 rounded-full py-3 px-5 flex items-center gap-3 group hover:border-brand-red/60 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] transition-all hidden scale-90 md:scale-100 origin-bottom-right">
+        <div id="music-icon" class="w-6 h-6 flex items-center justify-center">
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="flex flex-col items-start hidden md:flex">
+            <div class="text-[8px] font-mono text-gray-500 tracking-[0.2em] uppercase leading-none mb-1">SYS.BGM</div>
+            <div id="music-status" class="text-[10px] font-bold text-gray-400 font-mono tracking-widest leading-none">OFFLINE</div>
+        </div>
+        <div id="eq-bars" class="hidden items-end gap-[3px] h-4 ml-1">
+            <div class="w-1 bg-brand-crt eq-bar eq-bar-1 h-full rounded-sm"></div>
+            <div class="w-1 bg-brand-crt eq-bar eq-bar-2 h-full rounded-sm"></div>
+            <div class="w-1 bg-brand-crt eq-bar eq-bar-3 h-full rounded-sm"></div>
+            <div class="w-1 bg-brand-crt eq-bar eq-bar-4 h-full rounded-sm"></div>
+        </div>
+    </button>
 
     <div id="main-interface">
         
@@ -414,7 +444,59 @@
                     }
                 });
 
-                // Khớp hiệu ứng Card từ cấu hình (Nếu cột trống)
+                // --- LOGIC SETUP NHẠC NỀN ---
+                const bgmUrl = config['audio_bgm'];
+                if (bgmUrl) {
+                    const audioEl = document.getElementById('bg-audio');
+                    const toggleBtn = document.getElementById('music-toggle');
+                    const iconDiv = document.getElementById('music-icon');
+                    const statusDiv = document.getElementById('music-status');
+                    const eqBars = document.getElementById('eq-bars');
+
+                    // Convert link Google Drive thường sang dạng direct download link
+                    let playableUrl = bgmUrl;
+                    const driveMatch = bgmUrl.match(/\/d\/(.+?)\//);
+                    if (driveMatch) {
+                        playableUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+                    } else if (bgmUrl.includes('usp=sharing')) {
+                        playableUrl = bgmUrl.replace('view?usp=sharing', 'uc?export=download');
+                    }
+
+                    audioEl.src = playableUrl;
+                    audioEl.volume = 0.4; // Chỉnh âm lượng mặc định (0.0 đến 1.0)
+                    toggleBtn.classList.remove('hidden'); // Hiện nút bấm
+
+                    let isPlaying = false;
+                    toggleBtn.addEventListener('click', () => {
+                        if (isPlaying) {
+                            audioEl.pause();
+                            iconDiv.innerHTML = `<svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+                            statusDiv.textContent = "OFFLINE";
+                            statusDiv.classList.replace('text-brand-crt', 'text-gray-400');
+                            eqBars.classList.replace('flex', 'hidden');
+                        } else {
+                            audioEl.play().catch(e => console.log("Audio block:", e));
+                            // Icon Pause (Pause bars)
+                            iconDiv.innerHTML = `<svg class="w-5 h-5 text-brand-crt ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+                            statusDiv.textContent = "ONLINE";
+                            statusDiv.classList.replace('text-gray-400', 'text-brand-crt');
+                            eqBars.classList.replace('hidden', 'flex');
+                        }
+                        isPlaying = !isPlaying;
+                    });
+                    
+                    // Tự tắt animation nếu nhạc chạy hết hoặc bị dừng bởi system
+                    audioEl.addEventListener('ended', () => {
+                        isPlaying = false;
+                        iconDiv.innerHTML = `<svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+                        statusDiv.textContent = "OFFLINE";
+                        statusDiv.classList.replace('text-brand-crt', 'text-gray-400');
+                        eqBars.classList.replace('flex', 'hidden');
+                    });
+                }
+                // --- END LOGIC NHẠC ---
+
+                // Khớp hiệu ứng Card từ cấu hình
                 const processedCards = cards.map(c => {
                     if (!c.effect) {
                         const effectKey = Object.keys(config).find(key => key.toLowerCase() === c.id.toLowerCase() + '_effect');
