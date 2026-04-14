@@ -91,7 +91,7 @@
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
 
         /* =========================================
-           4. LOGO PIXEL LED MATRIX 007
+           4. LOGO PIXEL LED MATRIX 007 (Đã fix 15 cột)
         ========================================= */
         .pixel-logo { 
             display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; padding: 6px 10px; 
@@ -135,7 +135,7 @@
         @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
 
         /* =========================================
-           6. AUDIO PLAYER ANIMATION
+           6. CSS CHO AUDIO WIDGET & EQUALIZER
         ========================================= */
         @keyframes eq-wave { 0% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
         .eq-bar { transform-origin: bottom; animation: eq-wave 0.5s ease-in-out infinite alternate; }
@@ -419,12 +419,12 @@
                 const idxClient = findCol('client'), idxRole = findCol('role'), idxYear = findCol('year'), idxTools = findCol('tools');
                 const idxEffect = findCol('effect');
 
-                const config = {}, cards = [], projects = [];
+                const config = {}; const cards = []; const projects = [];
                 
                 rows.slice(1).forEach(row => {
                     const vals = parseCSVRow(row);
-                    const k = vals[idxKey] || '', v = vals[idxVal] || '';
-                    if (k) config[k] = v;
+                    const k = vals[idxKey] || ''; const v = vals[idxVal] || '';
+                    if (k) config[k] = v; // Lưu giá trị raw để so khớp (kể cả chữ hoa/thường)
                     
                     if (k.toLowerCase().startsWith('tradingcard') && !k.toLowerCase().includes('_effect') && v.startsWith('http')) {
                         let rowEffect = (idxEffect > -1 && vals[idxEffect]) ? vals[idxEffect].toLowerCase() : null;
@@ -443,8 +443,14 @@
                     }
                 });
 
-                // --- LOGIC NHẠC (SỬ DỤNG LINK TRỰC TIẾP TỪ SHEET) ---
-                const bgmUrl = config['audio_bgm'];
+                // Hàm hỗ trợ lấy config không phân biệt chữ hoa thường (phòng trường hợp gõ siteSignature hay sitesignature)
+                const getConfigIgnoreCase = (targetKey) => {
+                    const foundKey = Object.keys(config).find(k => k.toLowerCase() === targetKey.toLowerCase());
+                    return foundKey ? config[foundKey] : null;
+                };
+
+                // --- 1. LOGIC NHẠC BGM ---
+                const bgmUrl = getConfigIgnoreCase('audio_bgm');
                 if (bgmUrl) {
                     const audioEl = document.getElementById('bg-audio');
                     const toggleBtn = document.getElementById('music-toggle');
@@ -452,7 +458,7 @@
                     const statusDiv = document.getElementById('music-status');
                     const eqBars = document.getElementById('eq-bars');
                     
-                    audioEl.src = bgmUrl; // Đọc thẳng link đã xử lý direct từ Sheet
+                    audioEl.src = bgmUrl; // Đọc thẳng direct link từ Sheet
                     audioEl.load();
                     toggleBtn.classList.remove('hidden');
 
@@ -472,13 +478,13 @@
                                 statusDiv.className = "text-[10px] font-bold text-brand-crt font-mono tracking-widest leading-none";
                                 eqBars.classList.replace('hidden', 'flex');
                                 isPlaying = true;
-                            }).catch(e => console.log("Hệ thống chặn Autoplay"));
+                            }).catch(e => console.log("System block autoplay", e));
                         }
                     };
 
                     toggleBtn.addEventListener('click', toggleMusic);
 
-                    // --- AUTOPLAY TRÊN USER INTERACTION ---
+                    // Chờ tương tác đầu tiên của user để tự động phát nhạc
                     const startOnInteraction = () => {
                         if (!isPlaying && audioEl.src) {
                             toggleMusic();
@@ -492,10 +498,11 @@
                     document.addEventListener('keydown', startOnInteraction, { once: true });
                 }
 
-                // --- LOAD SITE SIGNATURE ẢNH TỪ SHEET ---
-                if (config['site_signature']) {
+                // --- 2. LOGIC LOAD ẢNH SIGNATURE TỪ SHEET ---
+                const signatureUrl = getConfigIgnoreCase('siteSignature'); 
+                if (signatureUrl) {
                     document.getElementById('site-signature-img-box').innerHTML = `
-                        <img src="${config['site_signature']}" alt="Rayn Scofield Signature" class="h-full w-auto object-contain drop-shadow-md">
+                        <img src="${signatureUrl}" alt="Rayn Scofield Signature" class="h-full w-auto object-contain drop-shadow-md">
                     `;
                 }
 
@@ -541,17 +548,17 @@
             }
         }
 
-        /* --- 4. TẠO LOGO LED MA TRẬN 007 - CHUẨN FORM KHỐI VUÔNG 15 CỘT --- */
+        /* --- 4. TẠO LOGO LED MA TRẬN 007 (Đã fix 15 cột - Không đụng vào code này nữa) --- */
         function initLED() {
             const matrix = document.getElementById('site-logo-led');
             matrix.innerHTML = '';
             
-            // Layout 15 cột, 007 vuông vức
+            // Bản đồ chuỗi 15 cột x 4 hàng (Khoảng cách giữa các số đúng 1 cột)
             const layout = [
-                "WWW.WWW.RRR....",
-                "W.W.W.W...R....",
-                "W.W.W.W..R.....",
-                "WWW.WWW.R......"
+                "C.WWW.WWW.RRR.C",
+                "..W.W.W.W...R..",
+                "..W.W.W.W..R...",
+                "C.WWW.WWW.R...C"
             ];
 
             layout.forEach(row => {
@@ -559,6 +566,7 @@
                     const px = document.createElement('div');
                     if (char === 'W') px.className = 'pxl w';
                     else if (char === 'R') px.className = 'pxl r';
+                    else if (char === 'C') px.className = 'pxl c'; 
                     else px.className = 'pxl dim';
                     matrix.appendChild(px);
                 }
