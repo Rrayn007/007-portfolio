@@ -1601,6 +1601,7 @@
 
             // Nạp bài đầu tiên
             audio.src = trackList[currentTrackIdx];
+            audio.volume = 0.5; // <--- THÊM DÒNG NÀY (0.3 là 30%, 1.0 là 100%)
             audio.load();
             btn.classList.add('visible');
 
