@@ -1025,15 +1025,13 @@
     </style>
 </head>
 <body>
-    <!-- Layers -->
     <div id="crt-overlay" class="crt-overlay" aria-hidden="true"></div>
     <canvas id="space-canvas" aria-hidden="true"></canvas>
     <div class="moon-glow" aria-hidden="true"></div>
     <div class="floater floater--ring" aria-hidden="true"></div>
     <div class="floater floater--grid" aria-hidden="true"></div>
 
-    <!-- Audio -->
-    <audio id="bg-audio" loop preload="auto"></audio>
+    <audio id="bg-audio" preload="auto"></audio>
     <button id="music-btn" class="music-btn" aria-label="Toggle background music">
         <div id="music-icon" class="w-6 h-6 flex items-center justify-center">
             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color:#9ca3af;margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
@@ -1052,7 +1050,6 @@
 
     <div id="main-interface">
 
-        <!-- HEADER -->
         <header class="site-header" id="site-header">
             <div class="container header-inner">
                 <div id="site-logo-led" class="pixel-logo" role="button" tabindex="0" aria-label="Go to top" onclick="scrollToSection('hero')"></div>
@@ -1075,7 +1072,6 @@
             </nav>
         </header>
 
-        <!-- HERO -->
         <section id="hero" class="hero" style="position:relative">
             <div class="reveal">
                 <div class="hero-badge" style="display:inline-flex">
@@ -1104,7 +1100,6 @@
             </div>
         </section>
 
-        <!-- ABOUT -->
         <section id="about" class="about-section">
             <div class="container">
                 <div class="about-grid">
@@ -1163,7 +1158,6 @@
             </div>
         </section>
 
-        <!-- WORK -->
         <section id="work" class="work-section">
             <div class="container">
                 <div class="work-header reveal">
@@ -1180,7 +1174,6 @@
             </div>
         </section>
 
-        <!-- COLLECTION -->
         <section id="collection" class="collection-section">
             <div class="container">
                 <div class="reveal" style="text-align:center;margin-bottom:4rem">
@@ -1191,7 +1184,6 @@
             </div>
         </section>
 
-        <!-- CONTACT -->
         <section id="contact" class="contact-section">
             <div class="container">
                 <div class="contact-box reveal">
@@ -1222,7 +1214,6 @@
             </div>
         </section>
 
-        <!-- FOOTER -->
         <footer class="site-footer">
             <div id="site-signature-img-box" class="footer-sig"></div>
             <div class="footer-version">v.007 // CYBER_CORE_ONLINE</div>
@@ -1235,10 +1226,7 @@
             </div>
         </footer>
 
-    </div><!-- /#main-interface -->
-
-    <!-- PROJECT MODAL -->
-    <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
+    </div><div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
         <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
         <div id="modal-box" class="modal-box">
             <button class="modal-close" onclick="closeModal()" aria-label="Close">
@@ -1296,9 +1284,16 @@
         'use strict';
 
         /* ════════════════════════════════════════════
-           CONFIG
+           CONFIG & DANH SÁCH NHẠC GITHUB
         ════════════════════════════════════════════ */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
+        
+        // BẠN THÊM LINK NHẠC TỪ GITHUB VÀO ĐÂY (dạng Raw Link).
+        // Nếu bạn để trống [], web sẽ tự động lấy link audio_bgm từ Google Sheet
+        const GITHUB_PLAYLIST = [
+            "https://raw.githubusercontent.com/Rrayn007/test/main/audio/Spacewalk.mp3",
+            // "https://raw.githubusercontent.com/Rrayn007/test/main/audio/bai_hat_thu_2.mp3"
+        ];
 
         /* ════════════════════════════════════════════
            STATE
@@ -1307,6 +1302,7 @@
         let crtEnabled = true;
         let musicPlaying = false;
         let rafTicking = false;
+        let currentTrackIdx = 0; // Thêm biến lưu vị trí bài hát hiện tại
 
         /* ════════════════════════════════════════════
            CANVAS STARFIELD
@@ -1418,7 +1414,7 @@
                 const col   = name => hdr.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name));
 
                 const iKey=col('configkey'), iVal=col('configvalue'),
-                      iTtl=col('title'),    iCat=col('category'),
+                      iTtl=col('title'),     iCat=col('category'),
                       iImg=col('imageurl'), iDesc=col('description'),
                       iLnk=col('link'),     iCli=col('client'),
                       iRol=col('role'),     iYr=col('year'),
@@ -1453,9 +1449,15 @@
 
                 const cfg = k => config[k.toLowerCase()] ?? null;
 
-                /* BGM */
+                /* --- BGM TÍCH HỢP PLAYLIST --- */
                 const bgmUrl = cfg('audio_bgm');
-                if (bgmUrl) initMusic(bgmUrl);
+                // Nếu mảng GITHUB_PLAYLIST có dữ liệu thì xài, không thì dùng link sheet
+                if (GITHUB_PLAYLIST && GITHUB_PLAYLIST.length > 0) {
+                    initMusic(GITHUB_PLAYLIST);
+                } else if (bgmUrl) {
+                    // Truyền link sheet vào dưới dạng mảng 1 phần tử
+                    initMusic([bgmUrl]);
+                }
 
                 /* Signature */
                 const sig = cfg('siteSignature');
@@ -1584,16 +1586,22 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER
+           MUSIC PLAYER (HỖ TRỢ PLAYLIST)
         ════════════════════════════════════════════ */
-        function initMusic(url) {
+        function initMusic(urls) {
             const audio  = document.getElementById('bg-audio');
             const btn    = document.getElementById('music-btn');
             const icon   = document.getElementById('music-icon');
             const status = document.getElementById('music-status');
             const eq     = document.getElementById('eq-bars');
 
-            audio.src = url; audio.load();
+            // Đảm bảo urls là một mảng
+            const trackList = Array.isArray(urls) ? urls : [urls];
+            if (trackList.length === 0) return;
+
+            // Nạp bài đầu tiên
+            audio.src = trackList[currentTrackIdx];
+            audio.load();
             btn.classList.add('visible');
 
             const play = () => {
@@ -1613,6 +1621,15 @@
             const toggle = () => musicPlaying ? pause() : play();
 
             btn.addEventListener('click', toggle);
+
+            // TỰ ĐỘNG NEXT BÀI KHI HẾT NHẠC
+            audio.addEventListener('ended', () => {
+                currentTrackIdx = (currentTrackIdx + 1) % trackList.length;
+                audio.src = trackList[currentTrackIdx];
+                if (musicPlaying) {
+                    audio.play().catch(() => {});
+                }
+            });
 
             // Auto-play on first interaction
             const autoPlay = () => {
