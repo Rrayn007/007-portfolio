@@ -1,659 +1,724 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rayn Scofield — Visual Architect. Không gian sáng tạo cyberpunk, chuyên sâu visual, motion & digital experience.">
-    <title>Rayn Scofield // 007 SYSTEM</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { brand: { red: '#dc2626', dark: '#030305', surface: '#0c0c12', border: '#1f1f2e', crt: '#33ff00' } },
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rayn Scofield · Project 007</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --surface: #111111;
+      --card: #181818;
+      --border: #2a2a2a;
+      --accent: #c8a96e;
+      --accent-dim: #8a7048;
+      --red: #c0392b;
+      --text: #e8e4dc;
+      --muted: #666;
+      --mono: 'DM Mono', monospace;
+    }
 
-    <style>
-        /* =========================================
-           1. CSS RESET & CƠ BẢN
-        ========================================= */
-        ::selection { background-color: #dc2626; color: white; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030305; color: #f3f4f6; overflow-x: hidden; scroll-behavior: smooth; }
-        
-        body::-webkit-scrollbar { width: 6px; }
-        body::-webkit-scrollbar-track { background: #030305; }
-        body::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 10px; }
-        body::-webkit-scrollbar-thumb:hover { background: #dc2626; }
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* =========================================
-           2. THEME & BACKGROUND TƯƠNG TÁC
-        ========================================= */
-        #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.7; }
-        
-        .moon-glow {
-            position: fixed; top: -50vh; left: 50%; transform: translateX(-50%); width: 150vw; height: 150vw; max-width: 1800px;
-            background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, rgba(255,255,255,0.01) 35%, transparent 70%);
-            border-radius: 50%; z-index: 1; filter: blur(90px); animation: moonBreath 12s infinite alternate ease-in-out; pointer-events: none;
-        }
-        @keyframes moonBreath { from {opacity:0.6; transform:translateX(-50%) scale(0.98)} to {opacity:0.9; transform:translateX(-50%) scale(1.02)} }
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
 
-        .floating-element { position: fixed; z-index: 2; pointer-events: none; user-select: none; }
-        .abstract-ring { 
-            top: 20%; left: 8%; width: 120px; height: 120px; 
-            border: 1px solid rgba(255,255,255,0.05); border-radius: 50%;
-            animation: float-slow 15s ease-in-out infinite, spin-slow 20s linear infinite;
-        }
-        .abstract-ring::before { content: ''; position: absolute; top: -2px; left: 50%; width: 4px; height: 4px; background: #dc2626; border-radius: 50%; box-shadow: 0 0 15px #dc2626; }
-        .abstract-grid { bottom: 15%; right: 10%; width: 100px; height: 100px; background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px); background-size: 20px 20px; opacity: 0.3; animation: float-flower 12s ease-in-out infinite alternate; }
-        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-40px) rotate(180deg); } }
-        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes float-flower { 0% { transform: translateY(0px) skewX(0deg); } 100% { transform: translateY(-30px) skewX(5deg); } }
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .crt-overlay {
-            position: fixed; inset: 0; z-index: 99999; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px), linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,0,0.01), rgba(0,0,255,0.02));
-            background-size: 100% 4px, 100% 100%; animation: crt-scan 10s linear infinite; opacity: 1; mix-blend-mode: overlay; box-shadow: inset 0 0 120px rgba(0,0,0,0.9); transition: opacity 0.5s ease;
-        }
-        @keyframes crt-scan { 0%{background-position:0 0,0 0} 100%{background-position:0 100%,0 0} }
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+    }
 
-        /* =========================================
-           3. UI CHUNG & HIỆU ỨNG TRƯỢT
-        ========================================= */
-        #main-interface { position: relative; z-index: 10; }
+    /* Header badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
 
-        .glass-panel { background: rgba(12,12,18,0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 30px rgba(0,0,0,0.5); transition: all 0.4s ease; }
-        .glass-strong { background: rgba(3,3,5,0.85); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .lux-text { font-weight: 900; letter-spacing: -0.03em; text-shadow: 0 10px 30px rgba(220,38,38,0.3); }
-        
-        .nav-link { position: relative; transition: color 0.3s; padding-bottom: 4px; }
-        .nav-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #dc2626; transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 10px #dc2626;}
-        .nav-link:hover::after { width: 100%; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
 
-        .project-card { transition: all 0.5s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(255,255,255,0.02); }
-        .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
+    /* Main card */
+    .player-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
 
-        /* =========================================
-           4. LOGO PIXEL LED MATRIX 007
-        ========================================= */
-        .pixel-logo { 
-            display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; padding: 6px 10px; 
-            background: #000; border: 1px solid #1f1f2e; border-radius: 8px; 
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s ease;
-        }
-        .pixel-logo:hover { border-color: rgba(220, 38, 38, 0.5); box-shadow: 0 0 20px rgba(220,38,38,0.15), inset 0 0 15px rgba(0,0,0,0.9); }
-        /* Sửa lại như này để logo tinh tế hơn */
-        .pxl { width: 3px; height: 3px; border-radius: 1px; transition: all 0.3s; }
-        @media (min-width: 768px) { .pxl { width: 4px; height: 4px; } }
-        
-        .pxl.w { background: #fff; box-shadow: 0 0 6px rgba(255,255,255,0.7); opacity: 0.95; }
-        .pxl.r { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation: ledPulse 2s infinite; }
-        .pxl.c { background: #dc2626; opacity: 0.2; } 
-        .pxl.dim { background: #111118; }
-        @keyframes ledPulse { 0%, 100% { opacity: 0.7; filter: brightness(1); } 50% { opacity: 1; filter: brightness(1.5); } }
+    /* Cover art area */
+    .cover-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--surface);
+    }
 
-        /* =========================================
-           5. THỂ BÀI 3D & VẬT LÝ ÁNH SÁNG
-        ========================================= */
-        .card-scene { perspective: 2000px; touch-action: none; }
-        .card-inner { 
-            position: relative; width: 100%; height: 100%; overflow: hidden; background: #050505; 
-            transform-style: preserve-3d; will-change: transform; transition: transform 0.1s cubic-bezier(0.23,1,0.32,1); 
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important; box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
-        }
-        .card-scene:hover .card-inner { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
-        
-        .glare { position: absolute; inset: 0; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.4s; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%); }
-        .specular { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 10%, transparent 60%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.4s; }
-        
-        .card-effect { position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: 0; mix-blend-mode: color-dodge; transition: opacity 0.4s ease; }
-        .effect-mirrorgold { background: linear-gradient(115deg, transparent 20%, rgba(255, 215, 0, 0.6) 35%, rgba(255, 255, 255, 0.8) 45%, rgba(255, 215, 0, 0.6) 55%, transparent 70%); background-size: 250% 250%; filter: brightness(1.1) contrast(1.2); }
-        .effect-holo { background: linear-gradient(115deg, transparent 20%, rgba(255, 0, 128, 0.4) 30%, rgba(0, 255, 255, 0.5) 45%, rgba(255, 255, 0, 0.4) 60%, transparent 80%); background-size: 250% 250%; filter: brightness(1.2) contrast(1.1); }
-        .effect-silver { background: linear-gradient(115deg, transparent 20%, rgba(220, 220, 220, 0.5) 35%, rgba(255, 255, 255, 0.9) 45%, rgba(220, 220, 220, 0.5) 55%, transparent 70%); background-size: 250% 250%; filter: brightness(1.1) contrast(1.2); }
+    .cover-art {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.6s ease;
+      filter: brightness(0.85);
+    }
 
-        .hero-section { padding-top: 12rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        section { scroll-margin-top: 100px; }
-        @media (max-width: 640px) { .card-scene { width: 260px !important; height: 364px !important; } }
+    .cover-art.playing {
+      transform: scale(1.02);
+      filter: brightness(1);
+    }
 
-        /* =========================================
-           6. AUDIO PLAYER & SIGNATURE FIX
-        ========================================= */
-        @keyframes eq-wave { 0% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
-        .eq-bar { transform-origin: bottom; animation: eq-wave 0.5s ease-in-out infinite alternate; }
-        .eq-bar-1 { animation-duration: 0.6s; }
-        .eq-bar-2 { animation-duration: 0.4s; }
-        .eq-bar-3 { animation-duration: 0.8s; }
-        .eq-bar-4 { animation-duration: 0.5s; }
+    .cover-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--muted);
+    }
 
-        /* Đảo màu chữ ký từ đen sang trắng */
-        #site-signature-img-box img {
-            filter: invert(1) brightness(2);
-            transition: all 0.4s ease;
-        }
-        #site-signature-img-box:hover img {
-            filter: invert(1) brightness(2) drop-shadow(0 0 10px rgba(220, 38, 38, 0.5));
-        }
-    </style>
+    .cover-placeholder svg {
+      opacity: 0.3;
+    }
+
+    /* Track overlay on cover */
+    .cover-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    }
+
+    .track-number {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .track-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Controls section */
+    .controls-section {
+      padding: 1.5rem;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    /* Main controls */
+    .main-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-ctrl {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .btn-ctrl:hover { color: var(--text); }
+    .btn-ctrl:active { transform: scale(0.92); }
+
+    .btn-play {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-play:hover { background: #dfc07e; }
+    .btn-play:active { transform: scale(0.95); }
+
+    /* Playlist */
+    .playlist-wrap {
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .playlist-wrap::-webkit-scrollbar { width: 3px; }
+    .playlist-wrap::-webkit-scrollbar-track { background: transparent; }
+    .playlist-wrap::-webkit-scrollbar-thumb { background: var(--border); }
+
+    .playlist-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .track-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .track-item:last-child { border-bottom: none; }
+    .track-item:hover { color: var(--accent); }
+
+    .track-item.active { color: var(--accent); }
+
+    .track-idx {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      min-width: 20px;
+      text-align: right;
+    }
+
+    .track-item.active .track-idx { color: var(--accent); }
+
+    .track-info { flex: 1; min-width: 0; }
+
+    .track-name {
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-meta {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .track-dur {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Volume */
+    .vol-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 0.5rem;
+    }
+
+    .vol-row svg { color: var(--muted); flex-shrink: 0; }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    /* Status bar */
+    .status-bar {
+      padding: 8px 1.5rem;
+      background: rgba(200,169,110,0.04);
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--muted);
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .status-dot.ok { background: #27ae60; }
+    .status-dot.err { background: var(--red); }
+
+    /* Eq bars animation */
+    .eq-bars {
+      display: flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 14px;
+    }
+
+    .eq-bar {
+      width: 3px;
+      background: var(--accent);
+      border-radius: 1px;
+      animation: none;
+      height: 3px;
+      transition: height 0.2s;
+    }
+
+    .playing .eq-bar:nth-child(1) { animation: eq1 0.8s infinite; }
+    .playing .eq-bar:nth-child(2) { animation: eq2 0.9s infinite 0.1s; }
+    .playing .eq-bar:nth-child(3) { animation: eq3 0.7s infinite 0.2s; }
+    .playing .eq-bar:nth-child(4) { animation: eq4 1s infinite 0.05s; }
+
+    @keyframes eq1 { 0%,100%{height:3px} 50%{height:12px} }
+    @keyframes eq2 { 0%,100%{height:8px} 50%{height:4px} }
+    @keyframes eq3 { 0%,100%{height:5px} 50%{height:14px} }
+    @keyframes eq4 { 0%,100%{height:10px} 50%{height:3px} }
+
+    .loading-msg {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .error-msg {
+      text-align: center;
+      padding: 2rem;
+      color: var(--red);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
-    <div id="crt-overlay" class="crt-overlay"></div>
-    <canvas id="space-canvas"></canvas>
-    <div class="moon-glow"></div>
-    <div class="floating-element abstract-ring"></div>
-    <div class="floating-element abstract-grid"></div>
 
-    <audio id="bg-audio" loop preload="auto"></audio>
-    <button id="music-toggle" class="fixed bottom-6 right-6 z-[100] glass-panel border border-brand-red/20 rounded-full py-3 px-5 flex items-center gap-3 group hover:border-brand-red/60 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] transition-all hidden scale-90 md:scale-100 origin-bottom-right">
-        <div id="music-icon" class="w-6 h-6 flex items-center justify-center">
-            <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+<div class="container">
+  <div class="badge">Project 007 · Portfolio</div>
+
+  <div class="player-card" id="playerCard">
+    <div id="appContent">
+      <div class="loading-msg">Đang kết nối dữ liệu…</div>
+    </div>
+  </div>
+</div>
+
+<audio id="audioEl" preload="none"></audio>
+
+<script>
+// ============================================================
+//  CẤU HÌNH — chỉ cần thay đổi dòng này
+// ============================================================
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
+// ============================================================
+
+const audio = document.getElementById('audioEl');
+let playlist = [];
+let currentIdx = 0;
+let isPlaying = false;
+let eqEl = null;
+
+// ---- Parse CSV đơn giản (xử lý field có dấu phẩy trong ngoặc kép)
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = splitCSVRow(lines[0]).map(h => h.toLowerCase().trim().replace(/\s+/g,'_'));
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = splitCSVRow(lines[i]);
+    if (vals.every(v => !v.trim())) continue;
+    const obj = {};
+    headers.forEach((h, j) => { obj[h] = (vals[j] || '').trim().replace(/^"|"$/g,''); });
+    rows.push(obj);
+  }
+  return rows;
+}
+
+function splitCSVRow(row) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (const ch of row) {
+    if (ch === '"') { inQ = !inQ; }
+    else if (ch === ',' && !inQ) { result.push(cur); cur = ''; }
+    else cur += ch;
+  }
+  result.push(cur);
+  return result;
+}
+
+// ---- Render UI principal
+function renderPlayer() {
+  const track = playlist[currentIdx] || {};
+  const coverUrl = track.cover_url || track.image_url || track.cover || '';
+  const appContent = document.getElementById('appContent');
+
+  appContent.innerHTML = `
+    <div class="cover-wrap" id="coverWrap">
+      ${coverUrl
+        ? `<img class="cover-art" id="coverImg" src="${coverUrl}" alt="${track.title||'Cover'}" loading="lazy" />`
+        : `<div class="cover-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+              <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+            </svg>
+           </div>`
+      }
+      <div class="cover-overlay">
+        <div class="track-number">Track ${String(currentIdx+1).padStart(2,'0')} / ${String(playlist.length).padStart(2,'0')}</div>
+        <div class="track-title" id="trackTitle">${track.title || 'Untitled'}</div>
+      </div>
+    </div>
+
+    <div class="controls-section">
+      <div class="progress-wrap">
+        <div class="time-row">
+          <span id="timeCur">0:00</span>
+          <span id="timeDur">--:--</span>
         </div>
-        <div class="flex flex-col items-start hidden md:flex">
-            <div class="text-[8px] font-mono text-gray-500 tracking-[0.2em] uppercase leading-none mb-1">SYS.BGM</div>
-            <div id="music-status" class="text-[10px] font-bold text-gray-400 font-mono tracking-widest leading-none">OFFLINE</div>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div id="eq-bars" class="hidden items-end gap-[3px] h-4 ml-1">
-            <div class="w-1 bg-brand-crt eq-bar eq-bar-1 h-full rounded-sm"></div>
-            <div class="w-1 bg-brand-crt eq-bar eq-bar-2 h-full rounded-sm"></div>
-            <div class="w-1 bg-brand-crt eq-bar eq-bar-3 h-full rounded-sm"></div>
-            <div class="w-1 bg-brand-crt eq-bar eq-bar-4 h-full rounded-sm"></div>
-        </div>
-    </button>
+      </div>
 
-    <div id="main-interface">
-        
-        <header id="main-header" class="fixed top-0 w-full z-50 glass-strong h-20 flex items-center transition-transform duration-300">
-            <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
-                <div class="flex items-center gap-5">
-                    <div class="pixel-logo" id="site-logo-led" onclick="smoothScrollTo('hero')" title="Rayn Scofield - 007 Core"></div>
-                </div>
-                <nav class="hidden md:flex items-center gap-10 text-[13px] font-bold tracking-[0.2em] text-gray-400">
-                    <a href="#about" onclick="smoothScrollTo('about')" class="nav-link">ABOUT</a>
-                    <a href="#work" onclick="smoothScrollTo('work')" class="nav-link">WORK</a>
-                    <a href="#collection" onclick="smoothScrollTo('collection')" class="nav-link">COLLECTION</a>
-                    <a href="#contact" onclick="smoothScrollTo('contact')" class="nav-link">CONTACT</a>
-                </nav>
-                <div class="hidden md:block text-[10px] tracking-[0.5em] font-mono text-gray-500">
-                    STATUS: <span class="text-brand-crt animate-pulse">ONLINE</span>
-                </div>
-                <button onclick="toggleMobileNav()" class="md:hidden p-2 text-brand-red hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-            </div>
+      <div class="main-controls">
+        <button class="btn-ctrl" id="btnPrev" title="Previous" style="visibility:hidden">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="19,20 9,12 19,4"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="btn-play" id="btnPlay">
+          <svg id="playIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,3 19,12 5,21"/>
+          </svg>
+        </button>
+        <button class="btn-ctrl" id="btnNext" title="Next" style="visibility:hidden">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,4 15,12 5,20"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
 
-            <div id="mobile-nav" class="hidden fixed top-20 inset-x-0 bg-[#030305]/95 backdrop-blur-2xl border-b border-white/5 py-8 px-8 md:hidden flex flex-col gap-6 text-center z-[999] shadow-2xl">
-                <a href="#about" onclick="toggleMobileNav();smoothScrollTo('about')" class="text-lg font-bold tracking-widest hover:text-brand-red">ABOUT</a>
-                <a href="#work" onclick="toggleMobileNav();smoothScrollTo('work')" class="text-lg font-bold tracking-widest hover:text-brand-red">WORK</a>
-                <a href="#collection" onclick="toggleMobileNav();smoothScrollTo('collection')" class="text-lg font-bold tracking-widest hover:text-brand-red">COLLECTION</a>
-                <a href="#contact" onclick="toggleMobileNav();smoothScrollTo('contact')" class="text-lg font-bold tracking-widest hover:text-brand-red">CONTACT</a>
-            </div>
-        </header>
+      <div class="vol-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        <input type="range" id="volSlider" min="0" max="100" value="80" />
+      </div>
+    </div>
 
-        <section id="hero" class="hero-section pb-24 px-6 text-center relative z-10">
-            <div class="reveal">
-                <div class="inline-flex items-center gap-3 px-6 py-3 glass-panel text-[11px] font-mono font-bold tracking-[0.4em] text-gray-300 mb-10 rounded-full border-brand-red/20 hover:border-brand-red/50 cursor-default transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shadow-[0_0_8px_#dc2626]"></span> OPEN FOR FREELANCE
-                </div>
-            </div>
-            <h1 class="reveal delay-100 lux-text text-[clamp(3.5rem,10vw,8.5rem)] leading-[0.9] flex flex-col justify-center items-center mb-6">
-                <span class="text-white drop-shadow-2xl">RAYN</span><span class="text-brand-red">SCOFIELD</span>
-            </h1>
-            <div class="reveal delay-200 mt-6 mb-12 mx-auto max-w-xl px-8 py-5 border border-white/5 bg-black/30 backdrop-blur-md rounded-2xl flex items-center justify-center gap-4 text-xs font-mono tracking-[0.15em] text-gray-400">
-                <span class="text-brand-red/50">///</span> VISUAL ARCHITECT & CYBERPUNK STORYTELLER <span class="text-brand-red/50">///</span>
-            </div>
-            <div class="reveal delay-300 flex flex-col md:flex-row items-center justify-center gap-8 text-gray-500 text-xs font-mono tracking-[0.2em] uppercase">
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span id="p-country-name">Ho Chi Minh City, VN</span>
-                </div>
-            </div>
-            <div id="p-skills-tags" class="reveal delay-300 flex flex-wrap justify-center gap-2 max-w-4xl mx-auto mt-12"></div>
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-            </div>
-        </section>
+    <div id="playlistWrap" style="display:none">
+      <div class="playlist-label">Playlist</div>
+      <div id="trackList"></div>
+    </div>
 
-        <section id="about" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5 relative">
-            <div class="grid md:grid-cols-12 gap-16 items-center">
-                <div class="md:col-span-6 relative z-10 reveal">
-                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-4">/// SYS.PROFILE</div>
-                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)] mb-8 leading-tight">THE ARCHITECT<br>BEHIND THE PIXELS</h2>
-                    <div class="text-base leading-relaxed text-gray-400 space-y-6 font-light">
-                        <p>Một Visual Architect và Motion Designer với niềm đam mê sâu sắc dành cho thế giới Cyberpunk, nghệ thuật số và trải nghiệm không gian mạng.</p>
-                        <p>Tôi không chỉ thiết kế đồ họa; tôi xây dựng các hệ sinh thái thị giác. Từ định dạng 3D Immersive, Cinematic Motion đến những bộ nhận diện thương hiệu mang hơi thở của tương lai.</p>
-                    </div>
-                    <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 font-mono">
-                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group">
-                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">EXP</div><div class="text-xl font-bold text-white">6+ YRS</div>
-                        </div>
-                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group">
-                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">CLIENTS</div><div class="text-xl font-bold text-white">42+</div>
-                        </div>
-                        <div class="glass-panel p-5 rounded-2xl border border-white/5 hover:border-brand-red/30 group col-span-2 md:col-span-1">
-                            <div class="text-brand-red text-[10px] tracking-widest mb-1 group-hover:animate-pulse">BASED</div><div class="text-xl font-bold text-white">VN</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:col-span-6 relative z-10 reveal delay-200">
-                    <div class="glass-strong p-10 rounded-[2rem] border border-brand-red/10 relative overflow-hidden shadow-2xl">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-red/10 blur-[50px] rounded-full pointer-events-none"></div>
-                        <h3 class="font-mono text-white text-sm mb-8 tracking-[0.2em] flex items-center gap-3"><div class="w-1.5 h-1.5 bg-brand-red rounded-full"></div>CORE CAPABILITIES</h3>
-                        <div class="space-y-6">
-                            <div class="group border-b border-white/5 pb-4"><div class="flex justify-between items-end mb-2"><strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Cinematic Motion</strong><span class="font-mono text-xs text-gray-600">01</span></div><p class="text-gray-500 text-sm">Chuyển động kể chuyện, tối ưu nhịp điệu thị giác.</p></div>
-                            <div class="group border-b border-white/5 pb-4"><div class="flex justify-between items-end mb-2"><strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Immersive 3D Identity</strong><span class="font-mono text-xs text-gray-600">02</span></div><p class="text-gray-500 text-sm">Xây dựng thế giới thương hiệu đa chiều.</p></div>
-                            <div class="group"><div class="flex justify-between items-end mb-2"><strong class="text-lg text-gray-200 group-hover:text-brand-red transition-colors">Digital Interactive UX</strong><span class="font-mono text-xs text-gray-600">03</span></div><p class="text-gray-500 text-sm">Giao diện tương tác, WebGL & Creative Coding.</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="status-bar">
+      <span><span class="status-dot ok" id="statusDot"></span><span id="statusText">Sẵn sàng</span></span>
+      <div class="eq-bars" id="eqBars">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+    </div>
+  `;
 
-        <section id="work" class="max-w-7xl mx-auto px-6 py-24 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6 reveal">
-                <div>
-                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-2">/// DATABASE.QUERY</div>
-                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)]">SELECTED WORK</h2>
-                </div>
-                <div id="loading" class="flex items-center gap-3 text-xs font-mono text-brand-crt glass-panel px-5 py-2.5 rounded-md border border-brand-crt/30 shadow-[0_0_15px_rgba(51,255,0,0.1)]">
-                    <div class="w-2 h-2 bg-brand-crt rounded-full animate-ping"></div>FETCHING FROM MAINFRAME...
-                </div>
-            </div>
-            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </section>
+  renderTrackList();
+  bindControls();
+  updateCoverState();
+}
 
-        <section id="collection" class="py-32 mt-10 border-y border-white/5 bg-[#030305]/80 relative z-10 backdrop-blur-xl">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center reveal">
-                    <div class="text-brand-red font-mono text-sm tracking-[0.3em] mb-2">/// VAULT.ACCESS</div>
-                    <h2 class="lux-text text-[clamp(2.5rem,4vw,3.5rem)] mb-16">EXCLUSIVE COLLECTION</h2>
-                </div>
-                <div id="cards-container" class="flex flex-wrap justify-center gap-12 md:gap-16 reveal delay-200"></div>
-            </div>
-        </section>
+function renderTrackList() {
+  const list = document.getElementById('trackList');
+  if (!list) return;
+  list.innerHTML = playlist.map((t, i) => `
+    <div class="track-item ${i===currentIdx?'active':''}" data-idx="${i}">
+      <span class="track-idx">${String(i+1).padStart(2,'0')}</span>
+      <div class="track-info">
+        <div class="track-name">${t.title || 'Untitled'}</div>
+        <div class="track-meta">${t.artist || ''}</div>
+      </div>
+      <span class="track-dur">${t.duration || ''}</span>
+    </div>
+  `).join('');
+  list.querySelectorAll('.track-item').forEach(el => {
+    el.addEventListener('click', () => selectTrack(parseInt(el.dataset.idx)));
+  });
+}
 
-        <section id="contact" class="max-w-7xl mx-auto px-6 py-32 relative z-10">
-            <div class="max-w-3xl mx-auto glass-panel p-8 md:p-16 rounded-[2rem] border border-white/5 relative overflow-hidden reveal">
-                <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-red/5 blur-[80px] rounded-full pointer-events-none"></div>
-                
-                <div class="text-center mb-12">
-                    <h2 class="lux-text text-[clamp(2rem,3.5vw,3rem)] mb-4">INITIATE CONNECTION</h2>
-                    <p class="text-gray-500 font-mono text-sm">> System ready to receive transmission.</p>
-                </div>
-                
-                <form id="contact-form" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-2"><label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Entity Name</label><input type="text" id="name" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red transition-all text-sm font-mono"></div>
-                        <div class="space-y-2"><label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Comms Link (Email)</label><input type="email" id="email" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red transition-all text-sm font-mono"></div>
-                    </div>
-                    <div class="space-y-2"><label class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">Encrypted Message</label><textarea id="message" rows="4" required class="w-full bg-[#0a0a0f] border border-white/10 px-6 py-4 rounded-xl text-white focus:outline-none focus:border-brand-red transition-all text-sm font-mono resize-none"></textarea></div>
-                    <button type="submit" id="submit-btn" class="w-full py-5 bg-white text-black hover:bg-brand-red hover:text-white transition-all font-bold text-xs tracking-[0.3em] uppercase rounded-xl flex justify-center items-center gap-3 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center gap-2">TRANSMIT DATA <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></span>
-                    </button>
-                </form>
-                <div id="form-success" class="hidden mt-6 text-brand-crt font-mono text-sm text-center bg-brand-crt/10 py-3 rounded-lg border border-brand-crt/20">> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
-            </div>
-        </section>
+function bindControls() {
+  document.getElementById('btnPlay')?.addEventListener('click', togglePlay);
+  document.getElementById('btnPrev')?.addEventListener('click', () => selectTrack((currentIdx-1+playlist.length)%playlist.length));
+  document.getElementById('btnNext')?.addEventListener('click', () => selectTrack((currentIdx+1)%playlist.length));
+  document.getElementById('progressBar')?.addEventListener('click', seekAudio);
+  document.getElementById('volSlider')?.addEventListener('input', e => { audio.volume = e.target.value/100; });
+  audio.volume = 0.8;
+}
 
-        <footer class="py-12 border-t border-white/5 text-center relative z-10 bg-[#020203]">
-            <div id="footer-signature-container" class="mb-6 flex flex-col items-center">
-                <div id="site-signature-img-box" class="h-32 opacity-70 hover:opacity-100 transition-opacity"></div>
-                <p class="text-[9px] text-gray-600 font-mono tracking-[0.3em] uppercase mt-3">v.007 // CYBER_CORE_ONLINE</p>
-            </div>
-            <p class="text-[10px] tracking-[0.4em] text-gray-600 font-mono uppercase">&copy; <span id="current-year"></span> RAYN SCOFIELD — ALL RIGHTS RESERVED.</p>
-            <div class="mt-8 flex justify-center items-center">
-                <button onclick="toggleCRT()" id="crt-toggle-btn" class="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-md text-[10px] font-mono tracking-widest hover:bg-white/5 transition-colors bg-black">
-                    <span id="crt-status" class="text-gray-400">CRT FILTER</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>
-                </button>
-            </div>
-        </footer>
+function selectTrack(idx) {
+  currentIdx = idx;
+  const track = playlist[idx];
+  if (!track?.audio_url) return;
+  audio.src = track.audio_url;
+  audio.load();
+  audio.play().then(() => { isPlaying = true; updatePlayState(); }).catch(console.warn);
+}
 
-        <div id="project-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center opacity-0 transition-opacity duration-300">
-            <div onclick="closeModal()" class="absolute inset-0 bg-[#020203]/90 backdrop-blur-xl"></div>
-            <div id="modal-content-box" class="glass-strong border border-brand-red/20 max-w-[95vw] md:max-w-[90vw] lg:max-w-[75rem] w-full max-h-[90vh] md:h-[85vh] flex flex-col md:flex-row rounded-[2rem] overflow-hidden relative scale-95 transition-all duration-500 shadow-[0_0_80px_rgba(220,38,38,0.15)]">
-                
-                <button onclick="closeModal()" class="absolute top-5 right-5 md:top-8 md:right-8 z-50 bg-black/60 hover:bg-brand-red p-3 rounded-full text-white transition-all duration-300 border border-white/10 group hover:scale-110">
-                    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+function initAudio() {
+  const track = playlist[0];
+  if (!track?.audio_url) return;
+  audio.src = track.audio_url;
+  audio.load();
+}
 
-                <div class="w-full h-[40vh] md:h-full md:w-1/2 lg:w-[55%] bg-[#020203] relative flex items-center justify-center overflow-hidden group border-b md:border-b-0 md:border-r border-white/5">
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmurlCtncmlkKSIvPjwvc3ZnPg==')] opacity-40"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent to-[#050508]/90 pointer-events-none z-10"></div>
-                    <img id="modal-img" src="" class="w-full h-full object-contain md:object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 z-0 p-4 md:p-0" />
-                </div>
+function togglePlay() {
+  if (!audio.src || audio.src === window.location.href) {
+    const track = playlist[currentIdx];
+    if (track?.audio_url) { audio.src = track.audio_url; audio.load(); }
+  }
+  if (audio.paused) {
+    audio.play()
+      .then(() => { isPlaying = true; updatePlayState(); })
+      .catch(() => setStatus('Nhấn Play để bắt đầu.', false));
+  } else {
+    audio.pause();
+    isPlaying = false;
+    updatePlayState();
+  }
+}
 
-                <div class="w-full md:w-1/2 lg:w-[45%] flex flex-col h-[50vh] md:h-full bg-[#050508] relative">
-                    <div class="p-8 md:p-10 pb-6 border-b border-white/5 shrink-0 relative overflow-hidden">
-                        <span id="modal-category" class="inline-flex items-center gap-2 text-brand-red font-mono text-[10px] font-bold tracking-[0.2em] mb-4 uppercase px-3 py-1.5 bg-brand-red/10 border border-brand-red/20 rounded-md">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg><span id="modal-category-text">CATEGORY</span>
-                        </span>
-                        <h2 id="modal-title" class="lux-text text-3xl md:text-4xl font-bold tracking-tight text-white leading-[1.1]">Title</h2>
-                    </div>
+function updatePlayState() {
+  const icon = document.getElementById('playIcon');
+  const coverImg = document.getElementById('coverImg');
+  const eqBars = document.getElementById('eqBars');
+  if (icon) {
+    icon.innerHTML = isPlaying
+      ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+      : '<polygon points="5,3 19,12 5,21"/>';
+  }
+  if (coverImg) coverImg.classList.toggle('playing', isPlaying);
+  if (eqBars) eqBars.classList.toggle('playing', isPlaying);
+}
 
-                    <div class="flex-1 overflow-y-auto custom-scroll p-8 md:p-10 relative">
-                        <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-10 p-6 bg-[#0a0a0f] border border-white/5 rounded-2xl">
-                            <div><div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Client / Project</div><div id="modal-client" class="text-sm font-semibold text-gray-200">Independent</div></div>
-                            <div><div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Role</div><div id="modal-role" class="text-sm font-semibold text-gray-200">Visual Designer</div></div>
-                            <div><div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Timeline</div><div id="modal-year" class="text-sm font-semibold text-gray-200">2023 - Present</div></div>
-                            <div><div class="text-[9px] font-mono text-gray-500 tracking-widest uppercase mb-1">Tech / Software</div><div id="modal-tech" class="text-sm font-semibold text-brand-red">Photoshop, Illustrator</div></div>
-                        </div>
-                        <div class="prose prose-invert prose-sm max-w-none">
-                            <h3 class="text-white font-mono text-[11px] tracking-[0.2em] mb-4 flex items-center gap-3 uppercase"><span class="w-1.5 h-4 bg-brand-red inline-block"></span> Project Overview</h3>
-                            <p id="modal-desc" class="text-gray-400 leading-[1.8] font-light text-[14px] md:text-[15px] whitespace-pre-line"></p>
-                        </div>
-                    </div>
+function updateCoverState() {
+  const coverImg = document.getElementById('coverImg');
+  if (coverImg) coverImg.classList.toggle('playing', isPlaying);
+  const eqBars = document.getElementById('eqBars');
+  if (eqBars) eqBars.classList.toggle('playing', isPlaying);
+}
 
-                    <div class="p-6 md:p-8 border-t border-white/5 shrink-0 bg-[#050508]">
-                        <a id="modal-link" href="#" target="_blank" class="flex items-center justify-between w-full py-4 px-6 border border-brand-red/30 bg-brand-red/10 text-white hover:bg-brand-red transition-all duration-300 rounded-xl text-xs font-bold tracking-[0.2em] uppercase group">
-                            <span>LAUNCH LIVE PROJECT</span><svg class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
+function seekAudio(e) {
+  if (!audio.duration) return;
+  const bar = e.currentTarget;
+  const ratio = e.offsetX / bar.offsetWidth;
+  audio.currentTime = ratio * audio.duration;
+}
 
-    <script>
-        /* --- 1. CANVAS VẼ SAO --- */
-        const canvas = document.getElementById('space-canvas'); const ctx = canvas.getContext('2d'); let width, height, stars = [];
-        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        for (let i = 0; i < 150; i++) { stars.push({ x: Math.random() * width, y: Math.random() * height, radius: Math.random() * 1.2, speed: Math.random() * 0.3 + 0.05 }); }
-        function animateStars() {
-            ctx.clearRect(0, 0, width, height); ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            stars.forEach(star => { ctx.beginPath(); ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2); ctx.fill(); star.x -= star.speed; if (star.x < 0) { star.x = width; star.y = Math.random() * height; } });
-            requestAnimationFrame(animateStars);
-        }
-        animateStars();
+function setStatus(msg, ok=true) {
+  const el = document.getElementById('statusText');
+  const dot = document.getElementById('statusDot');
+  if (el) el.textContent = msg;
+  if (dot) { dot.className = 'status-dot ' + (ok?'ok':'err'); }
+}
 
-        /* --- 2. HIỆU ỨNG CUỘN TRANG (SCROLL REVEAL) --- */
-        const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-        function initScrollReveals() { document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '--:--';
+  const m = Math.floor(s/60), sec = Math.floor(s%60);
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
 
-        /* --- 3. KẾT NỐI VÀ XỬ LÝ DỮ LIỆU TỪ GOOGLE SHEETS --- */
-        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
-        let globalProjects = []; let crtEnabled = true;
+// Audio events
+audio.addEventListener('timeupdate', () => {
+  const fill = document.getElementById('progressFill');
+  const cur = document.getElementById('timeCur');
+  const dur = document.getElementById('timeDur');
+  if (fill && audio.duration) fill.style.width = (audio.currentTime/audio.duration*100)+'%';
+  if (cur) cur.textContent = fmtTime(audio.currentTime);
+  if (dur) dur.textContent = fmtTime(audio.duration);
+});
 
-        function parseCSVRow(str) {
-            const result = []; let current = '', inQuotes = false;
-            for (let i = 0; i < str.length; i++) {
-                const char = str[i];
-                if (char === '"') { if (inQuotes && str[i+1] === '"') { current += '"'; i++; } else inQuotes = !inQuotes; } 
-                else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; } 
-                else current += char;
-            }
-            result.push(current.trim()); return result.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
-        }
+audio.addEventListener('ended', () => {
+  audio.currentTime = 0;
+  audio.play().catch(console.warn);
+});
 
-        async function initPortfolio() {
-            const loadingEl = document.getElementById('loading');
-            try {
-                const res = await fetch(SHEET_CSV_URL);
-                if(!res.ok) throw new Error("Network error");
-                const csv = await res.text();
-                const rows = csv.split('\n').filter(r => r.trim());
-                const headers = parseCSVRow(rows[0]);
-                const findCol = name => headers.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name.toLowerCase()));
-                
-                const idxKey = findCol('configkey'), idxVal = findCol('configvalue');
-                const idxTitle = findCol('title'), idxCategory = findCol('category');
-                const idxImageUrl = findCol('imageurl'), idxDescription = findCol('description'), idxLink = findCol('link');
-                const idxClient = findCol('client'), idxRole = findCol('role'), idxYear = findCol('year'), idxTools = findCol('tools');
-                const idxEffect = findCol('effect');
+audio.addEventListener('error', () => {
+  setStatus('Lỗi phát audio.', false);
+  isPlaying = false; updatePlayState();
+});
 
-                const config = {}; const cards = []; const projects = [];
-                
-                rows.slice(1).forEach(row => {
-                    const vals = parseCSVRow(row);
-                    const k = vals[idxKey] || ''; const v = vals[idxVal] || '';
-                    if (k) config[k] = v;
-                    
-                    if (k.toLowerCase().startsWith('tradingcard') && !k.toLowerCase().includes('_effect') && v.startsWith('http')) {
-                        let rowEffect = (idxEffect > -1 && vals[idxEffect]) ? vals[idxEffect].toLowerCase() : null;
-                        cards.push({ id: k, img: v, effect: rowEffect });
-                    }
-                    
-                    if (vals[idxTitle]) {
-                        projects.push({
-                            Title: vals[idxTitle], Category: vals[idxCategory] || 'Project',
-                            ImageUrl: vals[idxImageUrl] || '', Description: vals[idxDescription] || '', Link: vals[idxLink] || '',
-                            Client: (idxClient > -1 && vals[idxClient]) ? vals[idxClient] : 'Independent',
-                            Role: (idxRole > -1 && vals[idxRole]) ? vals[idxRole] : 'Visual Designer',
-                            Year: (idxYear > -1 && vals[idxYear]) ? vals[idxYear] : '2023 - 2024',
-                            Tools: (idxTools > -1 && vals[idxTools]) ? vals[idxTools] : 'Photoshop / After Effects'
-                        });
-                    }
-                });
+// ---- Parse ConfigKey / ConfigValue format
+// Sheet columns: ConfigKey | ConfigValue | ... (any extra columns ignored)
+// Reads ALL rows, builds a map: { configkey_normalized: value }
+function parseKeyValue(csv) {
+  const rows = parseCSV(csv);
+  const map = {};
+  for (const row of rows) {
+    // Find the ConfigKey column (first column header containing 'key' or 'config')
+    const keyCol = Object.keys(row).find(k => k.includes('key') || k.includes('config')) || Object.keys(row)[0];
+    const valCol = Object.keys(row).find(k => k.includes('value') || k.includes('val')) || Object.keys(row)[1];
+    const k = (row[keyCol] || '').trim().toLowerCase().replace(/\s+/g,'').replace(/_/g,'');
+    const v = (row[valCol] || '').trim().replace(/^"|"$/g,'');
+    if (k) map[k] = v;
+  }
+  return map;
+}
 
-                const getConfigIgnoreCase = (targetKey) => {
-                    const foundKey = Object.keys(config).find(k => k.toLowerCase() === targetKey.toLowerCase());
-                    return foundKey ? config[foundKey] : null;
-                };
+// ---- Fetch & parse Sheet (key-value mode)
+async function loadSheet() {
+  document.getElementById('appContent').innerHTML = '<div class="loading-msg">Đang tải dữ liệu từ Sheet…</div>';
+  try {
+    const res = await fetch(`${SHEET_CSV_URL}&t=${Date.now()}`);
+    if (!res.ok) throw new Error('Network error');
+    const csv = await res.text();
+    const cfg = parseKeyValue(csv);
 
-                // --- LOGIC NHẠC BGM ---
-                const bgmUrl = getConfigIgnoreCase('audio_bgm');
-                if (bgmUrl) {
-                    const audioEl = document.getElementById('bg-audio');
-                    const toggleBtn = document.getElementById('music-toggle');
-                    const iconDiv = document.getElementById('music-icon');
-                    const statusDiv = document.getElementById('music-status');
-                    const eqBars = document.getElementById('eq-bars');
-                    
-                    audioEl.src = bgmUrl;
-                    audioEl.load();
-                    toggleBtn.classList.remove('hidden');
+    // Tìm audio_bgm (normalize: audiobgm)
+    const audioUrl = cfg['audiobgm'] || cfg['audiobgm1'] || cfg['audio'] || '';
+    const coverUrl = cfg['sitelogo'] || cfg['cover'] || cfg['coverurl'] || cfg['tradingcard1'] || '';
+    const fullName = cfg['fullname'] || 'Rayn Scofield';
+    const country  = cfg['country'] || '';
 
-                    let isPlaying = false;
-                    const toggleMusic = () => {
-                        if (isPlaying) {
-                            audioEl.pause();
-                            iconDiv.innerHTML = `<svg class="w-5 h-5 text-gray-400 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
-                            statusDiv.textContent = "OFFLINE";
-                            statusDiv.className = "text-[10px] font-bold text-gray-400 font-mono tracking-widest leading-none";
-                            eqBars.classList.replace('flex', 'hidden');
-                            isPlaying = false;
-                        } else {
-                            audioEl.play().then(() => {
-                                iconDiv.innerHTML = `<svg class="w-5 h-5 text-brand-crt ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
-                                statusDiv.textContent = "ONLINE";
-                                statusDiv.className = "text-[10px] font-bold text-brand-crt font-mono tracking-widest leading-none";
-                                eqBars.classList.replace('hidden', 'flex');
-                                isPlaying = true;
-                            }).catch(e => console.log("Autoplay blocked"));
-                        }
-                    };
+    // Chấp nhận cả link tuyệt đối (http) và đường dẫn tương đối (./file.mp3 hoặc Spacewalk.mp3)
+    if (!audioUrl) {
+      throw new Error('Không tìm thấy key "audio_bgm" trong Sheet.');
+    }
 
-                    toggleBtn.addEventListener('click', toggleMusic);
+    // Build single-track playlist
+    playlist = [{
+      title:     'BGM',
+      artist:    fullName + (country ? ' · ' + country : ''),
+      audio_url: audioUrl,
+      cover_url: coverUrl,
+    }];
 
-                    const startOnInteraction = () => {
-                        if (!isPlaying && audioEl.src) {
-                            toggleMusic();
-                            document.removeEventListener('click', startOnInteraction);
-                            document.removeEventListener('scroll', startOnInteraction);
-                            document.removeEventListener('keydown', startOnInteraction);
-                        }
-                    };
-                    document.addEventListener('click', startOnInteraction);
-                    document.addEventListener('scroll', startOnInteraction, { once: true });
-                    document.addEventListener('keydown', startOnInteraction, { once: true });
-                }
+    renderPlayer();
+    initAudio();
+    setStatus('BGM đã tải xong', true);
+  } catch (err) {
+    document.getElementById('appContent').innerHTML = `
+      <div class="error-msg">
+        Lỗi: ${err.message}<br><br>
+        <small style="color:#555">Kiểm tra URL Sheet và quyền "Publish to web"</small>
+      </div>`;
+    console.error(err);
+  }
+}
 
-                // --- LOGIC LOAD CHỮ KÝ (SITESIGNATURE) ---
-                const signatureUrl = getConfigIgnoreCase('siteSignature'); 
-                if (signatureUrl) {
-                    document.getElementById('site-signature-img-box').innerHTML = `
-                        <img src="${signatureUrl}" alt="Rayn Scofield Signature" class="h-full w-auto object-contain">
-                    `;
-                }
-
-                // Khớp hiệu ứng Card
-                const processedCards = cards.map(c => {
-                    if (!c.effect) {
-                        const effectKey = Object.keys(config).find(key => key.toLowerCase() === c.id.toLowerCase() + '_effect');
-                        c.effect = effectKey ? config[effectKey].toLowerCase() : 'holo';
-                    }
-                    if (c.effect.includes('gold')) c.effect = 'mirrorgold';
-                    else if (c.effect.includes('silver')) c.effect = 'silver';
-                    else c.effect = 'holo';
-                    return c;
-                });
-
-                document.getElementById('cards-container').innerHTML = processedCards.map((c, i) => `
-                    <div class="card-scene w-[260px] h-[364px] cursor-crosshair reveal delay-${(i%3)*100}">
-                        <div class="card-inner rounded-none">
-                            <div class="glare"></div><div class="specular"></div>
-                            <div class="card-effect effect-${c.effect}"></div>
-                            <img src="${c.img}" class="w-full h-full object-cover" loading="lazy">
-                        </div>
-                    </div>
-                `).join('');
-
-                document.getElementById('portfolio-grid').innerHTML = projects.map((p, i) => `
-                    <div onclick="openModal(${i})" class="project-card glass-panel cursor-pointer overflow-hidden rounded-2xl group reveal delay-${(i%3)*100}">
-                        <div class="h-64 relative overflow-hidden bg-black">
-                            <img src="${p.ImageUrl}" class="w-full h-full object-cover group-hover:scale-105 group-hover:opacity-60 transition-all duration-700" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                            <div class="absolute bottom-6 left-6 right-6 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                                <p class="text-brand-red font-mono text-[10px] tracking-[0.2em] mb-2">> ${p.Category}</p>
-                                <h3 class="font-bold text-xl text-white drop-shadow-md line-clamp-2">${p.Title}</h3>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
-                globalProjects = projects; loadingEl.classList.add('hidden');
-                setTimeout(initScrollReveals, 100); attachCardListeners();
-            } catch (e) {
-                loadingEl.innerHTML = `<span class="text-red-500 font-mono">ERR: FETCH_FAILED [OFFLINE MODE]</span>`;
-            }
-        }
-
-        /* --- 4. TẠO LOGO LED MA TRẬN 007 (GIỮ NGUYÊN GỐC) --- */
-        function initLED() {
-            const matrix = document.getElementById('site-logo-led');
-            matrix.innerHTML = '';
-            
-            const layout = [
-                "C.WWW.WWW.RRR.C",
-                "..W.W.W.W...R..",
-                "..W.W.W.W..R...",
-                "C.WWW.WWW.R...C"
-            ];
-
-            layout.forEach(row => {
-                for(let char of row) {
-                    const px = document.createElement('div');
-                    if (char === 'W') px.className = 'pxl w';
-                    else if (char === 'R') px.className = 'pxl r';
-                    else if (char === 'C') px.className = 'pxl c'; 
-                    else px.className = 'pxl dim';
-                    matrix.appendChild(px);
-                }
-            });
-        }
-
-        /* --- 5. TÍNH TOÁN HIỆU ỨNG VẬT LÝ KHI RÊ CHUỘT --- */
-        let ticking = false;
-        function mv(e, el) {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const inner = el.querySelector('.card-inner');
-                    const glare = el.querySelector('.glare');
-                    const specular = el.querySelector('.specular');
-                    const effectLayer = el.querySelector('.card-effect'); 
-                    
-                    const r = el.getBoundingClientRect();
-                    const x = (e.clientX - r.left) / r.width - 0.5;
-                    const y = (e.clientY - r.top) / r.height - 0.5;
-
-                    inner.style.transform = `rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
-                    
-                    if(glare) { glare.style.opacity = '1'; glare.style.backgroundPosition = `${(x + 0.5) * 100}% ${(y + 0.5) * 100}%`; }
-                    if (specular) { specular.style.setProperty('--mx', `${(x + 0.5) * 100}%`); specular.style.setProperty('--my', `${(y + 0.5) * 100}%`); specular.style.opacity = '0.4'; }
-                    
-                    if (effectLayer) {
-                        effectLayer.style.opacity = '0.85';
-                        effectLayer.style.backgroundPosition = `${(x * 1.5 + 0.5) * 100}% ${(y * 1.5 + 0.5) * 100}%`;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-        function ml(el) {
-            const inner = el.querySelector('.card-inner'), glare = el.querySelector('.glare');
-            const specular = el.querySelector('.specular'), effectLayer = el.querySelector('.card-effect');
-            inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-            if(glare) glare.style.opacity = '0'; if(specular) specular.style.opacity = '0'; if(effectLayer) effectLayer.style.opacity = '0';
-        }
-        function attachCardListeners() {
-            document.querySelectorAll('.card-scene').forEach(el => {
-                el.addEventListener('mousemove', e => mv(e, el)); el.addEventListener('mouseleave', () => ml(el));
-            });
-        }
-
-        /* --- 6. LOGIC ĐIỀU KHIỂN GIAO DIỆN KHÁC (Modal, Scroll...) --- */
-        function openModal(i) {
-            const p = globalProjects[i]; if (!p) return;
-            document.getElementById('modal-img').src = p.ImageUrl; document.getElementById('modal-category-text').textContent = p.Category;
-            document.getElementById('modal-title').textContent = p.Title; document.getElementById('modal-desc').textContent = p.Description;
-            document.getElementById('modal-client').textContent = p.Client; document.getElementById('modal-role').textContent = p.Role;
-            document.getElementById('modal-year').textContent = p.Year; document.getElementById('modal-tech').textContent = p.Tools;
-            const linkEl = document.getElementById('modal-link');
-            if (p.Link) { linkEl.href = p.Link; linkEl.style.display = 'flex'; } else linkEl.style.display = 'none';
-            
-            const modal = document.getElementById('project-modal'); const contentBox = document.getElementById('modal-content-box');
-            modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden';
-            setTimeout(() => { modal.classList.remove('opacity-0'); contentBox.classList.remove('scale-95'); contentBox.classList.add('scale-100'); }, 10);
-        }
-        function closeModal() {
-            const modal = document.getElementById('project-modal'); const contentBox = document.getElementById('modal-content-box');
-            modal.classList.add('opacity-0'); contentBox.classList.remove('scale-100'); contentBox.classList.add('scale-95'); document.body.style.overflow = ''; 
-            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
-        }
-        function smoothScrollTo(id) { const el = document.getElementById(id); const top = el.getBoundingClientRect().top + window.pageYOffset - 80; window.scrollTo({ top, behavior: "smooth" }); }
-        function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
-        function toggleCRT() {
-            crtEnabled = !crtEnabled; const overlay = document.getElementById('crt-overlay'), btn = document.getElementById('crt-toggle-btn');
-            if (crtEnabled) { overlay.style.opacity = '1'; btn.innerHTML = `<span class="text-gray-400">CRT FILTER</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>`; } 
-            else { overlay.style.opacity = '0'; btn.innerHTML = `<span class="text-gray-600">CRT FILTER</span><div class="w-1.5 h-1.5 bg-gray-600 rounded-full"></div>`; }
-        }
-        async function submitContactForm(e) {
-            e.preventDefault(); const btn = document.getElementById('submit-btn'); const original = btn.innerHTML;
-            btn.disabled = true; btn.innerHTML = '<span class="animate-pulse">TRANSMITTING...</span>';
-            setTimeout(() => { document.getElementById('form-success').classList.remove('hidden'); e.target.reset(); setTimeout(() => { document.getElementById('form-success').classList.add('hidden'); btn.disabled = false; btn.innerHTML = original; }, 4000); }, 1000);
-        }
-        window.addEventListener('scroll', () => {
-            const h = document.getElementById('main-header');
-            if (window.scrollY > 50) { h.classList.add('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(220, 38, 38, 0.2)"; } 
-            else { h.classList.remove('shadow-lg', 'bg-opacity-90'); h.style.borderBottomColor = "rgba(255, 255, 255, 0.05)"; }
-        });
-
-        /* --- 7. KHỞI CHẠY HỆ THỐNG --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-            initLED(); 
-            initScrollReveals(); 
-            if (SHEET_CSV_URL.includes('http')) initPortfolio(); 
-            document.getElementById('contact-form').addEventListener('submit', submitContactForm);
-            document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('project-modal').classList.contains('flex')) closeModal(); });
-        });
-    </script>
+loadSheet();
+</script>
 </body>
 </html>
