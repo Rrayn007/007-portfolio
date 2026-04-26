@@ -2181,6 +2181,48 @@
         });
 
     })();
+        /* ════════════════════════════════════════════
+           007 SYSTEM SECURITY PROTOCOL (Levels 1, 3, 4)
+        ════════════════════════════════════════════ */
+        (function() {
+            'use strict';
+        
+            // 1. CHẶN THAO TÁC CƠ BẢN (Chuột phải, F12, Ctrl+U, Ctrl+Shift+I...)
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        
+            document.onkeydown = function(e) {
+                // Chặn F12
+                if (e.keyCode == 123) return false;
+                // Chặn Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+                if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false;
+                // Chặn Ctrl+U (View Source)
+                if (e.ctrlKey && e.keyCode == 85) return false;
+                // Chặn Ctrl+S (Lưu trang web)
+                if (e.ctrlKey && e.keyCode == 83) return false;
+            };
+        
+            // 3. CHỐNG DEBUG (Liên tục gọi Debugger để treo bảng Console nếu cố tình mở)
+            setInterval(function() {
+                (function() {
+                    return false;
+                }['constructor']('debugger')['call']());
+            }, 100);
+        
+            // 4. BẢO VỆ TÀI SẢN (Vô hiệu hóa việc nắm kéo hoặc click vào hình ảnh)
+            // Áp dụng cho tất cả thẻ img và các Trading Card
+            document.querySelectorAll('img, .card-inner, .project-card-img').forEach(el => {
+                el.style.userSelect = 'none';
+                el.style.webkitUserDrag = 'none';
+                el.addEventListener('dragstart', e => e.preventDefault());
+                
+                // Tạo lớp phủ trong suốt tạm thời để chặn chuột phải trên mobile/desktop
+                el.style.pointerEvents = 'none'; 
+                // Lưu ý: Nếu card cần click để mở modal, hãy đảm bảo bọc nó trong 1 thẻ div khác có pointer-events: auto
+            });
+        
+            // Thông báo nhỏ trong console cho những "vị khách" cố gắng phá khóa
+            console.log("%c[007 SYSTEM]%c ACCESS DENIED. Unauthorized inspection is prohibited.", "color:red;font-weight:bold;font-size:20px;", "color:gray;font-size:14px;");
+        })();
     </script>
 </body>
 </html>
