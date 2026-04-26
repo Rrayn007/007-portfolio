@@ -1084,8 +1084,6 @@
         }
         @keyframes toastPop { from { opacity:0; transform:translateY(8px) scale(.95); } to { opacity:1; transform:translateY(0) scale(1); } }
 
-
-
         /* ─────────────────────────────────────────────
            PROJECT MODAL
         ───────────────────────────────────────────── */
@@ -1249,19 +1247,15 @@
     </style>
 </head>
 <body>
-    <!-- Layers -->
     <div id="crt-overlay" class="crt-overlay" aria-hidden="true"></div>
     <canvas id="space-canvas" aria-hidden="true"></canvas>
     <div class="moon-glow" aria-hidden="true"></div>
     <div class="floater floater--ring" aria-hidden="true"></div>
     <div class="floater floater--grid" aria-hidden="true"></div>
 
-    <!-- Audio -->
     <audio id="bg-audio" preload="auto"></audio>
 
-    <!-- Music Player -->
     <div id="music-player" aria-label="Background music player">
-        <!-- Expandable Panel -->
         <div id="music-panel" class="music-panel" role="region" aria-label="Music controls">
             <div class="mp-track">
                 <div class="mp-disc">
@@ -1273,12 +1267,10 @@
                 </div>
             </div>
 
-            <!-- Progress bar -->
             <div class="mp-progress" id="mp-progress" title="Seek">
                 <div class="mp-progress-fill" id="mp-progress-fill"></div>
             </div>
 
-            <!-- Controls -->
             <div class="mp-controls">
                 <button class="mp-btn" id="mp-prev" aria-label="Previous track" title="Prev">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
@@ -1291,7 +1283,6 @@
                 </button>
             </div>
 
-            <!-- Volume row -->
             <div class="mp-volume-row">
                 <svg class="mp-vol-icon" id="vol-icon" width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
                 <input type="range" id="vol-slider" class="mp-vol-slider" min="0" max="100" value="50" aria-label="Volume">
@@ -1299,7 +1290,6 @@
             </div>
         </div>
 
-        <!-- Pill trigger -->
         <button id="music-pill" class="music-pill" aria-label="Toggle music player" aria-expanded="false">
             <div class="pill-play-circle" id="pill-circle">
                 <svg id="pill-icon" width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -1317,13 +1307,11 @@
         </button>
     </div>
 
-    <!-- Mobile toast -->
     <div id="music-toast" class="music-toast">▶ TAP TO PLAY MUSIC</div>
 
 
     <div id="main-interface">
 
-        <!-- HEADER -->
         <header class="site-header" id="site-header">
             <div class="container header-inner">
                 <div id="site-logo-led" class="pixel-logo" role="button" tabindex="0" aria-label="Go to top" onclick="scrollToSection('hero')"></div>
@@ -1346,7 +1334,6 @@
             </nav>
         </header>
 
-        <!-- HERO -->
         <section id="hero" class="hero" style="position:relative">
             <div class="reveal">
                 <div class="hero-badge" style="display:inline-flex">
@@ -1355,12 +1342,12 @@
                 </div>
             </div>
             <h1 class="hero-title lux-text reveal" data-delay="1">
-                <span>RAYN</span>
-                <span>SCOFIELD</span>
+                <span id="sys-first-name">RAYN</span>
+                <span id="sys-last-name">SCOFIELD</span>
             </h1>
             <div class="hero-tagline reveal" data-delay="2">
                 <span>///</span>
-                VISUAL ARCHITECT &amp; CYBERPUNK STORYTELLER
+                <span id="sys-tagline">VISUAL ARCHITECT &amp; CYBERPUNK STORYTELLER</span>
                 <span>///</span>
             </div>
             <div class="hero-meta reveal" data-delay="3">
@@ -1375,29 +1362,28 @@
             </div>
         </section>
 
-        <!-- ABOUT -->
         <section id="about" class="about-section">
             <div class="container">
                 <div class="about-grid">
                     <div class="reveal">
                         <div class="section-label">/// SYS.PROFILE</div>
-                        <h2 class="section-title lux-text">THE ARCHITECT<br>BEHIND THE PIXELS</h2>
-                        <div class="about-text">
+                        <h2 id="sys-about-title" class="section-title lux-text">THE ARCHITECT<br>BEHIND THE PIXELS</h2>
+                        <div id="sys-about-desc" class="about-text">
                             <p>Một Visual Architect và Motion Designer với niềm đam mê sâu sắc dành cho thế giới Cyberpunk, nghệ thuật số và trải nghiệm không gian mạng.</p>
                             <p>Tôi không chỉ thiết kế đồ họa; tôi xây dựng các hệ sinh thái thị giác. Từ định dạng 3D Immersive, Cinematic Motion đến những bộ nhận diện thương hiệu mang hơi thở của tương lai.</p>
                         </div>
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-label">EXP</div>
-                                <div class="stat-value">6+ YRS</div>
+                                <div id="sys-stat-1" class="stat-value">6+ YRS</div>
                             </div>
                             <div class="stat-card">
                                 <div class="stat-label">CLIENTS</div>
-                                <div class="stat-value">42+</div>
+                                <div id="sys-stat-2" class="stat-value">42+</div>
                             </div>
                             <div class="stat-card">
                                 <div class="stat-label">BASED</div>
-                                <div class="stat-value">VN</div>
+                                <div id="sys-stat-3" class="stat-value">VN</div>
                             </div>
                         </div>
                     </div>
@@ -1434,7 +1420,6 @@
             </div>
         </section>
 
-        <!-- WORK -->
         <section id="work" class="work-section">
             <div class="container">
                 <div class="work-header reveal">
@@ -1451,7 +1436,6 @@
             </div>
         </section>
 
-        <!-- COLLECTION -->
         <section id="collection" class="collection-section">
             <div class="container">
                 <div class="reveal" style="text-align:center;margin-bottom:4rem">
@@ -1462,7 +1446,6 @@
             </div>
         </section>
 
-        <!-- CONTACT -->
         <section id="contact" class="contact-section">
             <div class="container">
                 <div class="contact-box reveal">
@@ -1493,7 +1476,6 @@
             </div>
         </section>
 
-        <!-- FOOTER -->
         <footer class="site-footer">
             <div id="site-signature-img-box" class="footer-sig"></div>
             <div class="footer-version">v.007 // CYBER_CORE_ONLINE</div>
@@ -1506,10 +1488,7 @@
             </div>
         </footer>
 
-    </div><!-- /#main-interface -->
-
-    <!-- PROJECT MODAL -->
-    <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
+    </div><div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
         <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
         <div id="modal-box" class="modal-box">
             <button class="modal-close" onclick="closeModal()" aria-label="Close">
@@ -1571,10 +1550,8 @@
         ════════════════════════════════════════════ */
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzfUCbZ2r6kXI5fSqKov3aJRngpXzCRlhTeW3B8A1whJHLEXjqGDGlrgt-3DC74ZTYxatDqB35eAwP/pub?output=csv";
 
-        // Thêm link nhạc GitHub vào đây (raw link .mp3). Để [] thì dùng audio_bgm từ Sheet.
         const GITHUB_PLAYLIST = [
             "https://github.com/Rrayn007/007-portfolio/raw/refs/heads/main/SpaceWalk.mp3",
-            // "https://raw.githubusercontent.com/user/repo/main/track2.mp3",
         ];
 
         /* ════════════════════════════════════════════
@@ -1695,7 +1672,7 @@
                 const col   = name => hdr.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name));
 
                 const iKey=col('configkey'), iVal=col('configvalue'),
-                      iTtl=col('title'),    iCat=col('category'),
+                      iTtl=col('title'),     iCat=col('category'),
                       iImg=col('imageurl'), iDesc=col('description'),
                       iLnk=col('link'),     iCli=col('client'),
                       iRol=col('role'),     iYr=col('year'),
@@ -1730,8 +1707,30 @@
 
                 const cfg = k => config[k.toLowerCase()] ?? null;
 
+                // --- BẢN ĐỒ DỮ LIỆU ĐỘNG TỪ GOOGLE SHEET ---
+                const mapData = (id, key, isHTML = false) => {
+                    const el = document.getElementById(id);
+                    const val = cfg(key);
+                    if (el && val) {
+                        if (isHTML) el.innerHTML = val;
+                        else el.textContent = val;
+                    }
+                };
+
+                mapData('sys-first-name', 'hero_first_name');
+                mapData('sys-last-name', 'hero_last_name');
+                mapData('sys-tagline', 'hero_tagline');
+                mapData('p-country-name', 'hero_location'); 
+                
+                mapData('sys-about-title', 'about_title', true);
+                mapData('sys-about-desc', 'about_desc', true);
+                
+                mapData('sys-stat-1', 'stat_1_val');
+                mapData('sys-stat-2', 'stat_2_val');
+                mapData('sys-stat-3', 'stat_3_val');
+                // ------------------------------------------
+
                 /* BGM */
-                /* BGM — ưu tiên GITHUB_PLAYLIST, fallback sheet */
                 const bgmUrl = cfg('audio_bgm');
                 const playlist = (GITHUB_PLAYLIST && GITHUB_PLAYLIST.filter(Boolean).length)
                     ? GITHUB_PLAYLIST.filter(Boolean)
@@ -1745,7 +1744,7 @@
                         `<img src="${encodeURI(sig)}" alt="Rayn Scofield Signature" loading="lazy">`;
                 }
 
-                /* Skill tags from config (e.g. hero_skills = "Motion, 3D, WebGL, Branding") */
+                /* Skill tags from config */
                 const skillsRaw = cfg('hero_skills');
                 if (skillsRaw) {
                     const tags = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
@@ -1895,7 +1894,6 @@
             let panelOpen   = false;
             let isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-            // Helper: extract filename as track name
             const trackName = url => {
                 try {
                     const parts = decodeURIComponent(url).split('/');
@@ -1903,7 +1901,6 @@
                 } catch { return 'TRACK ' + (trackIdx + 1); }
             };
 
-            // Load track
             const loadTrack = idx => {
                 trackIdx = ((idx % trackList.length) + trackList.length) % trackList.length;
                 audio.src = trackList[trackIdx];
@@ -1912,7 +1909,6 @@
                 progFill.style.width = '0%';
             };
 
-            // UI state: playing
             const setPlayingUI = () => {
                 musicPlaying = true;
                 mpPlayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
@@ -1923,7 +1919,6 @@
                 discRing.classList.add('spinning');
             };
 
-            // UI state: paused
             const setPausedUI = () => {
                 musicPlaying = false;
                 mpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
@@ -1934,14 +1929,12 @@
                 discRing.classList.remove('spinning');
             };
 
-            // Play
             const play = (forceLoad) => {
                 if (forceLoad) loadTrack(trackIdx);
                 const p = audio.play();
                 if (p !== undefined) {
                     p.then(setPlayingUI).catch(err => {
                         console.warn('Autoplay blocked:', err.message);
-                        // On mobile: show toast hint
                         if (isMobile) showToast();
                     });
                 } else {
@@ -1952,23 +1945,18 @@
             const pause = () => { audio.pause(); setPausedUI(); };
             const toggle = () => musicPlaying ? pause() : play(false);
 
-            // Toast for mobile
             const showToast = () => {
                 toast.style.display = 'block';
                 setTimeout(() => { toast.style.display = 'none'; }, 3500);
             };
 
-            // Volume
             audio.volume = parseFloat(volSlider.value) / 100;
             const updateVol = () => {
                 const v = parseInt(volSlider.value);
                 audio.volume = v / 100;
                 volPct.textContent = v + '%';
-                // Update slider gradient fill
                 volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
-                // Icon state
                 volIcon.classList.toggle('active', v > 0);
-                // Muted icon if 0
                 volIcon.innerHTML = v === 0
                     ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/>'
                     : v < 50
@@ -1978,7 +1966,6 @@
             volSlider.addEventListener('input', updateVol);
             updateVol();
 
-            // Progress bar
             audio.addEventListener('timeupdate', () => {
                 if (!audio.duration) return;
                 const pct = (audio.currentTime / audio.duration) * 100;
@@ -1990,13 +1977,11 @@
                 audio.currentTime = pct * (audio.duration || 0);
             });
 
-            // Track ended → next
             audio.addEventListener('ended', () => {
                 loadTrack(trackIdx + 1);
                 play(false);
             });
 
-            // Prev / Next
             mpPrev.addEventListener('click', e => {
                 e.stopPropagation();
                 loadTrack(trackIdx - 1);
@@ -2008,17 +1993,14 @@
                 if (musicPlaying) play(false); else setPausedUI();
             });
 
-            // Panel play button
             mpPlay.addEventListener('click', e => { e.stopPropagation(); toggle(); });
 
-            // Panel open/close via pill
             pill.addEventListener('click', () => {
                 panelOpen = !panelOpen;
                 panel.classList.toggle('open', panelOpen);
                 pill.setAttribute('aria-expanded', String(panelOpen));
             });
 
-            // Close panel on outside click
             document.addEventListener('click', e => {
                 if (panelOpen && !player.contains(e.target)) {
                     panelOpen = false;
@@ -2027,26 +2009,16 @@
                 }
             });
 
-            // Init first track
             loadTrack(0);
             player.classList.add('visible');
 
-            /* ── AUTOPLAY STRATEGY ──
-               Desktop: attempt on first scroll / click / keydown
-               Mobile: MUST wait for direct user gesture on our button
-               We show pill immediately; toast hints mobile users.
-            */
             if (isMobile) {
-                // Mobile: show toast after 1s to hint user
                 setTimeout(showToast, 1200);
-                // Play only on direct pill/panel button touch
                 mpPlay.addEventListener('touchend', () => { if (!musicPlaying) play(false); }, { passive: true });
                 pill.addEventListener('touchend', () => {
-                    // small delay so panel toggle fires first
                     setTimeout(() => { if (!musicPlaying) play(false); }, 50);
                 }, { passive: true });
             } else {
-                // Desktop: play on first passive user interaction
                 const firstPlay = () => {
                     if (!musicPlaying) play(false);
                     document.removeEventListener('scroll',  firstPlay);
@@ -2056,7 +2028,6 @@
                 document.addEventListener('keydown', firstPlay, { once: true });
             }
         }
-
 
         /* ════════════════════════════════════════════
            MODAL
@@ -2150,11 +2121,11 @@
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
             success.style.display = 'none';
-        
+
             // 2. Gửi data đi
             fetch(scriptURL, { 
                 method: 'POST', 
-                body: data, // Sử dụng biến data đã chuyển đổi
+                body: data, 
                 mode: 'no-cors' 
             })
             .then(() => {
