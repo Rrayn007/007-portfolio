@@ -2128,23 +2128,50 @@
         };
 
         /* ════════════════════════════════════════════
-           CONTACT FORM
+           CONTACT FORM (LIVE CONNECTION TO GOOGLE SHEETS)
         ════════════════════════════════════════════ */
         function handleContactSubmit(e) {
             e.preventDefault();
+            
+            const form = e.target;
             const btn = document.getElementById('submit-btn');
             const success = document.getElementById('form-success');
+            
+            // Lấy dữ liệu từ form
+            const formData = new FormData(form);
+            
+            // THAY URL CỦA BẠN VÀO ĐÂY
+            const scriptURL = 'https://script.google.com/macros/s/AKfycby.../exec'; 
+            
+            // Đổi trạng thái UI
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
-            setTimeout(() => {
-                success.style.display = 'block';
-                e.target.reset();
-                setTimeout(() => {
-                    success.style.display = '';
-                    btn.disabled = false;
-                    btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
-                }, 4000);
-            }, 1000);
+            success.style.display = 'none'; // Ẩn thông báo cũ nếu có
+        
+            // Gửi data đi
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    // Hiển thị thành công
+                    success.style.display = 'block';
+                    success.style.color = 'var(--c-crt)'; // Trả về màu xanh lá
+                    success.textContent = '> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]';
+                    form.reset();
+                })
+                .catch(error => {
+                    // Xử lý nếu lỗi mạng
+                    console.error('Error!', error.message);
+                    success.style.display = 'block';
+                    success.style.color = 'var(--c-red)'; // Đổi sang màu đỏ
+                    success.textContent = '> SYS.ERR: TRANSMISSION FAILED. RETRY LATER.';
+                })
+                .finally(() => {
+                    // Trả nút lại trạng thái ban đầu sau 4 giây
+                    setTimeout(() => {
+                        success.style.display = 'none';
+                        btn.disabled = false;
+                        btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+                    }, 4000);
+                });
         }
 
         /* ════════════════════════════════════════════
