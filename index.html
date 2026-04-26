@@ -476,7 +476,7 @@
         }
         @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
 
-        .about-text { font-size: 1rem; line-height: 1.8; color: #9ca3af; font-weight: 300; white-space: pre-line;}
+        .about-text { font-size: 1rem; line-height: 1.8; color: #9ca3af; font-weight: 300; }
         .about-text p + p { margin-top: 1.5rem; }
 
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
@@ -1347,13 +1347,13 @@
             </h1>
             <div class="hero-tagline reveal" data-delay="2">
                 <span>///</span>
-                <span id="sys-tagline"> </span>
+                <span id="sys-tagline">VISUAL ARCHITECT &amp; CYBERPUNK STORYTELLER</span>
                 <span>///</span>
             </div>
             <div class="hero-meta reveal" data-delay="3">
                 <div class="hero-meta-item">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span id="p-country-name"> </span>
+                    <span id="p-country-name">Ho Chi Minh City, VN</span>
                 </div>
             </div>
             <div id="p-skills-tags" class="skill-tags reveal" data-delay="3"></div>
@@ -1367,7 +1367,7 @@
                 <div class="about-grid">
                     <div class="reveal">
                         <div class="section-label">/// SYS.PROFILE</div>
-                        <h2 id="sys-about-title" class="section-title lux-text"> </h2>
+                        <h2 id="sys-about-title" class="section-title lux-text">THE ARCHITECT<br>BEHIND THE PIXELS</h2>
                         <div id="sys-about-desc" class="about-text">
                             <p>Một Visual Architect và Motion Designer với niềm đam mê sâu sắc dành cho thế giới Cyberpunk, nghệ thuật số và trải nghiệm không gian mạng.</p>
                             <p>Tôi không chỉ thiết kế đồ họa; tôi xây dựng các hệ sinh thái thị giác. Từ định dạng 3D Immersive, Cinematic Motion đến những bộ nhận diện thương hiệu mang hơi thở của tương lai.</p>
@@ -1375,15 +1375,15 @@
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-label">EXP</div>
-                                <div id="sys-stat-1" class="stat-value"> </div>
+                                <div id="sys-stat-1" class="stat-value">6+ YRS</div>
                             </div>
                             <div class="stat-card">
                                 <div class="stat-label">CLIENTS</div>
-                                <div id="sys-stat-2" class="stat-value"> </div>
+                                <div id="sys-stat-2" class="stat-value">42+</div>
                             </div>
                             <div class="stat-card">
                                 <div class="stat-label">BASED</div>
-                                <div id="sys-stat-3" class="stat-value"> </div>
+                                <div id="sys-stat-3" class="stat-value">VN</div>
                             </div>
                         </div>
                     </div>
@@ -1488,50 +1488,53 @@
             </div>
         </footer>
 
-       <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true">
-        <div class="modal-bg" onclick="closeModal()"></div>
+    </div><div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
+        <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
         <div id="modal-box" class="modal-box">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
             <div class="modal-image-pane">
-                <img id="modal-img" src="" alt="Project Image">
+                <div class="modal-grid-bg" aria-hidden="true"></div>
+                <div class="modal-fade" aria-hidden="true"></div>
+                <img id="modal-img" src="" alt="Project image" loading="lazy">
             </div>
-    
             <div class="modal-content-pane">
                 <div class="modal-header">
                     <div class="modal-category-badge">
-                        <span id="modal-category-text"></span>
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        <span id="modal-category-text">CATEGORY</span>
                     </div>
-                    <h2 id="modal-title" class="modal-title"></h2>
+                    <h2 id="modal-title" class="modal-title">Title</h2>
                 </div>
-    
                 <div class="modal-body custom-scroll">
                     <div class="modal-meta">
                         <div>
                             <div class="meta-label">Client / Project</div>
-                            <div id="modal-client" class="meta-value"></div>
+                            <div id="modal-client" class="meta-value">Independent</div>
                         </div>
                         <div>
                             <div class="meta-label">Role</div>
-                            <div id="modal-role" class="meta-value"></div>
+                            <div id="modal-role" class="meta-value">Visual Designer</div>
                         </div>
                         <div>
                             <div class="meta-label">Timeline</div>
-                            <div id="modal-year" class="meta-value"></div>
+                            <div id="modal-year" class="meta-value">2023 - Present</div>
                         </div>
                         <div>
                             <div class="meta-label">Tech / Software</div>
-                            <div id="modal-tech" class="meta-value red"></div>
+                            <div id="modal-tech" class="meta-value red">Photoshop, Illustrator</div>
                         </div>
                     </div>
-                    <div class="modal-section-label">Project Overview</div>
-                    <p id="modal-desc" class="modal-desc"></p>
+                    <div>
+                        <div class="modal-section-label">Project Overview</div>
+                        <p id="modal-desc" class="modal-desc"></p>
+                    </div>
                 </div>
-    
                 <div class="modal-footer">
-                    <a id="modal-link" href="#" target="_blank" class="modal-launch" style="display: none;">
+                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="modal-launch">
                         <span>LAUNCH LIVE PROJECT</span>
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                     </a>
                 </div>
             </div>
@@ -2113,7 +2116,7 @@
             }
             
             // THAY WEB APP URL CỦA BẠN VÀO ĐÂY (Đuôi phải là /exec)
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec'; 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycby.../exec'; 
             
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
@@ -2178,48 +2181,6 @@
         });
 
     })();
-        /* ════════════════════════════════════════════
-           007 SYSTEM SECURITY PROTOCOL (Levels 1, 3, 4)
-        ════════════════════════════════════════════ */
-        (function() {
-            'use strict';
-        
-            // 1. CHẶN THAO TÁC CƠ BẢN (Chuột phải, F12, Ctrl+U, Ctrl+Shift+I...)
-            document.addEventListener('contextmenu', e => e.preventDefault());
-        
-            document.onkeydown = function(e) {
-                // Chặn F12
-                if (e.keyCode == 123) return false;
-                // Chặn Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-                if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false;
-                // Chặn Ctrl+U (View Source)
-                if (e.ctrlKey && e.keyCode == 85) return false;
-                // Chặn Ctrl+S (Lưu trang web)
-                if (e.ctrlKey && e.keyCode == 83) return false;
-            };
-        
-            // 3. CHỐNG DEBUG (Liên tục gọi Debugger để treo bảng Console nếu cố tình mở)
-            setInterval(function() {
-                (function() {
-                    return false;
-                }['constructor']('debugger')['call']());
-            }, 100);
-        
-            // 4. BẢO VỆ TÀI SẢN (Vô hiệu hóa việc nắm kéo hoặc click vào hình ảnh)
-            // Áp dụng cho tất cả thẻ img và các Trading Card
-            document.querySelectorAll('img, .card-inner, .project-card-img').forEach(el => {
-                el.style.userSelect = 'none';
-                el.style.webkitUserDrag = 'none';
-                el.addEventListener('dragstart', e => e.preventDefault());
-                
-                // Tạo lớp phủ trong suốt tạm thời để chặn chuột phải trên mobile/desktop
-                el.style.pointerEvents = 'none'; 
-                // Lưu ý: Nếu card cần click để mở modal, hãy đảm bảo bọc nó trong 1 thẻ div khác có pointer-events: auto
-            });
-        
-            // Thông báo nhỏ trong console cho những "vị khách" cố gắng phá khóa
-            console.log("%c[007 SYSTEM]%c ACCESS DENIED. Unauthorized inspection is prohibited.", "color:red;font-weight:bold;font-size:20px;", "color:gray;font-size:14px;");
-        })();
     </script>
 </body>
 </html>
