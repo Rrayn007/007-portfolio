@@ -2141,37 +2141,36 @@
             const formData = new FormData(form);
             
             // THAY URL CỦA BẠN VÀO ĐÂY
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxEGSDXPb0_-Azp3MAiHn7R-jY4GHTOsODbyo_qeAy1TLx7NEsVoLoVjL0D2HoP46gdsw/exec'; 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxyFNfurSgXz0Xm2Dx22UN_Vj8J-YywniCtZkARFVKHO_dD6ZTL9UEkkWXbqWF4K8lPxw/exec'; 
             
             // Đổi trạng thái UI
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
             success.style.display = 'none'; // Ẩn thông báo cũ nếu có
         
-            // Gửi data đi
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(response => {
-                    // Hiển thị thành công
+            // Gửi data đi kèm mode 'no-cors'
+            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+                .then(() => {
+                    // Với mode 'no-cors', trình duyệt không cho đọc kết quả trả về từ server,
+                    // nhưng lọt vào .then() nghĩa là request đã bắn đi thành công.
                     success.style.display = 'block';
-                    success.style.color = 'var(--c-crt)'; // Trả về màu xanh lá
+                    success.style.color = 'var(--c-crt)';
                     success.textContent = '> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]';
                     form.reset();
                 })
                 .catch(error => {
-                    // Xử lý nếu lỗi mạng
                     console.error('Error!', error.message);
                     success.style.display = 'block';
-                    success.style.color = 'var(--c-red)'; // Đổi sang màu đỏ
+                    success.style.color = 'var(--c-red)';
                     success.textContent = '> SYS.ERR: TRANSMISSION FAILED. RETRY LATER.';
                 })
                 .finally(() => {
-                    // Trả nút lại trạng thái ban đầu sau 4 giây
                     setTimeout(() => {
                         success.style.display = 'none';
                         btn.disabled = false;
                         btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
                     }, 4000);
-                });
+            });
         }
 
         /* ════════════════════════════════════════════
