@@ -1488,53 +1488,50 @@
             </div>
         </footer>
 
-    </div><div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
-        <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
+       <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true">
+        <div class="modal-bg" onclick="closeModal()"></div>
         <div id="modal-box" class="modal-box">
-            <button class="modal-close" onclick="closeModal()" aria-label="Close">
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            
             <div class="modal-image-pane">
-                <div class="modal-grid-bg" aria-hidden="true"></div>
-                <div class="modal-fade" aria-hidden="true"></div>
-                <img id="modal-img" src="" alt="Project image" loading="lazy">
+                <img id="modal-img" src="" alt="Project Image">
             </div>
+    
             <div class="modal-content-pane">
                 <div class="modal-header">
                     <div class="modal-category-badge">
-                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                        <span id="modal-category-text">CATEGORY</span>
+                        <span id="modal-category-text"></span>
                     </div>
-                    <h2 id="modal-title" class="modal-title">Title</h2>
+                    <h2 id="modal-title" class="modal-title"></h2>
                 </div>
+    
                 <div class="modal-body custom-scroll">
                     <div class="modal-meta">
                         <div>
                             <div class="meta-label">Client / Project</div>
-                            <div id="modal-client" class="meta-value">Independent</div>
+                            <div id="modal-client" class="meta-value"></div>
                         </div>
                         <div>
                             <div class="meta-label">Role</div>
-                            <div id="modal-role" class="meta-value">Visual Designer</div>
+                            <div id="modal-role" class="meta-value"></div>
                         </div>
                         <div>
                             <div class="meta-label">Timeline</div>
-                            <div id="modal-year" class="meta-value">2023 - Present</div>
+                            <div id="modal-year" class="meta-value"></div>
                         </div>
                         <div>
                             <div class="meta-label">Tech / Software</div>
-                            <div id="modal-tech" class="meta-value red">Photoshop, Illustrator</div>
+                            <div id="modal-tech" class="meta-value red"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="modal-section-label">Project Overview</div>
-                        <p id="modal-desc" class="modal-desc"></p>
-                    </div>
+                    <div class="modal-section-label">Project Overview</div>
+                    <p id="modal-desc" class="modal-desc"></p>
                 </div>
+    
                 <div class="modal-footer">
-                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="modal-launch">
+                    <a id="modal-link" href="#" target="_blank" class="modal-launch" style="display: none;">
                         <span>LAUNCH LIVE PROJECT</span>
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                     </a>
                 </div>
             </div>
