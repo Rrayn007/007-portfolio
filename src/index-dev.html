@@ -1664,7 +1664,7 @@
         async function initPortfolio() {
             const badge = document.getElementById('loading-badge');
             try {
-                const res = await fetch(SHEET_CSV_URL);
+                const res = await fetch(CSV_URL);
                 if (!res.ok) throw new Error('Network error');
                 const csv   = await res.text();
                 const rows  = csv.split('\n').filter(r => r.trim());
@@ -2172,16 +2172,18 @@
         /* ════════════════════════════════════════════
            BOOTSTRAP
         ════════════════════════════════════════════ */
-        document.addEventListener('DOMContentLoaded', () => {
+                document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
             observeReveals();
             document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
-            if (SHEET_CSV_URL.includes('http')) initPortfolio();
+            
+            // Đã sửa thành CSV_URL
+            if (CSV_URL) initPortfolio(); 
         });
 
         })();
-        // 1. Chặn bấm chuột phải
+         // 1. Chặn bấm chuột phải
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         
         // 2. Chặn các phím tắt F12, Ctrl+U (Xem code), Ctrl+Shift+I / J / C (DevTools)
