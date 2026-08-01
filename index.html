@@ -2101,7 +2101,7 @@
         };
 
         /* ════════════════════════════════════════════
-           CONTACT FORM (LIVE CONNECTION TO GOOGLE SHEETS)
+           CONTACT FORM (ĐÃ THÊM BỘ LỌC CHỐNG BỔ TRỐNG)
         ════════════════════════════════════════════ */
         function handleContactSubmit(e) {
             e.preventDefault();
@@ -2110,21 +2110,47 @@
             const btn = document.getElementById('submit-btn');
             const success = document.getElementById('form-success');
             
-            // 1. Gom dữ liệu và chuyển đổi sang định dạng URLSearchParams
+            // 1. KIỂM TRA CHÍNH XÁC CÁC TRƯỜNG DỮ LIỆU (VALIDATION)
+            const nameInput = document.getElementById('field-name');
+            const emailInput = document.getElementById('field-email');
+            const messageInput = document.getElementById('field-message');
+        
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const message = messageInput.value.trim();
+        
+            // Nếu có bất kỳ ô nào trống -> Báo lỗi và DỪNG KHÔNG GỬI
+            if (!name || !email || !message) {
+                success.style.display = 'block';
+                success.style.color = 'var(--c-red)';
+                success.textContent = '> SYS.ERR: ALL FIELDS ARE REQUIRED!';
+                return; // Dừng hàm ngay lập tức
+            }
+        
+            // Kiểm tra định dạng Email chuẩn
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                success.style.display = 'block';
+                success.style.color = 'var(--c-red)';
+                success.textContent = '> SYS.ERR: INVALID COMMS LINK (EMAIL)!';
+                return;
+            }
+        
+            // 2. GOM DỮ LIỆU KHI ĐÃ ĐỦ ĐIỀU KIỆN
             const formData = new FormData(form);
             const data = new URLSearchParams();
             for (const pair of formData) {
                 data.append(pair[0], pair[1]);
             }
             
-            // THAY WEB APP URL CỦA BẠN VÀO ĐÂY (Đuôi phải là /exec)
+            // Web App URL Google Apps Script của bạn
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec'; 
             
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
             success.style.display = 'none';
-
-            // 2. Gửi data đi
+        
+            // 3. GỬI DỮ LIỆU
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: data, 
@@ -2149,7 +2175,7 @@
                     btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
                 }, 4000);
             });
-        }
+}
 
         /* ════════════════════════════════════════════
            SCROLL EFFECTS
