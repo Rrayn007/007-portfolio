@@ -202,12 +202,17 @@
                 inset -1px -1px 0 rgba(0,0,0,.5);
         }
 
-        /* Scroll reveal */
+        /* Scroll reveal (ĐÃ FIX LỖI MẤT BACKDROP-FILTER 1 GIÂY ĐẦU TIÊN) */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: opacity var(--dur-slow) var(--ease-out),
                         transform var(--dur-slow) var(--ease-out);
+            /* Bật tăng tốc phần cứng để chống chớp glass */
+            will-change: transform, opacity;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .reveal[data-delay="1"] { transition-delay: 100ms; }
@@ -476,6 +481,9 @@
                 0 4px 16px rgba(0,0,0,.4);
             font-family: var(--f-mono);
             transition: all var(--dur-med) var(--ease-spring);
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .stat-card:hover {
             border-color: rgba(220,38,38,.28);
@@ -588,6 +596,9 @@
             transition: transform var(--dur-slow) var(--ease-spring),
                         box-shadow var(--dur-slow) var(--ease-spring),
                         border-color var(--dur-med);
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .project-card:hover {
             transform: translateY(-10px);
@@ -1052,22 +1063,6 @@
         .eq-bar:nth-child(4) { animation-duration: .5s; }
         @keyframes eqWave { from { transform: scaleY(.2); } to { transform: scaleY(1); } }
 
-        /* Mobile tap-to-play toast */
-        .music-toast {
-            position: fixed; bottom: 5.5rem; right: 1.5rem; z-index: 199;
-            background: linear-gradient(135deg, rgba(201,168,76,.18), rgba(8,7,4,.9));
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(201,168,76,.3);
-            border-radius: .75rem;
-            padding: .625rem 1rem;
-            font-family: var(--f-mono); font-size: .625rem;
-            color: var(--c-gold-lt); letter-spacing: .1em;
-            box-shadow: 0 8px 24px rgba(0,0,0,.5), 0 0 0 .5px rgba(201,168,76,.1);
-            display: none;
-            animation: toastPop .4s var(--ease-spring);
-        }
-        @keyframes toastPop { from { opacity:0; transform:translateY(8px) scale(.95); } to { opacity:1; transform:translateY(0) scale(1); } }
-
         /* ─────────────────────────────────────────────
            PROJECT MODAL
         ───────────────────────────────────────────── */
@@ -1110,14 +1105,18 @@
         }
         @media (min-width: 768px) { .modal-box { flex-direction: row; height: 85vh; } }
         .modal-box.open { transform: scale(1); }
+        
+        /* FIX CHO NÚT "X" TRÒN HOÀN HẢO */
         .modal-close {
             position: absolute; top: 1.25rem; right: 1.25rem; z-index: 50;
+            width: 2.75rem; height: 2.75rem;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(0,0,0,.55) 100%);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,.12);
             box-shadow: inset 1px 1px 0 rgba(255,255,255,.10), 0 4px 16px rgba(0,0,0,.5);
-            border-radius: 9999px; padding: .75rem; cursor: pointer; color: #fff;
+            border-radius: 50%; padding: 0; cursor: pointer; color: #fff;
             transition: all var(--dur-fast);
         }
         .modal-close:hover {
@@ -1299,7 +1298,7 @@
         </button>
     </div>
 
-    <div id="music-toast" class="music-toast">▶ TAP ANYWHERE TO PLAY MUSIC</div>
+    <!-- ĐÃ XÓA TAP TO PLAY TOAST Ở ĐÂY -->
 
     <div id="main-interface">
         <header class="site-header" id="site-header">
@@ -1880,7 +1879,6 @@
             const volSlider  = document.getElementById('vol-slider');
             const volPct     = document.getElementById('vol-pct');
             const volIcon    = document.getElementById('vol-icon');
-            const toast      = document.getElementById('music-toast');
             
             const mpMode     = document.getElementById('mp-mode');
             const mpModeIcon = document.getElementById('mp-mode-icon');
@@ -2043,8 +2041,7 @@
                     if (promise !== undefined) {
                         promise.then(() => {
                             setPlayingUI();
-                            removeAutoPlayListeners(); // Gỡ listeners khi đã phát được nhạc
-                            if (toast) toast.style.display = 'none'; // Ẩn nhắc nhở
+                            removeAutoPlayListeners(); 
                         }).catch(() => {
                             // Trình duyệt chặn, tiếp tục chờ gesture hợp lệ tiếp theo
                         });
@@ -2072,8 +2069,6 @@
                     setPlayingUI();
                     removeAutoPlayListeners();
                 }).catch(() => {
-                    // Nếu web tự bật nhạc bị chặn (chắc chắn), hiển thị Toast
-                    if (toast) toast.style.display = 'block';
                     setPausedUI();
                 });
             }
@@ -2266,15 +2261,7 @@
         }
     });
     
-    // 3. Bẫy Debugger
-    setInterval(() => {
-        const startTime = performance.now();
-        debugger;
-        const endTime = performance.now();
-        if (endTime - startTime > 100) {
-            window.location.reload();
-        }
-    }, 1000);
+    // 3. Đã xóa Bẫy Debugger để tránh gây lỗi reload web sau 1 giây
     </script>
 </body>
 </html>
