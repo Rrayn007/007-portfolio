@@ -2261,20 +2261,30 @@
         });
 
     })();
-    // 1. Chặn bấm chuột phải
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    
-    // 2. Chặn các phím tắt
-    document.addEventListener('keydown', (e) => {
-        if (
-            e.keyCode === 123 || 
-            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-            (e.ctrlKey && e.keyCode === 85)
-        ) {
-            e.preventDefault();
-            return false;
-        }
-    });
+     // 1. Chặn bấm chuột phải
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        // 2. Chặn các phím tắt F12, Ctrl+U (Xem code), Ctrl+Shift+I / J / C (DevTools)
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+                (e.ctrlKey && e.keyCode === 85)
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // 3. Bẫy Debugger: Nếu cố tình mở F12 bằng menu trình duyệt sẽ làm DevTools bị đơ/Reload
+        setInterval(() => {
+            const startTime = performance.now();
+            debugger;
+            const endTime = performance.now();
+            if (endTime - startTime > 100) {
+                window.location.reload();
+            }
+        }, 1000);
     </script>
 </body>
 </html>
