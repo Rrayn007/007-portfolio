@@ -201,6 +201,17 @@
                 inset -1px -1px 0 rgba(0,0,0,.5);
         }
 
+        /* Liquid glass glow variant — header scrolled, music btn hover */
+        .glass-glow {
+            box-shadow:
+                0 8px 32px rgba(0,0,0,.55),
+                inset 1px 1px 0 rgba(255,255,255,.14),
+                inset -1px -1px 0 rgba(0,0,0,.3),
+                0 0 0 .5px rgba(220,38,38,.2),
+                0 0 40px rgba(220,38,38,.08) !important;
+            border-color: rgba(220,38,38,.25) !important;
+        }
+
         /* Scroll reveal */
         .reveal {
             opacity: 0;
@@ -627,21 +638,13 @@
         ───────────────────────────────────────────── */
         .collection-section {
             padding-block: 8rem; margin-top: 2.5rem;
+            /* Đã giảm độ mờ (alpha) của background để kính phát huy tác dụng */
+            background: linear-gradient(145deg, rgba(255,255,255,.05) 0%, rgba(10,10,20,.3) 50%, rgba(3,3,10,.5) 100%);
+            backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
             border-top: 1px solid rgba(255,255,255,.08);
             border-bottom: 1px solid rgba(255,255,255,.05);
-            /* Thay đổi màu nền liquid glass đồng bộ */
-            background: linear-gradient(
-                145deg,
-                rgba(255,255,255,.05) 0%,
-                rgba(10,10,20,.5) 50%,
-                rgba(3,3,10,.7) 100%
-            );
-            backdrop-filter: blur(32px) saturate(160%) brightness(1.05);
-            -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(1.05);
-            box-shadow: 
-                inset 1px 1px 0 rgba(255,255,255,.08),
-                inset -1px -1px 0 rgba(0,0,0,.3),
-                0 20px 60px rgba(0,0,0,.6);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
             position: relative; z-index: 10;
         }
         .cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; }
@@ -694,14 +697,10 @@
         .contact-box {
             max-width: 48rem; margin-inline: auto;
             padding: 2rem; border-radius: 2rem;
-            background: linear-gradient(
-                145deg,
-                rgba(255,255,255,.055) 0%,
-                rgba(10,10,22,.65)    50%,
-                rgba(3,3,8,.80)       100%
-            );
-            backdrop-filter: blur(40px) saturate(180%) brightness(1.06);
-            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.06);
+            /* Đã giảm độ mờ (alpha) của background để kính phát huy tác dụng */
+            background: linear-gradient(145deg, rgba(255,255,255,.06) 0%, rgba(10,10,22,.35) 50%, rgba(3,3,8,.5) 100%);
+            backdrop-filter: blur(44px) saturate(180%) brightness(1.05);
+            -webkit-backdrop-filter: blur(44px) saturate(180%) brightness(1.05);
             border: 1px solid rgba(255,255,255,.09);
             box-shadow:
                 inset 1px 1px 0 rgba(255,255,255,.12),
@@ -975,7 +974,7 @@
         }
         .mp-vol-icon.active { color: var(--c-gold); }
 
-        /* Volume slider custom (Fix cho mobile) */
+        /* Volume slider custom */
         .mp-vol-slider {
             flex: 1; -webkit-appearance: none; appearance: none;
             height: 3px; border-radius: 99px; outline: none; cursor: pointer;
@@ -984,8 +983,7 @@
         }
         .mp-vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none;
-            width: 16px; height: 16px; /* Tăng kích thước để vuốt dễ hơn trên mobile */
-            border-radius: 50%;
+            width: 13px; height: 13px; border-radius: 50%;
             background: linear-gradient(135deg, var(--c-gold-lt), var(--c-gold));
             cursor: pointer;
             box-shadow: 0 0 6px rgba(201,168,76,.5), 0 0 0 2px rgba(201,168,76,.2);
@@ -996,7 +994,7 @@
             box-shadow: 0 0 10px rgba(201,168,76,.7), 0 0 0 3px rgba(201,168,76,.3);
         }
         .mp-vol-slider::-moz-range-thumb {
-            width: 16px; height: 16px; border-radius: 50%; border: none;
+            width: 13px; height: 13px; border-radius: 50%; border: none;
             background: linear-gradient(135deg, var(--c-gold-lt), var(--c-gold));
             cursor: pointer;
             box-shadow: 0 0 6px rgba(201,168,76,.5);
@@ -1247,7 +1245,6 @@
     <div class="floater floater--ring" aria-hidden="true"></div>
     <div class="floater floater--grid" aria-hidden="true"></div>
 
-    <!-- Cải thiện crossorigin để xử lý được Web Audio API trên điện thoại -->
     <audio id="bg-audio" preload="auto" crossorigin="anonymous"></audio>
 
     <div id="music-player" aria-label="Background music player">
@@ -1869,7 +1866,7 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER — FULL FEATURED (OPTIMIZED AUTOPLAY)
+           MUSIC PLAYER — GOLD EDITION (SỬA LỖI ĐIỀU CHỈNH)
         ════════════════════════════════════════════ */
         function initMusic(urls) {
             const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
@@ -1900,8 +1897,7 @@
 
             let trackIdx    = 0;
             let panelOpen   = false;
-            let isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            let playMode    = 0; // 0: Repeat All, 1: Repeat One, 2: Shuffle
+            let playMode    = 0; 
             
             const modeIcons = {
                 0: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>',
@@ -1956,7 +1952,7 @@
                 discRing.classList.remove('spinning');
             };
 
-            // Setup Web Audio API để Fix âm lượng trên Điện Thoại
+            // Fix Volume trên Mobile bằng Web Audio API
             let audioCtx, gainNode;
             const initWebAudio = () => {
                 if (audioCtx) return;
@@ -1970,7 +1966,7 @@
                     gainNode.connect(audioCtx.destination);
                     gainNode.gain.value = parseFloat(volSlider.value) / 100;
                 } catch (err) {
-                    console.warn('Web Audio API setup failed (Có thể do thiết bị không hỗ trợ):', err);
+                    console.warn('Web Audio API setup failed:', err);
                 }
             };
 
@@ -1984,7 +1980,6 @@
                 if (promise !== undefined) {
                     promise.then(() => {
                         setPlayingUI();
-                        removeAutoPlayListeners();
                     }).catch(err => {
                         console.warn('Autoplay waiting for valid gesture:', err.message);
                         setPausedUI();
@@ -1995,17 +1990,14 @@
             const pause = () => { audio.pause(); setPausedUI(); };
             const toggle = () => musicPlaying ? pause() : play(false);
 
-            // --- Cập nhật Volume control hỗ trợ cả Mobile và Desktop ---
             const updateVol = () => {
                 const v = parseInt(volSlider.value);
                 const volFloat = v / 100;
                 
-                // Nếu Web Audio API khả dụng (hỗ trợ cho iOS/Android) thì dùng GainNode
                 if (gainNode) {
                     gainNode.gain.value = volFloat;
-                    audio.volume = 1; // Để GainNode xử lý
                 } else {
-                    audio.volume = volFloat; // Fallback cho Desktop
+                    audio.volume = volFloat;
                 }
 
                 volPct.textContent = v + '%';
@@ -2020,10 +2012,9 @@
             
             volSlider.addEventListener('input', updateVol);
             volSlider.addEventListener('change', updateVol);
-            // Chặn sự kiện cuộn trang vô tình khi kéo thanh âm lượng trên mobile
             volSlider.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
             
-            updateVol(); // Khởi tạo âm lượng
+            updateVol();
 
             audio.addEventListener('timeupdate', () => {
                 if (!audio.duration) return;
@@ -2037,7 +2028,6 @@
                 audio.currentTime = pct * (audio.duration || 0);
             });
 
-            // --- Controls ---
             if (mpMode) {
                 mpMode.addEventListener('click', e => {
                     e.stopPropagation();
@@ -2081,34 +2071,21 @@
                 }
             });
 
-            // --- HỆ THỐNG LẮNG NGHE ĐA ĐIỂM ---
             loadTrack(0);
             player.classList.add('visible');
 
+            // Tính năng Trigger khi Scroll hoặc Tương tác
             const triggerPlayOnGesture = () => {
                 if (!musicPlaying) {
                     play(false);
                 }
             };
 
-            const removeAutoPlayListeners = () => {
-                window.removeEventListener('touchstart', triggerPlayOnGesture);
-                window.removeEventListener('touchend', triggerPlayOnGesture);
-                window.removeEventListener('pointerdown', triggerPlayOnGesture);
-                window.removeEventListener('click', triggerPlayOnGesture);
-                window.removeEventListener('scroll', triggerPlayOnGesture);
-                window.removeEventListener('wheel', triggerPlayOnGesture);
-                window.removeEventListener('keydown', triggerPlayOnGesture);
-            };
-
-            window.addEventListener('touchstart', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('touchend', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('pointerdown', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('click', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('scroll', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('wheel', triggerPlayOnGesture, { passive: true });
-            window.addEventListener('keydown', triggerPlayOnGesture, { passive: true });
-
+            // Lắng nghe các tương tác cuộn / di chuột / chạm mồi {once: true} để tự phát
+            window.addEventListener('scroll', triggerPlayOnGesture, { passive: true, once: true });
+            window.addEventListener('pointermove', triggerPlayOnGesture, { passive: true, once: true });
+            window.addEventListener('touchstart', triggerPlayOnGesture, { passive: true, once: true });
+            
             play(false);
         }
 
