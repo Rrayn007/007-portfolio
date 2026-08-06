@@ -129,8 +129,19 @@
         .container { max-width: 88rem; margin-inline: auto; padding-inline: 1.5rem; }
 
         /* ─────────────────────────────────────────────
-           LIQUID GLASS SYSTEM
+           LIQUID GLASS SYSTEM & HARDWARE ACCELERATION FIX
         ───────────────────────────────────────────── */
+
+        /* ÉP TRÌNH DUYỆT RENDER GLASS BẰNG GPU ĐỂ FIX LỖI CHỚP KÍNH MỜ */
+        .hero-badge, .hero-tagline, .skill-tag, .stat-card, .capabilities-card, 
+        .loading-badge, .project-card, .collection-section, .contact-box, 
+        .form-input, .form-textarea, .music-pill, .music-panel, .modal-box, 
+        .modal-close, .modal-meta, .modal-launch, .glass, .glass-strong, .site-header, .mobile-nav {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
 
         /* Base liquid glass */
         .glass {
@@ -202,13 +213,12 @@
                 inset -1px -1px 0 rgba(0,0,0,.5);
         }
 
-        /* Scroll reveal (ĐÃ FIX LỖI MẤT BACKDROP-FILTER 1 GIÂY ĐẦU TIÊN) */
+        /* Scroll reveal */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: opacity var(--dur-slow) var(--ease-out),
                         transform var(--dur-slow) var(--ease-out);
-            /* Bật tăng tốc phần cứng để chống chớp glass */
             will-change: transform, opacity;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
@@ -481,9 +491,6 @@
                 0 4px 16px rgba(0,0,0,.4);
             font-family: var(--f-mono);
             transition: all var(--dur-med) var(--ease-spring);
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
         }
         .stat-card:hover {
             border-color: rgba(220,38,38,.28);
@@ -596,9 +603,7 @@
             transition: transform var(--dur-slow) var(--ease-spring),
                         box-shadow var(--dur-slow) var(--ease-spring),
                         border-color var(--dur-med);
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+            height: 100%;
         }
         .project-card:hover {
             transform: translateY(-10px);
@@ -1298,8 +1303,6 @@
         </button>
     </div>
 
-    <!-- ĐÃ XÓA TAP TO PLAY TOAST Ở ĐÂY -->
-
     <div id="main-interface">
         <header class="site-header" id="site-header">
             <div class="container header-inner">
@@ -1334,18 +1337,28 @@
                 <span id="sys-first-name">RAYN</span>
                 <span id="sys-last-name">SCOFIELD</span>
             </h1>
-            <div class="hero-tagline reveal" data-delay="2">
-                <span>///</span>
-                <span id="sys-tagline">VISUAL ARCHITECT &amp; CYBERPUNK STORYTELLER</span>
-                <span>///</span>
+            
+            <!-- Đã tách rời thẻ div .reveal ra bao bọc bên ngoài class có backdrop-filter -->
+            <div class="reveal" data-delay="2">
+                <div class="hero-tagline">
+                    <span>///</span>
+                    <span id="sys-tagline">VISUAL ARCHITECT &amp; CYBERPUNK STORYTELLER</span>
+                    <span>///</span>
+                </div>
             </div>
+            
             <div class="hero-meta reveal" data-delay="3">
                 <div class="hero-meta-item">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <span id="p-country-name">Ho Chi Minh City, VN</span>
                 </div>
             </div>
-            <div id="p-skills-tags" class="skill-tags reveal" data-delay="3"></div>
+            
+            <!-- Bọc reveal riêng -->
+            <div class="reveal" data-delay="3">
+                <div id="p-skills-tags" class="skill-tags"></div>
+            </div>
+            
             <div class="scroll-indicator" aria-hidden="true">
                 <svg width="24" height="24" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
             </div>
@@ -1431,36 +1444,39 @@
                     <div class="section-label">/// VAULT.ACCESS</div>
                     <h2 class="section-title lux-text" style="margin-bottom:0">EXCLUSIVE COLLECTION</h2>
                 </div>
-                <div id="cards-container" class="cards-container reveal" data-delay="2"></div>
+                <div id="cards-container" class="cards-container"></div>
             </div>
         </section>
 
         <section id="contact" class="contact-section">
             <div class="container">
-                <div class="contact-box reveal">
-                    <h2 class="contact-title lux-text">INITIATE CONNECTION</h2>
-                    <p class="contact-sub">&gt; System ready to receive transmission.</p>
-                    <form id="contact-form" novalidate>
-                        <div class="form-row form-group">
-                            <div>
-                                <label class="form-label" for="field-name">Entity Name</label>
-                                <input type="text" id="field-name" name="name" required class="form-input" autocomplete="name">
+                <!-- Đã tách rời thẻ div .reveal khỏi .contact-box để bảo toàn filter kính mờ -->
+                <div class="reveal">
+                    <div class="contact-box">
+                        <h2 class="contact-title lux-text">INITIATE CONNECTION</h2>
+                        <p class="contact-sub">&gt; System ready to receive transmission.</p>
+                        <form id="contact-form" novalidate>
+                            <div class="form-row form-group">
+                                <div>
+                                    <label class="form-label" for="field-name">Entity Name</label>
+                                    <input type="text" id="field-name" name="name" required class="form-input" autocomplete="name">
+                                </div>
+                                <div>
+                                    <label class="form-label" for="field-email">Comms Link (Email)</label>
+                                    <input type="email" id="field-email" name="email" required class="form-input" autocomplete="email">
+                                </div>
                             </div>
-                            <div>
-                                <label class="form-label" for="field-email">Comms Link (Email)</label>
-                                <input type="email" id="field-email" name="email" required class="form-input" autocomplete="email">
+                            <div class="form-group">
+                                <label class="form-label" for="field-message">Encrypted Message</label>
+                                <textarea id="field-message" name="message" rows="4" required class="form-textarea form-input"></textarea>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="field-message">Encrypted Message</label>
-                            <textarea id="field-message" name="message" rows="4" required class="form-textarea form-input"></textarea>
-                        </div>
-                        <button type="submit" id="submit-btn" class="btn-submit">
-                            TRANSMIT DATA
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </button>
-                    </form>
-                    <div id="form-success" class="form-success" role="alert">&gt; SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
+                            <button type="submit" id="submit-btn" class="btn-submit">
+                                TRANSMIT DATA
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </button>
+                        </form>
+                        <div id="form-success" class="form-success" role="alert">&gt; SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1757,37 +1773,41 @@
                     return c;
                 });
 
-                /* Render cards */
+                /* Render cards - Đã bọc reveal bên ngoài thẻ card-scene */
                 const cardsEl = document.getElementById('cards-container');
                 cardsEl.innerHTML = processedCards.map((c, i) => `
-                    <div class="card-scene reveal" data-delay="${i % 3}" style="width:260px;height:364px" aria-label="Trading card ${i+1}">
-                        <div class="card-inner">
-                            <div class="card-glare" aria-hidden="true"></div>
-                            <div class="card-specular" aria-hidden="true"></div>
-                            <div class="card-effect effect-${c.effect}" aria-hidden="true"></div>
-                            <img src="${encodeURI(c.img)}" alt="Card ${i+1}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+                    <div class="reveal" data-delay="${i % 3}">
+                        <div class="card-scene" style="width:260px;height:364px" aria-label="Trading card ${i+1}">
+                            <div class="card-inner">
+                                <div class="card-glare" aria-hidden="true"></div>
+                                <div class="card-specular" aria-hidden="true"></div>
+                                <div class="card-effect effect-${c.effect}" aria-hidden="true"></div>
+                                <img src="${encodeURI(c.img)}" alt="Card ${i+1}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+                            </div>
                         </div>
                     </div>
                 `).join('');
                 attachCardListeners();
 
-                /* Render portfolio grid */
+                /* Render portfolio grid - Đã bọc reveal bên ngoài project-card */
                 globalProjects = projects;
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => `
-                    <article class="project-card reveal" data-delay="${i % 3}" role="button" tabindex="0"
-                        onclick="openModal(${i})"
-                        onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${i})"
-                        aria-label="Open project: ${escHtml(p.Title)}">
-                        <div class="project-card-img">
-                            <img src="${encodeURI(p.ImageUrl)}" alt="${escHtml(p.Title)}" loading="lazy">
-                            <div class="project-card-overlay" aria-hidden="true"></div>
-                            <div class="project-card-info">
-                                <div class="project-cat">&gt; ${escHtml(p.Category)}</div>
-                                <h3 class="project-title">${escHtml(p.Title)}</h3>
+                    <div class="reveal" data-delay="${i % 3}">
+                        <article class="project-card" role="button" tabindex="0"
+                            onclick="openModal(${i})"
+                            onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${i})"
+                            aria-label="Open project: ${escHtml(p.Title)}">
+                            <div class="project-card-img">
+                                <img src="${encodeURI(p.ImageUrl)}" alt="${escHtml(p.Title)}" loading="lazy">
+                                <div class="project-card-overlay" aria-hidden="true"></div>
+                                <div class="project-card-info">
+                                    <div class="project-cat">&gt; ${escHtml(p.Category)}</div>
+                                    <h3 class="project-title">${escHtml(p.Title)}</h3>
+                                </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 `).join('');
 
                 badge.classList.add('hidden');
@@ -1855,7 +1875,7 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER — AUTO-PLAY (Optimized Trigger)
+           MUSIC PLAYER — AUTO-PLAY
         ════════════════════════════════════════════ */
         function initMusic(urls) {
             const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
@@ -2033,7 +2053,6 @@
 
             // --- GESTURE AUTOPLAY BYPASS ---
             const triggerPlayOnGesture = (e) => {
-                // Ignore scroll and wheel since browsers block audio initiated by them
                 if (e.type === 'scroll' || e.type === 'wheel') return;
                 
                 if (!musicPlaying) {
@@ -2042,9 +2061,7 @@
                         promise.then(() => {
                             setPlayingUI();
                             removeAutoPlayListeners(); 
-                        }).catch(() => {
-                            // Trình duyệt chặn, tiếp tục chờ gesture hợp lệ tiếp theo
-                        });
+                        }).catch(() => { });
                     }
                 }
             };
@@ -2056,13 +2073,11 @@
                 document.removeEventListener('touchstart', triggerPlayOnGesture);
             };
 
-            // Gắn sự kiện vào document (Lắng nghe bất kỳ click/chạm/bấm phím nào ở mọi nơi)
             document.addEventListener('pointerdown', triggerPlayOnGesture, { passive: true });
             document.addEventListener('click', triggerPlayOnGesture, { passive: true });
             document.addEventListener('keydown', triggerPlayOnGesture, { passive: true });
             document.addEventListener('touchstart', triggerPlayOnGesture, { passive: true });
 
-            // Thử tự động phát liền lúc tải web
             const initialPlay = audio.play();
             if (initialPlay !== undefined) {
                 initialPlay.then(() => {
@@ -2260,8 +2275,6 @@
             return false;
         }
     });
-    
-    // 3. Đã xóa Bẫy Debugger để tránh gây lỗi reload web sau 1 giây
     </script>
 </body>
 </html>
