@@ -152,6 +152,7 @@
             transition: all var(--dur-med) var(--ease-spring);
             overflow: hidden;
         }
+        /* Liquid shimmer pseudo-layer */
         .glass::before {
             content: '';
             position: absolute; inset: 0;
@@ -634,17 +635,16 @@
         .project-title { font-weight: 700; font-size: 1.25rem; color: #fff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* ─────────────────────────────────────────────
-           COLLECTION (TRADING CARDS) (FIXED LIQUID GLASS)
+           COLLECTION (TRADING CARDS)
         ───────────────────────────────────────────── */
         .collection-section {
             padding-block: 8rem; margin-top: 2.5rem;
-            /* Đã giảm độ mờ (alpha) của background để kính phát huy tác dụng */
-            background: linear-gradient(145deg, rgba(255,255,255,.05) 0%, rgba(10,10,20,.3) 50%, rgba(3,3,10,.5) 100%);
-            backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
-            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
-            border-top: 1px solid rgba(255,255,255,.08);
+            border-top: 1px solid rgba(255,255,255,.05);
             border-bottom: 1px solid rgba(255,255,255,.05);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+            background: linear-gradient(180deg, rgba(3,3,7,.85) 0%, rgba(5,5,12,.9) 100%);
+            backdrop-filter: blur(32px) saturate(160%);
+            -webkit-backdrop-filter: blur(32px) saturate(160%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.04), inset 0 -1px 0 rgba(255,255,255,.03);
             position: relative; z-index: 10;
         }
         .cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; }
@@ -697,10 +697,14 @@
         .contact-box {
             max-width: 48rem; margin-inline: auto;
             padding: 2rem; border-radius: 2rem;
-            /* Đã giảm độ mờ (alpha) của background để kính phát huy tác dụng */
-            background: linear-gradient(145deg, rgba(255,255,255,.06) 0%, rgba(10,10,22,.35) 50%, rgba(3,3,8,.5) 100%);
-            backdrop-filter: blur(44px) saturate(180%) brightness(1.05);
-            -webkit-backdrop-filter: blur(44px) saturate(180%) brightness(1.05);
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,.055) 0%,
+                rgba(10,10,22,.65)    50%,
+                rgba(3,3,8,.80)       100%
+            );
+            backdrop-filter: blur(40px) saturate(180%) brightness(1.06);
+            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.06);
             border: 1px solid rgba(255,255,255,.09);
             box-shadow:
                 inset 1px 1px 0 rgba(255,255,255,.12),
@@ -1245,7 +1249,7 @@
     <div class="floater floater--ring" aria-hidden="true"></div>
     <div class="floater floater--grid" aria-hidden="true"></div>
 
-    <audio id="bg-audio" preload="auto" crossorigin="anonymous"></audio>
+    <audio id="bg-audio" preload="auto"></audio>
 
     <div id="music-player" aria-label="Background music player">
         <div id="music-panel" class="music-panel" role="region" aria-label="Music controls">
@@ -1866,7 +1870,7 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER — GOLD EDITION (SỬA LỖI ĐIỀU CHỈNH)
+           MUSIC PLAYER — FULL FEATURED (OPTIMIZED AUTOPLAY)
         ════════════════════════════════════════════ */
         function initMusic(urls) {
             const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
@@ -1897,7 +1901,8 @@
 
             let trackIdx    = 0;
             let panelOpen   = false;
-            let playMode    = 0; 
+            let isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let playMode    = 0; // 0: Repeat All, 1: Repeat One, 2: Shuffle
             
             const modeIcons = {
                 0: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>',
@@ -1952,35 +1957,15 @@
                 discRing.classList.remove('spinning');
             };
 
-            // Fix Volume trên Mobile bằng Web Audio API
-            let audioCtx, gainNode;
-            const initWebAudio = () => {
-                if (audioCtx) return;
-                try {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (!AudioContext) return;
-                    audioCtx = new AudioContext();
-                    const source = audioCtx.createMediaElementSource(audio);
-                    gainNode = audioCtx.createGain();
-                    source.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    gainNode.gain.value = parseFloat(volSlider.value) / 100;
-                } catch (err) {
-                    console.warn('Web Audio API setup failed:', err);
-                }
-            };
-
             const play = (forceLoad) => {
-                initWebAudio();
-                if (audioCtx && audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
                 if (forceLoad) loadTrack(trackIdx);
                 const promise = audio.play();
                 if (promise !== undefined) {
                     promise.then(() => {
                         setPlayingUI();
+                        removeAutoPlayListeners(); // Chỉ gỡ bỏ listener khi nhạc ĐÃ PHÁT THÀNH CÔNG
                     }).catch(err => {
+                        // Nếu bị trình duyệt chặn (do lăn chuột trên desktop), giữ nguyên listener chờ tương tác tiếp
                         console.warn('Autoplay waiting for valid gesture:', err.message);
                         setPausedUI();
                     });
@@ -1990,16 +1975,11 @@
             const pause = () => { audio.pause(); setPausedUI(); };
             const toggle = () => musicPlaying ? pause() : play(false);
 
+            // --- Volume control ---
+            audio.volume = parseFloat(volSlider.value) / 100;
             const updateVol = () => {
                 const v = parseInt(volSlider.value);
-                const volFloat = v / 100;
-                
-                if (gainNode) {
-                    gainNode.gain.value = volFloat;
-                } else {
-                    audio.volume = volFloat;
-                }
-
+                audio.volume = v / 100;
                 volPct.textContent = v + '%';
                 volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
                 volIcon.classList.toggle('active', v > 0);
@@ -2009,11 +1989,7 @@
                         ? '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>'
                         : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
             };
-            
             volSlider.addEventListener('input', updateVol);
-            volSlider.addEventListener('change', updateVol);
-            volSlider.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
-            
             updateVol();
 
             audio.addEventListener('timeupdate', () => {
@@ -2028,6 +2004,7 @@
                 audio.currentTime = pct * (audio.duration || 0);
             });
 
+            // --- Controls ---
             if (mpMode) {
                 mpMode.addEventListener('click', e => {
                     e.stopPropagation();
@@ -2071,24 +2048,38 @@
                 }
             });
 
+            // --- HỆ THỐNG LẮNG NGHE ĐA ĐIỂM (BẮT CẢ CHẠM VUỐT VÀ LĂN CHUỘT) ---
             loadTrack(0);
             player.classList.add('visible');
 
-            // Tính năng Trigger khi Scroll hoặc Tương tác
             const triggerPlayOnGesture = () => {
                 if (!musicPlaying) {
                     play(false);
                 }
             };
 
-            // Lắng nghe các tương tác cuộn / di chuột / chạm mồi {once: true} để tự phát
-            window.addEventListener('scroll', triggerPlayOnGesture, { passive: true, once: true });
-            window.addEventListener('pointermove', triggerPlayOnGesture, { passive: true, once: true });
-            window.addEventListener('touchstart', triggerPlayOnGesture, { passive: true, once: true });
-            
+            const removeAutoPlayListeners = () => {
+                window.removeEventListener('touchstart', triggerPlayOnGesture);
+                window.removeEventListener('touchend', triggerPlayOnGesture);
+                window.removeEventListener('pointerdown', triggerPlayOnGesture);
+                window.removeEventListener('click', triggerPlayOnGesture);
+                window.removeEventListener('scroll', triggerPlayOnGesture);
+                window.removeEventListener('wheel', triggerPlayOnGesture);
+                window.removeEventListener('keydown', triggerPlayOnGesture);
+            };
+
+            // Bắt mọi thao tác: Chạm màn hình điện thoại (touchstart/touchend), cuộn chuột (scroll/wheel), click, bấm phím
+            window.addEventListener('touchstart', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('touchend', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('pointerdown', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('click', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('scroll', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('wheel', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('keydown', triggerPlayOnGesture, { passive: true });
+
+            // Thử tự động phát ngay lập tức
             play(false);
         }
-
         /* ════════════════════════════════════════════
            MODAL
         ════════════════════════════════════════════ */
@@ -2159,7 +2150,7 @@
         };
 
         /* ════════════════════════════════════════════
-           CONTACT FORM
+           CONTACT FORM (ĐÃ THÊM BỘ LỌC CHỐNG BỔ TRỐNG)
         ════════════════════════════════════════════ */
         function handleContactSubmit(e) {
             e.preventDefault();
@@ -2168,6 +2159,7 @@
             const btn = document.getElementById('submit-btn');
             const success = document.getElementById('form-success');
             
+            // 1. KIỂM TRA CHÍNH XÁC CÁC TRƯỜNG DỮ LIỆU (VALIDATION)
             const nameInput = document.getElementById('field-name');
             const emailInput = document.getElementById('field-email');
             const messageInput = document.getElementById('field-message');
@@ -2176,13 +2168,15 @@
             const email = emailInput.value.trim();
             const message = messageInput.value.trim();
         
+            // Nếu có bất kỳ ô nào trống -> Báo lỗi và DỪNG KHÔNG GỬI
             if (!name || !email || !message) {
                 success.style.display = 'block';
                 success.style.color = 'var(--c-red)';
                 success.textContent = '> SYS.ERR: ALL FIELDS ARE REQUIRED!';
-                return;
+                return; // Dừng hàm ngay lập tức
             }
         
+            // Kiểm tra định dạng Email chuẩn
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 success.style.display = 'block';
@@ -2191,18 +2185,21 @@
                 return;
             }
         
+            // 2. GOM DỮ LIỆU KHI ĐÃ ĐỦ ĐIỀU KIỆN
             const formData = new FormData(form);
             const data = new URLSearchParams();
             for (const pair of formData) {
                 data.append(pair[0], pair[1]);
             }
             
+            // Web App URL Google Apps Script của bạn
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec'; 
             
             btn.disabled = true;
             btn.textContent = 'TRANSMITTING...';
             success.style.display = 'none';
         
+            // 3. GỬI DỮ LIỆU
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: data, 
@@ -2262,7 +2259,6 @@
         });
 
     })();
-
     // 1. Chặn bấm chuột phải
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     
