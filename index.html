@@ -1870,7 +1870,7 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER — FULL FEATURED (SPOTIFY-LIKE)
+           MUSIC PLAYER — FULL FEATURED (OPTIMIZED AUTOPLAY)
         ════════════════════════════════════════════ */
         function initMusic(urls) {
             const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
@@ -1963,22 +1963,17 @@
                 if (promise !== undefined) {
                     promise.then(() => {
                         setPlayingUI();
-                        removeAutoPlayListeners();
+                        removeAutoPlayListeners(); // Chỉ gỡ bỏ listener khi nhạc ĐÃ PHÁT THÀNH CÔNG
                     }).catch(err => {
-                        console.warn('Autoplay waiting for user gesture:', err.message);
+                        // Nếu bị trình duyệt chặn (do lăn chuột trên desktop), giữ nguyên listener chờ tương tác tiếp
+                        console.warn('Autoplay waiting for valid gesture:', err.message);
                         setPausedUI();
-                        if (isMobile) showToast();
                     });
                 }
             };
 
             const pause = () => { audio.pause(); setPausedUI(); };
             const toggle = () => musicPlaying ? pause() : play(false);
-            
-            const showToast = () => {
-                toast.style.display = 'block';
-                setTimeout(() => { toast.style.display = 'none'; }, 3500);
-            };
 
             // --- Volume control ---
             audio.volume = parseFloat(volSlider.value) / 100;
@@ -2053,33 +2048,38 @@
                 }
             });
 
-            // --- BỘ LẮNG NGHE TỰ ĐỘNG PHÁT BỀN VỮNG ---
+            // --- HỆ THỐNG LẮNG NGHE ĐA ĐIỂM (BẮT CẢ CHẠM VUỐT VÀ LĂN CHUỘT) ---
             loadTrack(0);
             player.classList.add('visible');
 
-            const triggerPlayOnUserGesture = () => {
+            const triggerPlayOnGesture = () => {
                 if (!musicPlaying) {
                     play(false);
                 }
             };
 
             const removeAutoPlayListeners = () => {
-                window.removeEventListener('click', triggerPlayOnUserGesture);
-                window.removeEventListener('touchstart', triggerPlayOnUserGesture);
-                window.removeEventListener('scroll', triggerPlayOnUserGesture);
-                window.removeEventListener('keydown', triggerPlayOnUserGesture);
+                window.removeEventListener('touchstart', triggerPlayOnGesture);
+                window.removeEventListener('touchend', triggerPlayOnGesture);
+                window.removeEventListener('pointerdown', triggerPlayOnGesture);
+                window.removeEventListener('click', triggerPlayOnGesture);
+                window.removeEventListener('scroll', triggerPlayOnGesture);
+                window.removeEventListener('wheel', triggerPlayOnGesture);
+                window.removeEventListener('keydown', triggerPlayOnGesture);
             };
 
-            // Gán sự kiện rộng ra thẻ window để nhạy hơn
-            window.addEventListener('click', triggerPlayOnUserGesture, { passive: true });
-            window.addEventListener('touchstart', triggerPlayOnUserGesture, { passive: true });
-            window.addEventListener('scroll', triggerPlayOnUserGesture, { passive: true });
-            window.addEventListener('keydown', triggerPlayOnUserGesture, { passive: true });
+            // Bắt mọi thao tác: Chạm màn hình điện thoại (touchstart/touchend), cuộn chuột (scroll/wheel), click, bấm phím
+            window.addEventListener('touchstart', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('touchend', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('pointerdown', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('click', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('scroll', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('wheel', triggerPlayOnGesture, { passive: true });
+            window.addEventListener('keydown', triggerPlayOnGesture, { passive: true });
 
-            // Thử chạy lần đầu (Nếu trình duyệt cho phép sẵn thì phát ngay)
+            // Thử tự động phát ngay lập tức
             play(false);
         }
-
         /* ════════════════════════════════════════════
            MODAL
         ════════════════════════════════════════════ */
