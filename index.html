@@ -152,7 +152,6 @@
             transition: all var(--dur-med) var(--ease-spring);
             overflow: hidden;
         }
-        /* Liquid shimmer pseudo-layer */
         .glass::before {
             content: '';
             position: absolute; inset: 0;
@@ -641,6 +640,7 @@
             padding-block: 8rem; margin-top: 2.5rem;
             border-top: 1px solid rgba(255,255,255,.08);
             border-bottom: 1px solid rgba(255,255,255,.05);
+            /* Màu nền trong suốt để thấy được canvas phía sau */
             background: linear-gradient(180deg, rgba(255,255,255,.02) 0%, rgba(3,3,10,.6) 100%);
             backdrop-filter: blur(30px) saturate(150%);
             -webkit-backdrop-filter: blur(30px) saturate(150%);
@@ -1198,7 +1198,7 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,.07);
             box-shadow: inset 1px 1px 0 rgba(255,255,255,.06), 0 4px 16px rgba(0,0,0,.35);
-            border-radius: 1rem margin-bottom: 2.5rem;
+            border-radius: 1rem; margin-bottom: 2.5rem;
         }
         .meta-label { font-family: var(--f-mono); font-size: .5625rem; letter-spacing: .2em; text-transform: uppercase; color: #6b7280; margin-bottom: .25rem; }
         .meta-value { font-size: .875rem; font-weight: 600; color: #e5e7eb; }
