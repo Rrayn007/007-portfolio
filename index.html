@@ -201,17 +201,6 @@
                 inset -1px -1px 0 rgba(0,0,0,.5);
         }
 
-        /* Liquid glass glow variant — header scrolled, music btn hover */
-        .glass-glow {
-            box-shadow:
-                0 8px 32px rgba(0,0,0,.55),
-                inset 1px 1px 0 rgba(255,255,255,.14),
-                inset -1px -1px 0 rgba(0,0,0,.3),
-                0 0 0 .5px rgba(220,38,38,.2),
-                0 0 40px rgba(220,38,38,.08) !important;
-            border-color: rgba(220,38,38,.25) !important;
-        }
-
         /* Scroll reveal */
         .reveal {
             opacity: 0;
@@ -640,11 +629,19 @@
             padding-block: 8rem; margin-top: 2.5rem;
             border-top: 1px solid rgba(255,255,255,.08);
             border-bottom: 1px solid rgba(255,255,255,.05);
-            /* Màu nền trong suốt để thấy được canvas phía sau */
-            background: linear-gradient(180deg, rgba(255,255,255,.02) 0%, rgba(3,3,10,.6) 100%);
-            backdrop-filter: blur(30px) saturate(150%);
-            -webkit-backdrop-filter: blur(30px) saturate(150%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+            /* Thay đổi màu nền liquid glass đồng bộ */
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,.05) 0%,
+                rgba(10,10,20,.5) 50%,
+                rgba(3,3,10,.7) 100%
+            );
+            backdrop-filter: blur(32px) saturate(160%) brightness(1.05);
+            -webkit-backdrop-filter: blur(32px) saturate(160%) brightness(1.05);
+            box-shadow: 
+                inset 1px 1px 0 rgba(255,255,255,.08),
+                inset -1px -1px 0 rgba(0,0,0,.3),
+                0 20px 60px rgba(0,0,0,.6);
             position: relative; z-index: 10;
         }
         .cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; }
@@ -978,7 +975,7 @@
         }
         .mp-vol-icon.active { color: var(--c-gold); }
 
-        /* Volume slider custom */
+        /* Volume slider custom (Fix cho mobile) */
         .mp-vol-slider {
             flex: 1; -webkit-appearance: none; appearance: none;
             height: 3px; border-radius: 99px; outline: none; cursor: pointer;
@@ -987,7 +984,8 @@
         }
         .mp-vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none;
-            width: 13px; height: 13px; border-radius: 50%;
+            width: 16px; height: 16px; /* Tăng kích thước để vuốt dễ hơn trên mobile */
+            border-radius: 50%;
             background: linear-gradient(135deg, var(--c-gold-lt), var(--c-gold));
             cursor: pointer;
             box-shadow: 0 0 6px rgba(201,168,76,.5), 0 0 0 2px rgba(201,168,76,.2);
@@ -998,7 +996,7 @@
             box-shadow: 0 0 10px rgba(201,168,76,.7), 0 0 0 3px rgba(201,168,76,.3);
         }
         .mp-vol-slider::-moz-range-thumb {
-            width: 13px; height: 13px; border-radius: 50%; border: none;
+            width: 16px; height: 16px; border-radius: 50%; border: none;
             background: linear-gradient(135deg, var(--c-gold-lt), var(--c-gold));
             cursor: pointer;
             box-shadow: 0 0 6px rgba(201,168,76,.5);
@@ -1249,7 +1247,8 @@
     <div class="floater floater--ring" aria-hidden="true"></div>
     <div class="floater floater--grid" aria-hidden="true"></div>
 
-    <audio id="bg-audio" preload="auto"></audio>
+    <!-- Cải thiện crossorigin để xử lý được Web Audio API trên điện thoại -->
+    <audio id="bg-audio" preload="auto" crossorigin="anonymous"></audio>
 
     <div id="music-player" aria-label="Background music player">
         <div id="music-panel" class="music-panel" role="region" aria-label="Music controls">
@@ -1957,7 +1956,29 @@
                 discRing.classList.remove('spinning');
             };
 
+            // Setup Web Audio API để Fix âm lượng trên Điện Thoại
+            let audioCtx, gainNode;
+            const initWebAudio = () => {
+                if (audioCtx) return;
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioContext) return;
+                    audioCtx = new AudioContext();
+                    const source = audioCtx.createMediaElementSource(audio);
+                    gainNode = audioCtx.createGain();
+                    source.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    gainNode.gain.value = parseFloat(volSlider.value) / 100;
+                } catch (err) {
+                    console.warn('Web Audio API setup failed (Có thể do thiết bị không hỗ trợ):', err);
+                }
+            };
+
             const play = (forceLoad) => {
+                initWebAudio();
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
                 if (forceLoad) loadTrack(trackIdx);
                 const promise = audio.play();
                 if (promise !== undefined) {
@@ -1974,11 +1995,19 @@
             const pause = () => { audio.pause(); setPausedUI(); };
             const toggle = () => musicPlaying ? pause() : play(false);
 
-            // --- Volume control (Hỗ trợ cảm ứng điện thoại) ---
-            audio.volume = parseFloat(volSlider.value) / 100;
+            // --- Cập nhật Volume control hỗ trợ cả Mobile và Desktop ---
             const updateVol = () => {
                 const v = parseInt(volSlider.value);
-                audio.volume = v / 100;
+                const volFloat = v / 100;
+                
+                // Nếu Web Audio API khả dụng (hỗ trợ cho iOS/Android) thì dùng GainNode
+                if (gainNode) {
+                    gainNode.gain.value = volFloat;
+                    audio.volume = 1; // Để GainNode xử lý
+                } else {
+                    audio.volume = volFloat; // Fallback cho Desktop
+                }
+
                 volPct.textContent = v + '%';
                 volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
                 volIcon.classList.toggle('active', v > 0);
@@ -1989,11 +2018,12 @@
                         : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
             };
             
-            // Bổ sung listener "change" và "touch" để thanh gạt âm lượng nhạy hơn trên điện thoại
             volSlider.addEventListener('input', updateVol);
             volSlider.addEventListener('change', updateVol);
-            volSlider.addEventListener('touchmove', updateVol, { passive: true });
-            updateVol();
+            // Chặn sự kiện cuộn trang vô tình khi kéo thanh âm lượng trên mobile
+            volSlider.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
+            
+            updateVol(); // Khởi tạo âm lượng
 
             audio.addEventListener('timeupdate', () => {
                 if (!audio.duration) return;
