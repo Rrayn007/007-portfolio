@@ -145,13 +145,9 @@
             -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(1.08);
             border: 1px solid rgba(255,255,255,.10);
             box-shadow:
-                /* outer shadow */
                 0 8px 32px rgba(0,0,0,.55),
-                /* inner top-left light */
                 inset 1px 1px 0 rgba(255,255,255,.12),
-                /* inner bottom-right shadow */
                 inset -1px -1px 0 rgba(0,0,0,.3),
-                /* chromatic red fringe */
                 0 0 0 .5px rgba(220,38,38,.08);
             transition: all var(--dur-med) var(--ease-spring);
             overflow: hidden;
@@ -512,7 +508,7 @@
             background: linear-gradient(
                 145deg,
                 rgba(255,255,255,.055) 0%,
-                rgba(8,8,18,.75)      50%,
+                rgba(8,8,18,.75)     50%,
                 rgba(3,3,8,.88)       100%
             );
             backdrop-filter: blur(44px) saturate(180%) brightness(1.06);
@@ -1277,13 +1273,15 @@
                         <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
                     </svg>
                 </button>
-            
+
                 <button class="mp-btn" id="mp-prev" aria-label="Previous track" title="Prev">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
                 </button>
+                
                 <button class="mp-btn-play" id="mp-play" aria-label="Play/Pause">
                     <svg id="mp-play-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 </button>
+                
                 <button class="mp-btn" id="mp-next" aria-label="Next track" title="Next">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2.5-6 6-4.35v8.7L8.5 12zM16 6h2v12h-2z"/></svg>
                 </button>
@@ -1315,9 +1313,7 @@
 
     <div id="music-toast" class="music-toast">▶ TAP TO PLAY MUSIC</div>
 
-
     <div id="main-interface">
-
         <header class="site-header" id="site-header">
             <div class="container header-inner">
                 <div id="site-logo-led" class="pixel-logo" role="button" tabindex="0" aria-label="Go to top" onclick="scrollToSection('hero')"></div>
@@ -1494,7 +1490,9 @@
             </div>
         </footer>
 
-    </div><div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
+    </div>
+
+    <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
         <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
         <div id="modal-box" class="modal-box">
             <button class="modal-close" onclick="closeModal()" aria-label="Close">
@@ -1557,9 +1555,9 @@
         const CSV_URL = '/api/data';
 
         const GITHUB_PLAYLIST = [
-               "https://github.com/Rrayn007/007-portfolio/raw/refs/heads/main/audio/SpaceWalk.mp3",
-               "https://github.com/Rrayn007/007-portfolio/raw/refs/heads/main/audio/Track2.mp3",
-               "https://github.com/Rrayn007/007-portfolio/raw/refs/heads/main/audio/Track3.mp3"
+            "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/SpaceWalk.mp3",
+            "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track2.mp3",
+            "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track3.mp3"
         ];
 
         /* ════════════════════════════════════════════
@@ -1872,215 +1870,215 @@
         }
 
         /* ════════════════════════════════════════════
-           MUSIC PLAYER — FULL FEATURED
+           MUSIC PLAYER — FULL FEATURED (SPOTIFY-LIKE)
         ════════════════════════════════════════════ */
         function initMusic(urls) {
-    const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean)[cite: 417];
-    if (!trackList.length) return[cite: 417];
+            const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
+            if (!trackList.length) return;
 
-    const audio      = document.getElementById('bg-audio')[cite: 418];
-    const player     = document.getElementById('music-player')[cite: 418];
-    const panel      = document.getElementById('music-panel')[cite: 418];
-    const pill       = document.getElementById('music-pill')[cite: 418];
-    const pillStatus = document.getElementById('pill-status')[cite: 419];
-    const pillIcon   = document.getElementById('pill-icon')[cite: 419];
-    const eq         = document.getElementById('eq-bars')[cite: 419];
-    const discRing   = document.getElementById('disc-ring')[cite: 419];
-    const mpTitle    = document.getElementById('mp-title')[cite: 419];
-    const mpPlay     = document.getElementById('mp-play')[cite: 420];
-    const mpPlayIcon = document.getElementById('mp-play-icon')[cite: 420];
-    const mpPrev     = document.getElementById('mp-prev')[cite: 420];
-    const mpNext     = document.getElementById('mp-next')[cite: 420];
-    const progBar    = document.getElementById('mp-progress')[cite: 420];
-    const progFill   = document.getElementById('mp-progress-fill')[cite: 421];
-    const volSlider  = document.getElementById('vol-slider')[cite: 421];
-    const volPct     = document.getElementById('vol-pct')[cite: 421];
-    const volIcon    = document.getElementById('vol-icon')[cite: 421];
-    const toast      = document.getElementById('music-toast')[cite: 421];
-    
-    const mpMode     = document.getElementById('mp-mode');
-    const mpModeIcon = document.getElementById('mp-mode-icon');
+            const audio      = document.getElementById('bg-audio');
+            const player     = document.getElementById('music-player');
+            const panel      = document.getElementById('music-panel');
+            const pill       = document.getElementById('music-pill');
+            const pillStatus = document.getElementById('pill-status');
+            const pillIcon   = document.getElementById('pill-icon');
+            const eq         = document.getElementById('eq-bars');
+            const discRing   = document.getElementById('disc-ring');
+            const mpTitle    = document.getElementById('mp-title');
+            const mpPlay     = document.getElementById('mp-play');
+            const mpPlayIcon = document.getElementById('mp-play-icon');
+            const mpPrev     = document.getElementById('mp-prev');
+            const mpNext     = document.getElementById('mp-next');
+            const progBar    = document.getElementById('mp-progress');
+            const progFill   = document.getElementById('mp-progress-fill');
+            const volSlider  = document.getElementById('vol-slider');
+            const volPct     = document.getElementById('vol-pct');
+            const volIcon    = document.getElementById('vol-icon');
+            const toast      = document.getElementById('music-toast');
+            
+            const mpMode     = document.getElementById('mp-mode');
+            const mpModeIcon = document.getElementById('mp-mode-icon');
 
-    let trackIdx    = 0;
-    let panelOpen   = false;
-    let isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)[cite: 422];
-    let playMode    = 0; // 0: Repeat All, 1: Repeat One, 2: Shuffle
-    
-    const modeIcons = {
-        0: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>',
-        1: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z"/>',
-        2: '<path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>'
-    };
+            let trackIdx    = 0;
+            let panelOpen   = false;
+            let isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let playMode    = 0; // 0: Repeat All, 1: Repeat One, 2: Shuffle
+            
+            const modeIcons = {
+                0: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>',
+                1: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z"/>',
+                2: '<path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>'
+            };
 
-    const trackName = url => {
-        try {
-            const parts = decodeURIComponent(url).split('/')[cite: 423];
-            return parts[parts.length - 1].replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').toUpperCase()[cite: 424];
-        } catch { return 'TRACK ' + (trackIdx + 1)[cite: 424]; }
-    };
+            const trackName = url => {
+                try {
+                    const parts = decodeURIComponent(url).split('/');
+                    return parts[parts.length - 1].replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').toUpperCase();
+                } catch { return 'TRACK ' + (trackIdx + 1); }
+            };
 
-    const loadTrack = idx => {
-        trackIdx = ((idx % trackList.length) + trackList.length) % trackList.length[cite: 425];
-        audio.src = trackList[trackIdx][cite: 426];
-        audio.load()[cite: 426];
-        mpTitle.textContent = trackName(trackList[trackIdx])[cite: 426];
-        progFill.style.width = '0%'[cite: 426];
-    };
+            const loadTrack = idx => {
+                trackIdx = ((idx % trackList.length) + trackList.length) % trackList.length;
+                audio.src = trackList[trackIdx];
+                audio.load();
+                mpTitle.textContent = trackName(trackList[trackIdx]);
+                progFill.style.width = '0%';
+            };
 
-    const getNextTrackIdx = () => {
-        if (playMode === 1) return trackIdx[cite: 513];
-        if (playMode === 2) {
-            let next = Math.floor(Math.random() * trackList.length)[cite: 514];
-            if (next === trackIdx && trackList.length > 1) {
-                next = (next + 1) % trackList.length[cite: 514];
-            }
-            return next;
-        }
-        return trackIdx + 1[cite: 512];
-    };
+            const getNextTrackIdx = () => {
+                if (playMode === 1) return trackIdx;
+                if (playMode === 2) {
+                    let next = Math.floor(Math.random() * trackList.length);
+                    if (next === trackIdx && trackList.length > 1) {
+                        next = (next + 1) % trackList.length;
+                    }
+                    return next;
+                }
+                return trackIdx + 1;
+            };
 
-    const setPlayingUI = () => {
-        musicPlaying = true[cite: 427];
-        mpPlayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-        pillIcon.innerHTML   = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-        pillStatus.textContent = 'ONLINE'[cite: 428];
-        pillStatus.classList.add('on')[cite: 428];
-        eq.classList.add('visible')[cite: 428];
-        discRing.classList.add('spinning')[cite: 428];
-    };
+            const setPlayingUI = () => {
+                musicPlaying = true;
+                mpPlayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+                pillIcon.innerHTML   = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+                pillStatus.textContent = 'ONLINE';
+                pillStatus.classList.add('on');
+                eq.classList.add('visible');
+                discRing.classList.add('spinning');
+            };
 
-    const setPausedUI = () => {
-        musicPlaying = false[cite: 429];
-        mpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-        pillIcon.innerHTML   = '<path d="M8 5v14l11-7z"/>';
-        pillStatus.textContent = 'OFFLINE'[cite: 430];
-        pillStatus.classList.remove('on')[cite: 430];
-        eq.classList.remove('visible')[cite: 430];
-        discRing.classList.remove('spinning')[cite: 430];
-    };
+            const setPausedUI = () => {
+                musicPlaying = false;
+                mpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+                pillIcon.innerHTML   = '<path d="M8 5v14l11-7z"/>';
+                pillStatus.textContent = 'OFFLINE';
+                pillStatus.classList.remove('on');
+                eq.classList.remove('visible');
+                discRing.classList.remove('spinning');
+            };
 
-    const play = (forceLoad) => {
-        if (forceLoad) loadTrack(trackIdx)[cite: 431];
-        const promise = audio.play()[cite: 431];
-        if (promise !== undefined) {
-            promise.then(() => {
-                setPlayingUI();
-                removeAutoPlayListeners(); // Nhạc phát thành công mới tháo listener
-            }).catch(err => {
-                console.warn('Autoplay waiting for user gesture:', err.message);
-                setPausedUI();
-                if (isMobile) showToast()[cite: 432];
+            const play = (forceLoad) => {
+                if (forceLoad) loadTrack(trackIdx);
+                const promise = audio.play();
+                if (promise !== undefined) {
+                    promise.then(() => {
+                        setPlayingUI();
+                        removeAutoPlayListeners();
+                    }).catch(err => {
+                        console.warn('Autoplay waiting for user gesture:', err.message);
+                        setPausedUI();
+                        if (isMobile) showToast();
+                    });
+                }
+            };
+
+            const pause = () => { audio.pause(); setPausedUI(); };
+            const toggle = () => musicPlaying ? pause() : play(false);
+            
+            const showToast = () => {
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 3500);
+            };
+
+            // --- Volume control ---
+            audio.volume = parseFloat(volSlider.value) / 100;
+            const updateVol = () => {
+                const v = parseInt(volSlider.value);
+                audio.volume = v / 100;
+                volPct.textContent = v + '%';
+                volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
+                volIcon.classList.toggle('active', v > 0);
+                volIcon.innerHTML = v === 0 
+                    ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/>'
+                    : v < 50
+                        ? '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>'
+                        : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+            };
+            volSlider.addEventListener('input', updateVol);
+            updateVol();
+
+            audio.addEventListener('timeupdate', () => {
+                if (!audio.duration) return;
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progFill.style.width = pct + '%';
             });
-        }
-    };
 
-    const pause = () => { audio.pause() [cite: 434]; setPausedUI()[cite: 434]; };
-    const toggle = () => musicPlaying ? pause() : play(false)[cite: 435];
-    
-    const showToast = () => {
-        toast.style.display = 'block'[cite: 436];
-        setTimeout(() => { toast.style.display = 'none'; }, 3500)[cite: 437];
-    };
+            progBar.addEventListener('click', e => {
+                const r = progBar.getBoundingClientRect();
+                const pct = (e.clientX - r.left) / r.width;
+                audio.currentTime = pct * (audio.duration || 0);
+            });
 
-    // --- Volume control ---
-    audio.volume = parseFloat(volSlider.value) / 100[cite: 437];
-    const updateVol = () => {
-        const v = parseInt(volSlider.value)[cite: 438];
-        audio.volume = v / 100[cite: 439];
-        volPct.textContent = v + '%'[cite: 439];
-        volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`[cite: 439];
-        volIcon.classList.toggle('active', v > 0)[cite: 439];
-        volIcon.innerHTML = v === 0 
-            ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/>'
-            : v < 50
-                ? '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>'
-                : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
-    };
-    volSlider.addEventListener('input', updateVol)[cite: 442];
-    updateVol()[cite: 442];
+            // --- Controls ---
+            if (mpMode) {
+                mpMode.addEventListener('click', e => {
+                    e.stopPropagation();
+                    playMode = (playMode + 1) % 3;
+                    mpModeIcon.innerHTML = modeIcons[playMode];
+                    const modeTitles = ["Repeat All", "Repeat One", "Shuffle"];
+                    mpMode.title = modeTitles[playMode];
+                });
+            }
 
-    audio.addEventListener('timeupdate', () => {
-        if (!audio.duration) return[cite: 443];
-        const pct = (audio.currentTime / audio.duration) * 100[cite: 443];
-        progFill.style.width = pct + '%'[cite: 443];
-    });
+            audio.addEventListener('ended', () => {
+                loadTrack(getNextTrackIdx());
+                play(false);
+            });
 
-    progBar.addEventListener('click', e => {
-        const r = progBar.getBoundingClientRect()[cite: 444];
-        const pct = (e.clientX - r.left) / r.width[cite: 444];
-        audio.currentTime = pct * (audio.duration || 0)[cite: 444];
-    });
+            mpNext.addEventListener('click', e => {
+                e.stopPropagation();
+                loadTrack(getNextTrackIdx());
+                play(false);
+            });
 
-    // --- Controls ---
-    if (mpMode) {
-        mpMode.addEventListener('click', e => {
-            e.stopPropagation();
-            playMode = (playMode + 1) % 3;
-            mpModeIcon.innerHTML = modeIcons[playMode];
-            const modeTitles = ["Repeat All", "Repeat One", "Shuffle"];
-            mpMode.title = modeTitles[playMode];
-        });
-    }
+            mpPrev.addEventListener('click', e => {
+                e.stopPropagation();
+                loadTrack(playMode === 2 ? getNextTrackIdx() : trackIdx - 1);
+                play(false);
+            });
 
-    audio.addEventListener('ended', () => {
-        loadTrack(getNextTrackIdx())[cite: 445];
-        play(false)[cite: 445];
-    });
+            mpPlay.addEventListener('click', e => { e.stopPropagation(); toggle(); });
 
-    mpNext.addEventListener('click', e => {
-        e.stopPropagation()[cite: 447];
-        loadTrack(getNextTrackIdx());
-        play(false);
-    });
+            pill.addEventListener('click', () => {
+                panelOpen = !panelOpen;
+                panel.classList.toggle('open', panelOpen);
+                pill.setAttribute('aria-expanded', String(panelOpen));
+            });
 
-    mpPrev.addEventListener('click', e => {
-        e.stopPropagation()[cite: 446];
-        loadTrack(playMode === 2 ? getNextTrackIdx() : trackIdx - 1);
-        play(false);
-    });
+            document.addEventListener('click', e => {
+                if (panelOpen && !player.contains(e.target)) {
+                    panelOpen = false;
+                    panel.classList.remove('open');
+                    pill.setAttribute('aria-expanded', 'false');
+                }
+            });
 
-    mpPlay.addEventListener('click', e => { e.stopPropagation() [cite: 448]; toggle()[cite: 448]; });
+            // --- BỘ LẮNG NGHE TỰ ĐỘNG PHÁT BỀN VỮNG ---
+            loadTrack(0);
+            player.classList.add('visible');
 
-    pill.addEventListener('click', () => {
-        panelOpen = !panelOpen[cite: 449];
-        panel.classList.toggle('open', panelOpen)[cite: 449];
-        pill.setAttribute('aria-expanded', String(panelOpen))[cite: 449];
-    });
+            const triggerPlayOnUserGesture = () => {
+                if (!musicPlaying) {
+                    play(false);
+                }
+            };
 
-    document.addEventListener('click', e => {
-        if (panelOpen && !player.contains(e.target)) {
-            panelOpen = false[cite: 450];
-            panel.classList.remove('open')[cite: 450];
-            pill.setAttribute('aria-expanded', 'false')[cite: 450];
-        }
-    });
+            const removeAutoPlayListeners = () => {
+                window.removeEventListener('click', triggerPlayOnUserGesture);
+                window.removeEventListener('touchstart', triggerPlayOnUserGesture);
+                window.removeEventListener('scroll', triggerPlayOnUserGesture);
+                window.removeEventListener('keydown', triggerPlayOnUserGesture);
+            };
 
-    // --- BỘ LẮNG NGHE TỰ ĐỘNG PHÁT BỀN VỮNG ---
-    loadTrack(0)[cite: 451];
-    player.classList.add('visible')[cite: 451];
+            // Gán sự kiện rộng ra thẻ window để nhạy hơn
+            window.addEventListener('click', triggerPlayOnUserGesture, { passive: true });
+            window.addEventListener('touchstart', triggerPlayOnUserGesture, { passive: true });
+            window.addEventListener('scroll', triggerPlayOnUserGesture, { passive: true });
+            window.addEventListener('keydown', triggerPlayOnUserGesture, { passive: true });
 
-    const triggerPlayOnUserGesture = () => {
-        if (!musicPlaying) {
+            // Thử chạy lần đầu (Nếu trình duyệt cho phép sẵn thì phát ngay)
             play(false);
         }
-    };
-
-    const removeAutoPlayListeners = () => {
-        window.removeEventListener('click', triggerPlayOnUserGesture);
-        window.removeEventListener('touchstart', triggerPlayOnUserGesture);
-        window.removeEventListener('scroll', triggerPlayOnUserGesture);
-        window.removeEventListener('keydown', triggerPlayOnUserGesture);
-    };
-
-    // Gán sự kiện rộng ra thẻ `window` để nhạy hơn
-    window.addEventListener('click', triggerPlayOnUserGesture, { passive: true });
-    window.addEventListener('touchstart', triggerPlayOnUserGesture, { passive: true });
-    window.addEventListener('scroll', triggerPlayOnUserGesture, { passive: true });
-    window.addEventListener('keydown', triggerPlayOnUserGesture, { passive: true });
-
-    // Thử chạy lần đầu (Nếu trình duyệt cho phép sẵn thì phát ngay)
-    play(false);
-}
 
         /* ════════════════════════════════════════════
            MODAL
@@ -2226,7 +2224,7 @@
                     btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
                 }, 4000);
             });
-}
+        }
 
         /* ════════════════════════════════════════════
            SCROLL EFFECTS
@@ -2251,41 +2249,40 @@
         /* ════════════════════════════════════════════
            BOOTSTRAP
         ════════════════════════════════════════════ */
-                document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-year').textContent = new Date().getFullYear();
             initLED();
             observeReveals();
             document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
             
-            // Đã sửa thành CSV_URL
             if (CSV_URL) initPortfolio(); 
         });
 
-        })();
-         // 1. Chặn bấm chuột phải
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        // 2. Chặn các phím tắt F12, Ctrl+U (Xem code), Ctrl+Shift+I / J / C (DevTools)
-        document.addEventListener('keydown', (e) => {
-            if (
-                e.keyCode === 123 || 
-                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-                (e.ctrlKey && e.keyCode === 85)
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        });
-        
-        // 3. Bẫy Debugger: Nếu cố tình mở F12 bằng menu trình duyệt sẽ làm DevTools bị đơ/Reload
-        setInterval(() => {
-            const startTime = performance.now();
-            debugger;
-            const endTime = performance.now();
-            if (endTime - startTime > 100) {
-                window.location.reload();
-            }
-        }, 1000);
+    })();
+    // 1. Chặn bấm chuột phải
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    // 2. Chặn các phím tắt F12, Ctrl+U (Xem code), Ctrl+Shift+I / J / C (DevTools)
+    document.addEventListener('keydown', (e) => {
+        if (
+            e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+            (e.ctrlKey && e.keyCode === 85)
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // 3. Bẫy Debugger: Nếu cố tình mở F12 bằng menu trình duyệt sẽ làm DevTools bị đơ/Reload
+    setInterval(() => {
+        const startTime = performance.now();
+        debugger;
+        const endTime = performance.now();
+        if (endTime - startTime > 100) {
+            window.location.reload();
+        }
+    }, 1000);
     </script>
 </body>
 </html>
