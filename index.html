@@ -1069,7 +1069,7 @@
         @keyframes eqWave { from { transform: scaleY(.2); } to { transform: scaleY(1); } }
 
         /* ─────────────────────────────────────────────
-           PROJECT MODAL
+           PROJECT MODAL & GALLERY ARROWS
         ───────────────────────────────────────────── */
         .modal-overlay {
             position: fixed; inset: 0; z-index: 9999;
@@ -1111,7 +1111,6 @@
         @media (min-width: 768px) { .modal-box { flex-direction: row; height: 85vh; } }
         .modal-box.open { transform: scale(1); }
         
-        /* FIX CHO NÚT "X" TRÒN HOÀN HẢO */
         .modal-close {
             position: absolute; top: 1.25rem; right: 1.25rem; z-index: 50;
             width: 2.75rem; height: 2.75rem;
@@ -1158,10 +1157,37 @@
         #modal-img {
             width: 100%; height: 100%; object-fit: contain;
             z-index: 0; padding: 1rem; opacity: .9;
-            transition: opacity .7s, transform .7s;
+            transition: opacity .3s, transform .7s;
         }
         @media (min-width: 768px) { #modal-img { object-fit: cover; padding: 0; } }
         .modal-image-pane:hover #modal-img { opacity: 1; transform: scale(1.03); }
+
+        /* Modal Gallery UI */
+        .modal-nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
+            width: 2.75rem; height: 2.75rem;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(0,0,0,.55) 100%);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,.12); border-radius: 50%;
+            color: #fff; cursor: pointer; transition: all var(--dur-fast);
+        }
+        .modal-nav-btn:hover {
+            background: var(--c-red); border-color: var(--c-red);
+            box-shadow: 0 0 15px rgba(220,38,38,.4), inset 1px 1px 0 rgba(255,255,255,.15);
+        }
+        .modal-nav-btn:active { transform: translateY(-50%) scale(0.95); }
+        .modal-nav-prev { left: 1rem; }
+        .modal-nav-next { right: 1rem; }
+        
+        .modal-img-counter {
+            position: absolute; bottom: 1rem; left: 1rem; z-index: 20;
+            font-family: var(--f-mono); font-size: 0.625rem; font-weight: 700;
+            letter-spacing: 0.2em; color: #9ca3af;
+            background: rgba(0,0,0,0.6); padding: 0.35rem 0.85rem;
+            border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+        }
 
         .modal-content-pane {
             width: 100%; display: flex; flex-direction: column;
@@ -1338,7 +1364,6 @@
                 <span id="sys-last-name">SCOFIELD</span>
             </h1>
             
-            <!-- Đã tách rời thẻ div .reveal ra bao bọc bên ngoài class có backdrop-filter -->
             <div class="reveal" data-delay="2">
                 <div class="hero-tagline">
                     <span>///</span>
@@ -1354,7 +1379,6 @@
                 </div>
             </div>
             
-            <!-- Bọc reveal riêng -->
             <div class="reveal" data-delay="3">
                 <div id="p-skills-tags" class="skill-tags"></div>
             </div>
@@ -1450,7 +1474,6 @@
 
         <section id="contact" class="contact-section">
             <div class="container">
-                <!-- Đã tách rời thẻ div .reveal khỏi .contact-box để bảo toàn filter kính mờ -->
                 <div class="reveal">
                     <div class="contact-box">
                         <h2 class="contact-title lux-text">INITIATE CONNECTION</h2>
@@ -1472,7 +1495,7 @@
                             </div>
                             <button type="submit" id="submit-btn" class="btn-submit">
                                 TRANSMIT DATA
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7-7m7-7H3"/></svg>
                             </button>
                         </form>
                         <div id="form-success" class="form-success" role="alert">&gt; SYS.MSG: TRANSMISSION SUCCESSFUL [OK]</div>
@@ -1495,17 +1518,34 @@
 
     </div>
 
+    <!-- NÂNG CẤP: MODAL GALLERY -->
     <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
         <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
         <div id="modal-box" class="modal-box">
             <button class="modal-close" onclick="closeModal()" aria-label="Close">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
+            
             <div class="modal-image-pane">
                 <div class="modal-grid-bg" aria-hidden="true"></div>
                 <div class="modal-fade" aria-hidden="true"></div>
+                
+                <!-- Nút Prev -->
+                <button id="modal-prev-btn" class="modal-nav-btn modal-nav-prev" onclick="modalPrevImg(event)" aria-label="Previous image" style="display: none;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                
                 <img id="modal-img" src="" alt="Project image" loading="lazy">
+                
+                <!-- Nút Next -->
+                <button id="modal-next-btn" class="modal-nav-btn modal-nav-next" onclick="modalNextImg(event)" aria-label="Next image" style="display: none;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+
+                <!-- Counter Ảnh -->
+                <div id="modal-img-counter" class="modal-img-counter" style="display: none;">1 / 1</div>
             </div>
+
             <div class="modal-content-pane">
                 <div class="modal-header">
                     <div class="modal-category-badge">
@@ -1570,6 +1610,10 @@
         let crtEnabled = true;
         let musicPlaying = false;
         let rafTicking = false;
+        
+        // Thêm State cho Modal Gallery
+        let currentModalImages = [];
+        let currentModalImgIndex = 0;
 
         /* ════════════════════════════════════════════
            CANVAS STARFIELD
@@ -1773,7 +1817,7 @@
                     return c;
                 });
 
-                /* Render cards - Đã bọc reveal bên ngoài thẻ card-scene */
+                /* Render cards */
                 const cardsEl = document.getElementById('cards-container');
                 cardsEl.innerHTML = processedCards.map((c, i) => `
                     <div class="reveal" data-delay="${i % 3}">
@@ -1789,17 +1833,19 @@
                 `).join('');
                 attachCardListeners();
 
-                /* Render portfolio grid - Đã bọc reveal bên ngoài project-card */
+                /* Render portfolio grid (Chỉ lấy ảnh ĐẦU TIÊN làm thumbnail) */
                 globalProjects = projects;
                 const grid = document.getElementById('portfolio-grid');
-                grid.innerHTML = projects.map((p, i) => `
+                grid.innerHTML = projects.map((p, i) => {
+                    const firstImg = (p.ImageUrl || "").split(',')[0].trim(); // Chỉ lấy link đầu tiên
+                    return `
                     <div class="reveal" data-delay="${i % 3}">
                         <article class="project-card" role="button" tabindex="0"
                             onclick="openModal(${i})"
                             onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${i})"
                             aria-label="Open project: ${escHtml(p.Title)}">
                             <div class="project-card-img">
-                                <img src="${encodeURI(p.ImageUrl)}" alt="${escHtml(p.Title)}" loading="lazy">
+                                <img src="${encodeURI(firstImg)}" alt="${escHtml(p.Title)}" loading="lazy">
                                 <div class="project-card-overlay" aria-hidden="true"></div>
                                 <div class="project-card-info">
                                     <div class="project-cat">&gt; ${escHtml(p.Category)}</div>
@@ -1808,7 +1854,8 @@
                             </div>
                         </article>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
 
                 badge.classList.add('hidden');
                 setTimeout(observeReveals, 100);
@@ -2088,16 +2135,69 @@
                 });
             }
         }
+
         /* ════════════════════════════════════════════
-           MODAL
+           MODAL & GALLERY NAVIGATION
         ════════════════════════════════════════════ */
+        
+        // Render Ảnh thay vì link cố định
+        function renderModalGallery() {
+            if (currentModalImages.length === 0) return;
+            const imgEl = document.getElementById('modal-img');
+            const counterEl = document.getElementById('modal-img-counter');
+            
+            // Fade Transition nhẹ khi chuyển ảnh
+            imgEl.style.opacity = 0.5;
+            setTimeout(() => {
+                imgEl.src = encodeURI(currentModalImages[currentModalImgIndex]);
+                imgEl.style.opacity = 1;
+            }, 150);
+
+            counterEl.textContent = `${currentModalImgIndex + 1} / ${currentModalImages.length}`;
+        }
+
+        window.modalPrevImg = function(e) {
+            if(e) e.stopPropagation();
+            if (currentModalImages.length <= 1) return;
+            currentModalImgIndex = (currentModalImgIndex - 1 + currentModalImages.length) % currentModalImages.length;
+            renderModalGallery();
+        };
+
+        window.modalNextImg = function(e) {
+            if(e) e.stopPropagation();
+            if (currentModalImages.length <= 1) return;
+            currentModalImgIndex = (currentModalImgIndex + 1) % currentModalImages.length;
+            renderModalGallery();
+        };
+
         window.openModal = function(idx) {
             const p = globalProjects[idx]; if (!p) return;
             const modal = document.getElementById('project-modal');
             const box   = document.getElementById('modal-box');
             const link  = document.getElementById('modal-link');
 
-            document.getElementById('modal-img').src                 = p.ImageUrl;
+            // Xử lý Gallery Links (Tách mảng bởi dấu phẩy, loại bỏ khoảng trắng rỗng)
+            currentModalImages = (p.ImageUrl || "").split(',').map(url => url.trim()).filter(Boolean);
+            currentModalImgIndex = 0;
+
+            // Xử lý hiển thị các nút điều hướng
+            const prevBtn = document.getElementById('modal-prev-btn');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const counter = document.getElementById('modal-img-counter');
+
+            if (currentModalImages.length > 1) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+                counter.style.display = 'block';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                counter.style.display = 'none';
+            }
+
+            renderModalGallery();
+
+            // Render Text Info
             document.getElementById('modal-category-text').textContent = p.Category;
             document.getElementById('modal-title').textContent        = p.Title;
             document.getElementById('modal-desc').textContent         = p.Desc;
@@ -2223,7 +2323,7 @@
                 setTimeout(() => {
                     success.style.display = 'none';
                     btn.disabled = false;
-                    btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+                    btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7-7m7-7H3"/></svg>';
                 }, 4000);
             });
         }
@@ -2245,6 +2345,13 @@
                 const modal = document.getElementById('project-modal');
                 if (modal.classList.contains('open')) window.closeModal();
                 if (mobileNavOpen) window.toggleMobileNav();
+            }
+            
+            // Xử lý nút qua lại cho Slider Modal
+            const modal = document.getElementById('project-modal');
+            if (modal.classList.contains('open') && currentModalImages.length > 1) {
+                if (e.key === 'ArrowLeft') window.modalPrevImg();
+                if (e.key === 'ArrowRight') window.modalNextImg();
             }
         });
 
