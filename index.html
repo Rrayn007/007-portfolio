@@ -1131,38 +1131,7 @@
         .modal-close svg { transition: transform .3s; }
         .modal-close:hover svg { transform: rotate(90deg); }
 
-        .modal-image-pane {
-            width: 100%; height: 40vh; position: relative;
-            background: transparent; overflow: hidden; 
-            display: flex; align-items: center; justify-content: center;
-            border-bottom: 1px solid rgba(255,255,255,.05);
-        }
-        @media (min-width: 768px) {
-            .modal-image-pane {
-                width: 55%; height: 100%;
-                border-bottom: none; border-right: 1px solid rgba(255,255,255,.05);
-            }
-        }
-        .modal-grid-bg {
-            position: absolute; inset: 0; opacity: .4;
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10h40M10 0v40' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3C/svg%3E");
-        }
-        .modal-fade {
-            position: absolute; inset: 0; pointer-events: none; z-index: 10;
-            background: linear-gradient(to top, transparent, rgba(5,5,8,.6));
-        }
-        @media (min-width: 768px) {
-            .modal-fade { background: linear-gradient(to right, transparent, rgba(5,5,8,.6)); }
-        }
-        #modal-img {
-            width: 100%; height: 100%; object-fit: contain;
-            z-index: 0; padding: 1rem; opacity: .9;
-            transition: opacity .3s, transform .7s;
-        }
-        @media (min-width: 768px) { #modal-img { object-fit: cover; padding: 0; } }
-        .modal-image-pane:hover #modal-img { opacity: 1; transform: scale(1.03); }
-
-        /* Modal Gallery UI (NÂNG CẤP) */
+        /* Modal Gallery UI */
         .modal-nav-btn {
             position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
             width: 2.75rem; height: 2.75rem;
@@ -1188,6 +1157,38 @@
             border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(4px);
         }
+
+        .modal-image-pane {
+            width: 100%; height: 40vh; position: relative;
+            background: transparent; overflow: hidden; 
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        @media (min-width: 768px) {
+            .modal-image-pane {
+                width: 55%; height: 100%;
+                border-bottom: none; border-right: 1px solid rgba(255,255,255,.05);
+            }
+        }
+        .modal-grid-bg {
+            position: absolute; inset: 0; opacity: .4;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10h40M10 0v40' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3C/svg%3E");
+        }
+        .modal-fade {
+            position: absolute; inset: 0; pointer-events: none; z-index: 10;
+            background: linear-gradient(to top, transparent, rgba(5,5,8,.6));
+        }
+        @media (min-width: 768px) {
+            .modal-fade { background: linear-gradient(to right, transparent, rgba(5,5,8,.6)); }
+        }
+        
+        #modal-img {
+            width: 100%; height: 100%; object-fit: contain;
+            z-index: 0; padding: 1rem; opacity: .9;
+            transition: opacity .3s, transform .7s;
+        }
+        @media (min-width: 768px) { #modal-img { object-fit: cover; padding: 0; } }
+        .modal-image-pane:hover #modal-img { opacity: 1; transform: scale(1.03); }
 
         .modal-content-pane {
             width: 100%; display: flex; flex-direction: column;
@@ -1593,7 +1594,7 @@
         'use strict';
 
         /* ════════════════════════════════════════════
-           CONFIG
+           CONFIG & STATE
         ════════════════════════════════════════════ */
         const CSV_URL = '/api/data';
 
@@ -1603,15 +1604,11 @@
             "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track3.mp3"
         ];
 
-        /* ════════════════════════════════════════════
-           STATE
-        ════════════════════════════════════════════ */
         let globalProjects = [];
         let crtEnabled = true;
         let musicPlaying = false;
         let rafTicking = false;
-
-        // Thêm State cho Modal Gallery
+        
         let currentModalImages = [];
         let currentModalImgIndex = 0;
 
@@ -1840,7 +1837,6 @@
                     const rawImg = (p.ImageUrl || "").toString();
                     const imgList = rawImg.split(/[|,]/).map(url => url.trim()).filter(url => url.startsWith('http'));
                     const firstImg = imgList[0] || '';
-                    
                     return `
                     <div class="reveal" data-delay="${i % 3}">
                         <article class="project-card" role="button" tabindex="0"
@@ -2139,7 +2135,9 @@
             }
         }
 
-        // Nâng cấp: Render Modal Gallery
+        /* ════════════════════════════════════════════
+           MODAL & GALLERY NAVIGATION
+        ════════════════════════════════════════════ */
         function renderModalGallery() {
             if (currentModalImages.length === 0) return;
             const imgEl = document.getElementById('modal-img');
@@ -2174,7 +2172,6 @@
             const box   = document.getElementById('modal-box');
             const link  = document.getElementById('modal-link');
 
-            // Xử lý Gallery Links
             const rawImages = (p.ImageUrl || "").toString();
             currentModalImages = rawImages.split(/[|,]/).map(url => url.trim()).filter(url => url.startsWith('http'));
             currentModalImgIndex = 0;
@@ -2184,13 +2181,13 @@
             const counter = document.getElementById('modal-img-counter');
 
             if (currentModalImages.length > 1) {
-                if(prevBtn) prevBtn.style.display = 'flex';
-                if(nextBtn) nextBtn.style.display = 'flex';
-                if(counter) counter.style.display = 'block';
+                if (prevBtn) prevBtn.style.display = 'flex';
+                if (nextBtn) nextBtn.style.display = 'flex';
+                if (counter) counter.style.display = 'block';
             } else {
-                if(prevBtn) prevBtn.style.display = 'none';
-                if(nextBtn) nextBtn.style.display = 'none';
-                if(counter) counter.style.display = 'none';
+                if (prevBtn) prevBtn.style.display = 'none';
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (counter) counter.style.display = 'none';
             }
 
             renderModalGallery();
