@@ -1535,7 +1535,7 @@
                     <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
                 
-                <img id="modal-img" src="" alt="Project image" loading="lazy">
+                <img id="modal-img" src="" alt="Project image" loading="lazy" referrerpolicy="no-referrer">
                 
                 <!-- Nút Next -->
                 <button id="modal-next-btn" class="modal-nav-btn modal-nav-next" onclick="modalNextImg(event)" aria-label="Next image" style="display: none;">
@@ -1610,7 +1610,7 @@
         let crtEnabled = true;
         let musicPlaying = false;
         let rafTicking = false;
-        
+
         // Thêm State cho Modal Gallery
         let currentModalImages = [];
         let currentModalImgIndex = 0;
@@ -1837,8 +1837,10 @@
                 globalProjects = projects;
                 const grid = document.getElementById('portfolio-grid');
                 grid.innerHTML = projects.map((p, i) => {
-                    // Nâng cấp: Lấy ảnh đầu tiên làm thumbnail ngoài grid (hỗ trợ cả dấu phẩy và gạch đứng)
-                    const firstImg = (p.ImageUrl || "").split(/[|,]/)[0].trim();
+                    const rawImg = (p.ImageUrl || "").toString();
+                    const imgList = rawImg.split(/[|,]/).map(url => url.trim()).filter(url => url.startsWith('http'));
+                    const firstImg = imgList[0] || '';
+                    
                     return `
                     <div class="reveal" data-delay="${i % 3}">
                         <article class="project-card" role="button" tabindex="0"
@@ -1846,7 +1848,7 @@
                             onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${i})"
                             aria-label="Open project: ${escHtml(p.Title)}">
                             <div class="project-card-img">
-                                <img src="${encodeURI(firstImg)}" alt="${escHtml(p.Title)}" loading="lazy">
+                                <img src="${firstImg}" alt="${escHtml(p.Title)}" loading="lazy" referrerpolicy="no-referrer">
                                 <div class="project-card-overlay" aria-hidden="true"></div>
                                 <div class="project-card-info">
                                     <div class="project-cat">&gt; ${escHtml(p.Category)}</div>
@@ -2137,18 +2139,15 @@
             }
         }
 
-        /* ════════════════════════════════════════════
-           MODAL & GALLERY NAVIGATION (NÂNG CẤP)
-        ════════════════════════════════════════════ */
+        // Nâng cấp: Render Modal Gallery
         function renderModalGallery() {
             if (currentModalImages.length === 0) return;
             const imgEl = document.getElementById('modal-img');
             const counterEl = document.getElementById('modal-img-counter');
-
-            // Fade Transition nhẹ khi chuyển ảnh
+            
             imgEl.style.opacity = 0.5;
             setTimeout(() => {
-                imgEl.src = encodeURI(currentModalImages[currentModalImgIndex]);
+                imgEl.src = currentModalImages[currentModalImgIndex];
                 imgEl.style.opacity = 1;
             }, 150);
 
@@ -2175,28 +2174,27 @@
             const box   = document.getElementById('modal-box');
             const link  = document.getElementById('modal-link');
 
-            // Xử lý Gallery Links (Tách mảng bởi dấu phẩy HOẶC gạch đứng, loại bỏ khoảng trắng rỗng)
-            currentModalImages = (p.ImageUrl || "").split(/[|,]/).map(url => url.trim()).filter(Boolean);
+            // Xử lý Gallery Links
+            const rawImages = (p.ImageUrl || "").toString();
+            currentModalImages = rawImages.split(/[|,]/).map(url => url.trim()).filter(url => url.startsWith('http'));
             currentModalImgIndex = 0;
 
-            // Xử lý hiển thị các nút điều hướng
             const prevBtn = document.getElementById('modal-prev-btn');
             const nextBtn = document.getElementById('modal-next-btn');
             const counter = document.getElementById('modal-img-counter');
 
             if (currentModalImages.length > 1) {
-                prevBtn.style.display = 'flex';
-                nextBtn.style.display = 'flex';
-                counter.style.display = 'block';
+                if(prevBtn) prevBtn.style.display = 'flex';
+                if(nextBtn) nextBtn.style.display = 'flex';
+                if(counter) counter.style.display = 'block';
             } else {
-                prevBtn.style.display = 'none';
-                nextBtn.style.display = 'none';
-                counter.style.display = 'none';
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+                if(counter) counter.style.display = 'none';
             }
 
             renderModalGallery();
 
-            // Render Text Info
             document.getElementById('modal-category-text').textContent = p.Category;
             document.getElementById('modal-title').textContent        = p.Title;
             document.getElementById('modal-desc').textContent         = p.Desc;
@@ -2345,8 +2343,7 @@
                 if (modal.classList.contains('open')) window.closeModal();
                 if (mobileNavOpen) window.toggleMobileNav();
             }
-
-            // Nâng cấp: Xử lý nút qua lại cho Slider Modal
+            
             const modal = document.getElementById('project-modal');
             if (modal.classList.contains('open') && currentModalImages.length > 1) {
                 if (e.key === 'ArrowLeft') window.modalPrevImg();
