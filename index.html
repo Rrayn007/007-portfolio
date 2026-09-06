@@ -33,7 +33,7 @@
         --ease-out:    cubic-bezier(.25,.46,.45,.94);
         --ease-spring: cubic-bezier(.23,1,.32,1);
 
-        /* Glass Utility Tokens */
+        /* Glass Tokens */
         --glass-blur: blur(16px) saturate(160%);
         --glass-blur-heavy: blur(24px) saturate(180%) brightness(1.05);
     }
@@ -131,9 +131,7 @@
     #main-interface { position: relative; z-index: 10; }
     .container { max-width: 88rem; margin-inline: auto; padding-inline: 1.5rem; }
 
-    /* ─────────────────────────────────────────────
-       LIQUID GLASS SYSTEM (HARDWARE ACCELERATION)
-    ───────────────────────────────────────────── */
+    /* Hardware acceleration */
     .hero-badge, .hero-tagline, .skill-tag, .stat-card, .capabilities-card, 
     .loading-badge, .project-card, .collection-section, .contact-box, 
     .form-input, .form-textarea, .music-pill, .music-panel, .modal-box, 
@@ -1367,6 +1365,8 @@
        CONFIG & STATE
     ════════════════════════════════════════════ */
     const CSV_URL = '/api/data';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec';
+
     const GITHUB_PLAYLIST = [
         "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/SpaceWalk.mp3",
         "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track2.mp3",
@@ -1387,6 +1387,49 @@
 
     const escHtml = str => 
         String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+    /* ════════════════════════════════════════════
+       TRAFFIC & IP ANALYTICS
+    ════════════════════════════════════════════ */
+    async function trackVisitor() {
+        if (sessionStorage.getItem('sys_visited')) return;
+
+        try {
+            const ipRes = await fetch('https://ipapi.co/json/');
+            const ipData = ipRes.ok ? await ipRes.json() : {};
+
+            const payload = new URLSearchParams({
+                action: 'track_visit',
+                ip: ipData.ip || 'Unknown',
+                city: ipData.city || 'Unknown',
+                country: ipData.country_name || 'Unknown',
+                userAgent: navigator.userAgent,
+                referrer: document.referrer || 'Direct'
+            });
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: payload,
+                mode: 'no-cors'
+            });
+
+            sessionStorage.setItem('sys_visited', 'true');
+        } catch (err) {
+            const fallbackPayload = new URLSearchParams({
+                action: 'track_visit',
+                ip: 'AdBlocked/Hidden',
+                userAgent: navigator.userAgent,
+                referrer: document.referrer || 'Direct'
+            });
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: fallbackPayload,
+                mode: 'no-cors'
+            });
+            sessionStorage.setItem('sys_visited', 'true');
+        }
+    }
 
     /* ════════════════════════════════════════════
        CANVAS STARFIELD
@@ -1789,7 +1832,7 @@
             volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
             volIcon.classList.toggle('active', v > 0);
             volIcon.innerHTML = v === 0 
-                ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/>'
+                ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>'
                 : v < 50
                     ? '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>'
                     : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
@@ -2015,14 +2058,12 @@
         const formData = new FormData(form);
         const data = new URLSearchParams();
         for (const pair of formData) { data.append(pair[0], pair[1]); }
-        
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec'; 
 
         btn.disabled = true;
         btn.textContent = 'TRANSMITTING...';
         success.style.display = 'none';
 
-        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+        fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' })
             .then(() => {
                 showFormStatus('> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]', 'var(--c-crt)');
                 form.reset();
@@ -2043,10 +2084,8 @@
     /* ════════════════════════════════════════════
        SECURITY & GLOBAL KEYBOARD LISTENER
     ════════════════════════════════════════════ */
-    // 1. Chặn chuột phải
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // 2. Gom toàn bộ phím tắt hệ thống vào 1 nơi duy nhất
     document.addEventListener('keydown', e => {
         const isF12 = e.key === 'F12';
         const isCtrlShift = e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'i', 'j', 'c'].includes(e.key);
@@ -2069,7 +2108,6 @@
         }
     });
 
-    // 3. Anti-debugger check
     setInterval(() => {
         const startTime = performance.now();
         debugger;
@@ -2091,6 +2129,8 @@
         observeReveals();
         document.getElementById('contact-form')?.addEventListener('submit', handleContactSubmit);
         if (CSV_URL) initPortfolio(); 
+
+        trackVisitor();
     });
 
 })();
