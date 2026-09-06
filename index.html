@@ -824,6 +824,304 @@
 
     section { scroll-margin-top: 6rem; }
     .hidden { display: none !important; }
+
+    /* ═════════════════════════════════════════════════════════════
+       007 / PREMIUM PORTFOLIO OVERRIDES
+       Art direction first — effects support the work, never compete.
+    ═════════════════════════════════════════════════════════════ */
+    :root {
+        --container-max: 90rem;
+        --section-space: clamp(5rem, 9vw, 9rem);
+        --surface-1: rgba(255,255,255,.035);
+        --surface-2: rgba(7,7,12,.72);
+        --line-soft: rgba(255,255,255,.075);
+        --line-red: rgba(220,38,38,.24);
+        --shadow-deep: 0 24px 70px rgba(0,0,0,.62);
+    }
+
+    html { scrollbar-gutter: stable; }
+    body { min-width: 320px; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+    button, input, textarea { font: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible,
+    [tabindex]:focus-visible { outline: 2px solid var(--c-red); outline-offset: 4px; }
+
+    .container { width: min(100% - 3rem, var(--container-max)); padding-inline: 0; }
+    section { scroll-margin-top: 5.75rem; }
+
+    /* Reduce the "everything is glass" feeling. */
+    .about-section,
+    .work-section,
+    .contact-section { background: transparent; }
+
+    .about-section { padding-block: var(--section-space); }
+    .work-section { padding-block: var(--section-space); }
+    .contact-section { padding-block: var(--section-space); }
+
+    .hero {
+        min-height: max(42rem, 100svh);
+        padding: clamp(8rem, 16vh, 11rem) 1.5rem 6rem;
+        position: relative;
+        isolation: isolate;
+    }
+    .hero::before {
+        content: "007";
+        position: absolute;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -53%);
+        font: 900 clamp(10rem, 30vw, 32rem)/.8 var(--f-sans);
+        letter-spacing: -.09em;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255,255,255,.035);
+        pointer-events: none;
+        user-select: none;
+        white-space: nowrap;
+    }
+    .hero-title {
+        max-width: 80rem;
+        margin-inline: auto;
+        position: relative;
+    }
+    .hero-title::after {
+        content: "SYS.007";
+        position: absolute;
+        right: clamp(0rem, 5vw, 4rem);
+        bottom: -.25rem;
+        font: 700 .6rem var(--f-mono);
+        letter-spacing: .3em;
+        color: rgba(255,255,255,.25);
+    }
+    .hero-tagline {
+        width: min(100%, 42rem);
+        border-radius: .5rem;
+        padding: .9rem 1.25rem;
+        background: rgba(3,3,5,.58);
+    }
+    .hero-meta { gap: 1rem; }
+    .skill-tags { margin-top: 2rem; gap: .4rem; }
+    .skill-tag { background: rgba(255,255,255,.025); border-radius: .35rem; }
+
+    .section-label { font-size: .7rem; letter-spacing: .28em; }
+    .section-title { letter-spacing: -.045em; }
+
+    .work-header {
+        margin-bottom: clamp(2rem, 5vw, 4rem);
+        align-items: flex-end;
+    }
+    .work-header > div:first-child::after {
+        content: "SELECT / CURATE / PRESENT";
+        display: block;
+        margin-top: .9rem;
+        font: 400 .58rem var(--f-mono);
+        letter-spacing: .2em;
+        color: #4b5563;
+    }
+
+    .loading-badge {
+        border-radius: .3rem;
+        padding: .5rem .8rem;
+        background: rgba(51,255,0,.025);
+        box-shadow: none;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(12, minmax(0,1fr));
+        gap: 1rem;
+        align-items: stretch;
+    }
+    .portfolio-grid > .reveal { min-width: 0; }
+    .portfolio-grid > .reveal:nth-child(6n + 1),
+    .portfolio-grid > .reveal:nth-child(6n + 4) { grid-column: span 7; }
+    .portfolio-grid > .reveal:nth-child(6n + 2),
+    .portfolio-grid > .reveal:nth-child(6n + 3),
+    .portfolio-grid > .reveal:nth-child(6n + 5),
+    .portfolio-grid > .reveal:nth-child(6n + 6) { grid-column: span 5; }
+
+    .project-card {
+        border-radius: .45rem;
+        background: #08080d;
+        border-color: var(--line-soft);
+        box-shadow: 0 10px 30px rgba(0,0,0,.42);
+        position: relative;
+    }
+    .project-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border: 1px solid transparent;
+        border-radius: inherit;
+        transition: border-color .35s ease;
+    }
+    .project-card:hover::after { border-color: var(--line-red); }
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-deep);
+    }
+    .project-card-img { height: clamp(18rem, 31vw, 30rem); }
+    .project-card-img img {
+        transition: transform .8s var(--ease-spring), opacity .6s ease, filter .6s ease;
+    }
+    .project-card:hover .project-card-img img {
+        transform: scale(1.035);
+        opacity: .72;
+        filter: saturate(1.06);
+    }
+    .project-card-overlay {
+        background:
+            linear-gradient(180deg, transparent 40%, rgba(0,0,0,.18) 55%, rgba(0,0,0,.92) 100%);
+    }
+    .project-card-info {
+        left: 1.15rem; right: 1.15rem; bottom: 1.15rem;
+        transform: none;
+    }
+    .project-index {
+        display: inline-flex;
+        margin-bottom: .55rem;
+        font: 700 .55rem var(--f-mono);
+        letter-spacing: .2em;
+        color: rgba(255,255,255,.38);
+    }
+    .project-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .45rem .8rem;
+        margin-top: .65rem;
+        font: 400 .56rem var(--f-mono);
+        letter-spacing: .12em;
+        color: rgba(255,255,255,.5);
+        text-transform: uppercase;
+    }
+    .project-card-meta span + span::before {
+        content: "/";
+        margin-right: .8rem;
+        color: rgba(220,38,38,.55);
+    }
+    .project-cat { margin-bottom: .35rem; }
+    .project-title { font-size: clamp(1.05rem, 1.8vw, 1.4rem); }
+
+    .collection-section {
+        padding-block: var(--section-space);
+        margin-top: 1rem;
+        background: rgba(5,5,10,.32);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .collection-intro {
+        max-width: 42rem;
+        margin: -.8rem auto 0;
+        color: #626b78;
+        font: 400 .68rem/1.8 var(--f-mono);
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+    .cards-container { gap: clamp(1.5rem, 4vw, 4rem); }
+    .card-scene { cursor: pointer; touch-action: pan-y; }
+    .card-inner { transition: transform .18s var(--ease-spring), border-color .3s ease, box-shadow .3s ease; }
+    .card-scene:focus-visible .card-inner { border-color: var(--c-red); box-shadow: 0 0 0 2px rgba(220,38,38,.2), 0 25px 60px rgba(0,0,0,.8); }
+
+    .contact-box {
+        border-radius: .75rem;
+        background: rgba(8,8,13,.72);
+        box-shadow: var(--shadow-deep);
+    }
+    .form-input, .form-textarea { border-radius: .4rem; }
+    .btn-submit { border-radius: .4rem; min-height: 3.4rem; }
+
+    .site-footer { padding-block: 4rem 3rem; }
+    .footer-version { color: #4b5563; }
+
+    /* Modal: more editorial, less "app panel". */
+    .modal-box { border-radius: .7rem; }
+    .modal-image-pane { background: #020204; }
+    .modal-content-pane { background: rgba(4,4,8,.82); }
+    .modal-header { padding: 2rem 2rem 1.25rem; }
+    .modal-body { padding: 1.5rem 2rem 2rem; }
+    .modal-meta { border-radius: .5rem; margin-bottom: 2rem; }
+    .modal-footer { padding: 1rem 1.5rem; }
+    .modal-launch { border-radius: .4rem; }
+
+    /* Hide decorative background motion where it is not useful. */
+    @media (max-width: 767px) {
+        .container { width: min(100% - 2rem, var(--container-max)); }
+        .hero { padding-inline: 1rem; }
+        .hero::before { font-size: 48vw; }
+        .hero-title::after { right: 0; }
+        .hero-tagline { padding-inline: .8rem; gap: .55rem; }
+        .hero-tagline span:nth-child(1),
+        .hero-tagline span:nth-child(3) { display: none; }
+        .hero-meta { gap: .8rem; }
+        .skill-tags { max-width: 24rem; }
+        .about-grid { gap: 2.5rem; }
+        .capabilities-card { padding: 1.5rem; border-radius: .75rem; }
+        .portfolio-grid { grid-template-columns: 1fr; gap: 1rem; }
+        .portfolio-grid > .reveal { grid-column: 1 / -1 !important; }
+        .project-card-img { height: min(72vw, 26rem); }
+        .project-card-info { left: .9rem; right: .9rem; bottom: .9rem; }
+        .collection-section { overflow: hidden; }
+        .cards-container {
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: visible;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem max(1rem, calc((100vw - var(--container-max)) / 2)) 2rem;
+            margin-inline: -1rem;
+            scrollbar-width: none;
+        }
+        .cards-container::-webkit-scrollbar { display: none; }
+        .cards-container > .reveal {
+            flex: 0 0 min(260px, 76vw);
+            scroll-snap-align: center;
+        }
+        .cards-container .card-scene { width: 100% !important; height: auto !important; aspect-ratio: 260 / 364; }
+        .contact-box { padding: 1.25rem; border-radius: .6rem; }
+        .form-row { gap: 1rem; }
+        .music-panel { width: min(280px, calc(100vw - 2rem)); }
+        #music-player { right: .75rem; bottom: .75rem; }
+        .modal-box { max-height: 94svh; border-radius: .6rem; }
+        .modal-image-pane { height: 36svh; }
+        .modal-content-pane { height: 52svh; }
+        .modal-header { padding: 1.25rem 1.25rem 1rem; }
+        .modal-body { padding: 1.25rem; }
+        .modal-meta { padding: 1rem; }
+        .modal-footer { padding: .8rem 1rem; }
+        .crt-overlay { opacity: .08 !important; }
+        .floater { display: none; }
+    }
+
+    @media (min-width: 768px) and (max-width: 1099px) {
+        .portfolio-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .portfolio-grid > .reveal { grid-column: auto !important; }
+        .project-card-img { height: 22rem; }
+    }
+
+    @media (min-width: 1100px) {
+        .portfolio-grid > .reveal:nth-child(6n + 1),
+        .portfolio-grid > .reveal:nth-child(6n + 4) { grid-row: span 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after {
+            animation-duration: .01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: .01ms !important;
+            scroll-behavior: auto !important;
+        }
+        #space-canvas, .floater { display: none; }
+        .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+        .project-card:hover { transform: none; }
+        .project-card:hover .project-card-img img { transform: none; opacity: 1; }
+        .card-scene:hover .card-inner { border-color: rgba(255,255,255,.1); }
+    }
+
 </style>
 </head>
 <body>
@@ -1032,7 +1330,8 @@
             <div class="container">
                 <div class="reveal" style="text-align:center;margin-bottom:4rem">
                     <div class="section-label">/// VAULT.ACCESS</div>
-                    <h2 class="section-title lux-text" style="margin-bottom:0">EXCLUSIVE COLLECTION</h2>
+                    <h2 class="section-title lux-text" style="margin-bottom:.75rem">EXCLUSIVE COLLECTION</h2>
+                    <p class="collection-intro">SELECTED ARTIFACTS // VISUAL STUDIES // 007 ARCHIVE</p>
                 </div>
                 <div id="cards-container" class="cards-container"></div>
             </div>
@@ -1085,9 +1384,9 @@
 
     <!-- MODAL GALLERY -->
     <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
-        <div class="modal-bg" onclick="closeModal()" aria-label="Close modal"></div>
-        <div id="modal-box" class="modal-box">
-            <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <div class="modal-bg" onclick="closeModal()" aria-label="Close modal" role="button" tabindex="-1"></div>
+        <div id="modal-box" class="modal-box" tabindex="-1">
+            <button id="modal-close" class="modal-close" onclick="closeModal()" aria-label="Close">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
@@ -1154,392 +1453,575 @@
 (() => {
     'use strict';
 
-    /* ════════════════════════════════════════════
-       CONFIG & STATE
-    ════════════════════════════════════════════ */
+    /* ═════════════════════════════════════════════════════════════
+       007 SYSTEM / CLEAN RUNTIME
+    ═════════════════════════════════════════════════════════════ */
     const CSV_URL = '/api/data';
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfVzOD1Bss4sxl1LozcrbAaEJp44ayvlRbz_sEeOhxiLcCureF-GBvr0r27W3iblHZQg/exec';
-
     const GITHUB_PLAYLIST = [
-        "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/SpaceWalk.mp3",
-        "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track2.mp3",
-        "https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track3.mp3"
+        'https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/SpaceWalk.mp3',
+        'https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track2.mp3',
+        'https://raw.githubusercontent.com/Rrayn007/007-portfolio/main/audio/Track3.mp3'
     ];
 
-    let globalProjects = [];
-    let crtEnabled = true;
-    let musicPlaying = false;
-    let rafTicking = false;
-    let currentModalImages = [];
-    let currentModalImgIndex = 0;
-    let mobileNavOpen = false;
+    const state = {
+        projects: [],
+        modalImages: [],
+        modalImageIndex: 0,
+        modalTrigger: null,
+        modalPreviousFocus: null,
+        mobileNavOpen: false,
+        crtEnabled: true,
+        rafPending: false
+    };
 
-    const parseImageUrls = (raw = '') => 
-        String(raw).split(/[|,]/).map(u => u.trim()).filter(u => u.startsWith('http'));
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-    const escHtml = str => 
-        String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const escHtml = value => String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 
-    /* ════════════════════════════════════════════
-       TRAFFIC & IP TRACKING (F1 HUB MECHANISM)
-    ════════════════════════════════════════════ */
-    async function getClientIp() {
-        const endpoints = [
-            'https://api64.ipify.org?format=json',
-            'https://api.ipify.org?format=json'
-        ];
-        for (const endpoint of endpoints) {
-            try {
-                const response = await fetch(endpoint, { cache: 'no-store' });
-                if (!response.ok) continue;
-                const data = await response.json();
-                if (data?.ip) return String(data.ip).trim();
-            } catch {}
-        }
-        return '';
-    }
+    const encodeUrl = value => {
+        try { return encodeURI(String(value ?? '').trim()); }
+        catch { return ''; }
+    };
 
-    async function trackVisitor() {
-        if (sessionStorage.getItem('sys_visited')) return;
+    const parseImageUrls = (raw = '') =>
+        String(raw)
+            .split(/[|,]/)
+            .map(url => url.trim())
+            .filter(url => /^https?:\/\//i.test(url));
 
-        try {
-            // Đợi 1.2s tránh nghẽn khi render trang (giống F1)
-            await new Promise(res => setTimeout(res, 1200));
-            const ip = await getClientIp();
-            if (!ip) return;
-
-            const url = new URL(SCRIPT_URL);
-            url.searchParams.set('track', '1');
-            url.searchParams.set('ip', ip);
-
-            await fetch(url.toString(), {
-                method: 'GET',
-                mode: 'no-cors',
-                cache: 'no-store'
-            });
-
-            sessionStorage.setItem('sys_visited', 'true');
-        } catch (error) {
-            console.warn('Visitor tracking unavailable', error);
-        }
-    }
-
-    /* ════════════════════════════════════════════
-       CANVAS STARFIELD
-    ════════════════════════════════════════════ */
-    (function initStars() {
-        const canvas = document.getElementById('space-canvas');
+    /* ─────────────────────────────────────────────────────────────
+       STARFIELD — paused when hidden / disabled for reduced motion
+    ───────────────────────────────────────────────────────────── */
+    function initStars() {
+        const canvas = $('#space-canvas');
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let W, H, stars;
+
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const coarse = window.matchMedia('(pointer: coarse)').matches;
+        if (reduced || coarse) {
+            canvas.style.display = 'none';
+            return;
+        }
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        let width = 0;
+        let height = 0;
+        let stars = [];
+        let running = !document.hidden;
 
         const resize = () => {
-            W = canvas.width  = window.innerWidth;
-            H = canvas.height = window.innerHeight;
-        };
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const createStars = () => {
-            stars = Array.from({ length: 150 }, () => ({
-                x: Math.random() * W,
-                y: Math.random() * H,
-                r: Math.random() * 1.2,
-                s: Math.random() * 0.3 + 0.05
+            const count = width < 900 ? 80 : 125;
+            stars = Array.from({ length: count }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 1.05 + .15,
+                speed: Math.random() * .24 + .035
             }));
         };
 
         const tick = () => {
-            ctx.clearRect(0, 0, W, H);
-            ctx.fillStyle = 'rgba(255,255,255,0.6)';
-            stars.forEach(star => {
+            if (!running) return;
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(255,255,255,.52)';
+
+            for (const star of stars) {
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
                 ctx.fill();
-                star.x -= star.s;
-                if (star.x < 0) { star.x = W; star.y = Math.random() * H; }
-            });
+                star.x -= star.speed;
+
+                if (star.x < -2) {
+                    star.x = width + 2;
+                    star.y = Math.random() * height;
+                }
+            }
             requestAnimationFrame(tick);
         };
 
-        window.addEventListener('resize', resize, { passive: true });
-        resize(); createStars(); tick();
-    })();
-
-    /* ════════════════════════════════════════════
-       SCROLL REVEAL
-    ════════════════════════════════════════════ */
-    const revealObserver = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('active');
-                revealObserver.unobserve(e.target);
-            }
+        document.addEventListener('visibilitychange', () => {
+            running = !document.hidden;
+            if (running) requestAnimationFrame(tick);
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        window.addEventListener('resize', resize, { passive: true });
 
-    const observeReveals = () =>
-        document.querySelectorAll('.reveal:not(.active)').forEach(el => revealObserver.observe(el));
+        resize();
+        requestAnimationFrame(tick);
+    }
 
-    /* ════════════════════════════════════════════
-       PIXEL LED LOGO
-    ════════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────────────────────────────── */
+    const revealObserver = 'IntersectionObserver' in window
+        ? new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            });
+        }, { threshold: .08, rootMargin: '0px 0px -32px 0px' })
+        : null;
+
+    function observeReveals() {
+        const items = $$('.reveal:not(.active)');
+        if (!revealObserver) {
+            items.forEach(el => el.classList.add('active'));
+            return;
+        }
+        items.forEach(el => revealObserver.observe(el));
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       HEADER / NAV
+    ───────────────────────────────────────────────────────────── */
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (!element) return;
+        const offset = $('.site-header')?.offsetHeight || 80;
+        const top = element.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+    }
+    window.scrollToSection = scrollToSection;
+
+    function toggleMobileNav(force) {
+        const nav = $('#mobile-nav');
+        const button = $('#hamburger');
+        if (!nav || !button) return;
+
+        state.mobileNavOpen = typeof force === 'boolean' ? force : !state.mobileNavOpen;
+        nav.classList.toggle('open', state.mobileNavOpen);
+        button.setAttribute('aria-expanded', String(state.mobileNavOpen));
+    }
+    window.toggleMobileNav = toggleMobileNav;
+
+    /* ─────────────────────────────────────────────────────────────
+       PIXEL LOGO
+    ───────────────────────────────────────────────────────────── */
     function initLED() {
-        const matrix = document.getElementById('site-logo-led');
-        if (!matrix) return;
+        const matrix = $('#site-logo-led');
+        if (!matrix || matrix.children.length) return;
+
         const layout = [
-            "C.WWW.WWW.RRR.C",
-            "..W.W.W.W...R..",
-            "..W.W.W.W..R...",
-            "C.WWW.WWW.R...C"
+            'C.WWW.WWW.RRR.C',
+            '..W.W.W.W...R..',
+            '..W.W.W.W..R...',
+            'C.WWW.WWW.R...C'
         ];
         const typeMap = { W:'pxl-w', R:'pxl-r', C:'pxl-c', '.':'pxl-dim' };
-        const frag = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
+
         layout.forEach(row => {
-            for (const ch of row) {
-                const px = document.createElement('div');
-                px.className = `pxl ${typeMap[ch] ?? 'pxl-dim'}`;
-                frag.appendChild(px);
+            for (const char of row) {
+                const pixel = document.createElement('div');
+                pixel.className = `pxl ${typeMap[char] || 'pxl-dim'}`;
+                fragment.appendChild(pixel);
             }
         });
-        matrix.appendChild(frag);
+        matrix.appendChild(fragment);
+
+        matrix.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                scrollToSection('hero');
+            }
+        });
     }
 
-    /* ════════════════════════════════════════════
-       CSV PARSER
-    ════════════════════════════════════════════ */
-    function parseCSVRow(str) {
-        const cols = []; let cur = '', inQ = false;
-        for (let i = 0; i < str.length; i++) {
-            const c = str[i];
-            if (c === '"') {
-                if (inQ && str[i+1] === '"') { cur += '"'; i++; }
-                else inQ = !inQ;
-            } else if (c === ',' && !inQ) {
-                cols.push(cur.trim()); cur = '';
-            } else cur += c;
+    /* ─────────────────────────────────────────────────────────────
+       CSV
+    ───────────────────────────────────────────────────────────── */
+    function parseCSVRow(row) {
+        const columns = [];
+        let current = '';
+        let quoted = false;
+
+        for (let i = 0; i < row.length; i++) {
+            const char = row[i];
+
+            if (char === '"') {
+                if (quoted && row[i + 1] === '"') {
+                    current += '"';
+                    i++;
+                } else {
+                    quoted = !quoted;
+                }
+            } else if (char === ',' && !quoted) {
+                columns.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
         }
-        cols.push(cur.trim());
-        return cols.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
+
+        columns.push(current.trim());
+        return columns.map(value => value.replace(/^"|"$/g, '').replace(/""/g, '"'));
     }
 
-    /* ════════════════════════════════════════════
-       DATA — PORTFOLIO & CARDS
-    ════════════════════════════════════════════ */
+    function splitCSVLines(csv) {
+        const lines = [];
+        let current = '';
+        let quoted = false;
+
+        for (let i = 0; i < csv.length; i++) {
+            const char = csv[i];
+
+            if (char === '"') {
+                if (quoted && csv[i + 1] === '"') {
+                    current += '""';
+                    i++;
+                } else {
+                    quoted = !quoted;
+                    current += char;
+                }
+            } else if ((char === '\n' || char === '\r') && !quoted) {
+                if (current.trim()) lines.push(current);
+                current = '';
+                if (char === '\r' && csv[i + 1] === '\n') i++;
+            } else {
+                current += char;
+            }
+        }
+
+        if (current.trim()) lines.push(current);
+        return lines;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       DATA + PORTFOLIO RENDER
+    ───────────────────────────────────────────────────────────── */
     async function initPortfolio() {
-        const badge = document.getElementById('loading-badge');
+        const badge = $('#loading-badge');
+
         try {
-            const res = await fetch(CSV_URL);
-            if (!res.ok) throw new Error('Network error');
-            const csv   = await res.text();
-            const rows  = csv.split('\n').filter(r => r.trim());
-            const hdr   = parseCSVRow(rows[0]);
-            const col   = name => hdr.findIndex(h => h.toLowerCase().replace(/[^a-z]/g,'').includes(name));
+            const response = await fetch(CSV_URL, {
+                headers: { Accept: 'text/plain,text/csv,*/*' },
+                cache: 'no-store'
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-            const iKey=col('configkey'), iVal=col('configvalue'),
-                  iTtl=col('title'),     iCat=col('category'),
-                  iImg=col('imageurl'), iDesc=col('description'),
-                  iLnk=col('link'),     iCli=col('client'),
-                  iRol=col('role'),     iYr=col('year'),
-                  iTol=col('tools'),    iEff=col('effect');
+            const csv = await response.text();
+            const rows = splitCSVLines(csv);
+            if (!rows.length) throw new Error('Empty data');
 
-            const config   = Object.create(null);
-            const cards    = [];
+            const headers = parseCSVRow(rows[0]).map(value => value.toLowerCase());
+            const column = name => headers.findIndex(header =>
+                header.replace(/[^a-z0-9]/g, '').includes(name)
+            );
+
+            const iKey = column('configkey');
+            const iValue = column('configvalue');
+            const iTitle = column('title');
+            const iCategory = column('category');
+            const iImage = column('imageurl');
+            const iDesc = column('description');
+            const iLink = column('link');
+            const iClient = column('client');
+            const iRole = column('role');
+            const iYear = column('year');
+            const iTools = column('tools');
+            const iEffect = column('effect');
+
+            const config = Object.create(null);
+            const cards = [];
             const projects = [];
 
             rows.slice(1).forEach(row => {
-                const v = parseCSVRow(row);
-                const k = v[iKey] ?? '', val = v[iVal] ?? '';
-                if (k) config[k.toLowerCase()] = val;
+                const values = parseCSVRow(row);
+                const key = values[iKey] ?? '';
+                const value = values[iValue] ?? '';
 
-                if (k.toLowerCase().startsWith('tradingcard') && !k.toLowerCase().includes('_effect') && val.startsWith('http')) {
-                    cards.push({ id: k.toLowerCase(), img: val, effect: (iEff > -1 && v[iEff]) ? v[iEff].toLowerCase() : null });
+                if (key) config[key.toLowerCase()] = value;
+
+                if (
+                    key.toLowerCase().startsWith('tradingcard') &&
+                    !key.toLowerCase().includes('_effect') &&
+                    /^https?:\/\//i.test(value)
+                ) {
+                    cards.push({
+                        id: key.toLowerCase(),
+                        img: value,
+                        effect: iEffect > -1 && values[iEffect]
+                            ? values[iEffect].toLowerCase()
+                            : null
+                    });
                 }
-                if (v[iTtl]) {
+
+                if (iTitle > -1 && values[iTitle]) {
                     projects.push({
-                        Title:    v[iTtl],
-                        Category: v[iCat]  || 'Project',
-                        ImageUrl: v[iImg]  || '',
-                        Desc:     v[iDesc] || '',
-                        Link:     v[iLnk]  || '',
-                        Client:   (iCli > -1 && v[iCli]) ? v[iCli] : 'Independent',
-                        Role:     (iRol > -1 && v[iRol]) ? v[iRol] : 'Visual Designer',
-                        Year:     (iYr  > -1 && v[iYr])  ? v[iYr]  : '2023 - 2024',
-                        Tools:    (iTol > -1 && v[iTol]) ? v[iTol] : 'Photoshop / After Effects'
+                        Title: values[iTitle],
+                        Category: iCategory > -1 && values[iCategory] ? values[iCategory] : 'Project',
+                        ImageUrl: iImage > -1 ? values[iImage] || '' : '',
+                        Desc: iDesc > -1 ? values[iDesc] || '' : '',
+                        Link: iLink > -1 ? values[iLink] || '' : '',
+                        Client: iClient > -1 && values[iClient] ? values[iClient] : 'Independent',
+                        Role: iRole > -1 && values[iRole] ? values[iRole] : 'Visual Designer',
+                        Year: iYear > -1 && values[iYear] ? values[iYear] : '2023 - 2024',
+                        Tools: iTools > -1 && values[iTools] ? values[iTools] : 'Photoshop / After Effects'
                     });
                 }
             });
 
-            const cfg = k => config[k.toLowerCase()] ?? null;
-            const mapData = (id, key, isHTML = false) => {
-                const el = document.getElementById(id);
-                const val = cfg(key);
-                if (el && val) {
-                    if (isHTML) el.innerHTML = val;
-                    else el.textContent = val;
-                }
+            const cfg = key => config[key.toLowerCase()] ?? '';
+
+            const setText = (id, key) => {
+                const element = document.getElementById(id);
+                const value = cfg(key);
+                if (element && value) element.textContent = value;
             };
 
-            mapData('sys-first-name', 'hero_first_name');
-            mapData('sys-last-name', 'hero_last_name');
-            mapData('sys-tagline', 'hero_tagline');
-            mapData('p-country-name', 'hero_location'); 
-            mapData('sys-about-title', 'about_title', true);
-            mapData('sys-about-desc', 'about_desc', true);
-            mapData('sys-stat-1', 'stat_1_val');
-            mapData('sys-stat-2', 'stat_2_val');
-            mapData('sys-stat-3', 'stat_3_val');
+            const setHtml = (id, key) => {
+                const element = document.getElementById(id);
+                const value = cfg(key);
+                if (element && value) element.innerHTML = value;
+            };
 
-            const validGithubTracks = GITHUB_PLAYLIST.filter(Boolean);
-            const bgmUrl = cfg('audio_bgm');
-            const playlist = validGithubTracks.length ? validGithubTracks : (bgmUrl ? [bgmUrl] : []);
-            if (playlist.length) initMusic(playlist);
+            setText('sys-first-name', 'hero_first_name');
+            setText('sys-last-name', 'hero_last_name');
+            setText('sys-tagline', 'hero_tagline');
+            setText('p-country-name', 'hero_location');
+            setHtml('sys-about-title', 'about_title');
+            setHtml('sys-about-desc', 'about_desc');
+            setText('sys-stat-1', 'stat_1_val');
+            setText('sys-stat-2', 'stat_2_val');
+            setText('sys-stat-3', 'stat_3_val');
 
-            const sig = cfg('siteSignature');
-            if (sig) {
-                document.getElementById('site-signature-img-box').innerHTML =
-                    `<img src="${encodeURI(sig)}" alt="Rayn Scofield Signature" loading="lazy">`;
+            const skills = cfg('hero_skills')
+                .split(',')
+                .map(skill => skill.trim())
+                .filter(Boolean);
+
+            const skillsContainer = $('#p-skills-tags');
+            if (skillsContainer) {
+                skillsContainer.innerHTML = skills
+                    .map(skill => `<span class="skill-tag">${escHtml(skill)}</span>`)
+                    .join('');
             }
 
-            const skillsRaw = cfg('hero_skills');
-            if (skillsRaw) {
-                const tags = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
-                document.getElementById('p-skills-tags').innerHTML =
-                    tags.map(t => `<span class="skill-tag">${escHtml(t)}</span>`).join('');
+            const signature = cfg('sitesignature');
+            const signatureBox = $('#site-signature-img-box');
+            if (signature && signatureBox) {
+                signatureBox.innerHTML =
+                    `<img src="${escHtml(encodeUrl(signature))}" alt="Rayn Scofield signature" width="320" height="128" loading="lazy" decoding="async">`;
             }
 
-            const EFFECTS = { gold:'mirrorgold', silver:'silver' };
-            const processedCards = cards.map(c => {
-                if (!c.effect) {
-                    const ek = config[c.id + '_effect'];
-                    c.effect = ek ? ek.toLowerCase() : 'holo';
+            const effects = { gold: 'mirrorgold', silver: 'silver' };
+            const processedCards = cards.map(card => {
+                let effect = card.effect || config[`${card.id}_effect`] || 'holo';
+                for (const [name, mapped] of Object.entries(effects)) {
+                    if (effect.includes(name)) {
+                        effect = mapped;
+                        break;
+                    }
                 }
-                for (const [k,v] of Object.entries(EFFECTS)) {
-                    if (c.effect.includes(k)) { c.effect = v; break; }
-                }
-                if (!['mirrorgold','silver','holo'].includes(c.effect)) c.effect = 'holo';
-                return c;
+                return {
+                    ...card,
+                    effect: ['mirrorgold', 'silver', 'holo'].includes(effect) ? effect : 'holo'
+                };
             });
 
-            document.getElementById('cards-container').innerHTML = processedCards.map((c, i) => `
-                <div class="reveal" data-delay="${i % 3}">
-                    <div class="card-scene" style="width:260px;height:364px" aria-label="Trading card ${i+1}">
-                        <div class="card-inner">
-                            <div class="card-glare" aria-hidden="true"></div>
-                            <div class="card-specular" aria-hidden="true"></div>
-                            <div class="card-effect effect-${c.effect}" aria-hidden="true"></div>
-                            <img src="${encodeURI(c.img)}" alt="Card ${i+1}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            attachCardListeners();
-
-            globalProjects = projects;
-            document.getElementById('portfolio-grid').innerHTML = projects.map((p, i) => {
-                const imgList = parseImageUrls(p.ImageUrl);
-                const firstImg = imgList[0] || '';
-                return `
-                <div class="reveal" data-delay="${i % 3}">
-                    <article class="project-card" role="button" tabindex="0"
-                        onclick="openModal(${i})"
-                        onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${i})"
-                        aria-label="Open project: ${escHtml(p.Title)}">
-                        <div class="project-card-img">
-                            <img src="${firstImg}" alt="${escHtml(p.Title)}" loading="lazy" referrerpolicy="no-referrer">
-                            <div class="project-card-overlay" aria-hidden="true"></div>
-                            <div class="project-card-info">
-                                <div class="project-cat">&gt; ${escHtml(p.Category)}</div>
-                                <h3 class="project-title">${escHtml(p.Title)}</h3>
+            const cardsContainer = $('#cards-container');
+            if (cardsContainer) {
+                cardsContainer.innerHTML = processedCards.map((card, index) => `
+                    <div class="reveal" data-delay="${index % 3}">
+                        <div class="card-scene" tabindex="0" role="button"
+                             aria-label="View trading card ${index + 1}">
+                            <div class="card-inner">
+                                <div class="card-glare" aria-hidden="true"></div>
+                                <div class="card-specular" aria-hidden="true"></div>
+                                <div class="card-effect effect-${card.effect}" aria-hidden="true"></div>
+                                <img src="${escHtml(encodeUrl(card.img))}"
+                                     alt="Trading card ${index + 1}"
+                                     width="260" height="364"
+                                     loading="lazy" decoding="async"
+                                     draggable="false">
                             </div>
                         </div>
-                    </article>
-                </div>`;
-            }).join('');
+                    </div>
+                `).join('');
 
-            badge.classList.add('hidden');
-            setTimeout(observeReveals, 100);
+                attachCardListeners();
+            }
 
-        } catch (err) {
-            badge.innerHTML = '<span style="color:#ef4444;font-family:monospace">ERR: FETCH_FAILED [OFFLINE MODE]</span>';
-            console.error('Portfolio fetch failed:', err);
+            state.projects = projects;
+            const portfolio = $('#portfolio-grid');
+
+            if (portfolio) {
+                portfolio.innerHTML = projects.map((project, index) => {
+                    const imageList = parseImageUrls(project.ImageUrl);
+                    const firstImage = imageList[0] || '';
+
+                    return `
+                        <div class="reveal" data-delay="${index % 3}">
+                            <article class="project-card"
+                                     role="button"
+                                     tabindex="0"
+                                     data-project-index="${index}"
+                                     aria-label="Open project: ${escHtml(project.Title)}"
+                                     onclick="openModal(${index}, this)"
+                                     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal(${index},this)}">
+                                <div class="project-card-img">
+                                    ${firstImage
+                                        ? `<img src="${escHtml(encodeUrl(firstImage))}"
+                                                alt="${escHtml(project.Title)}"
+                                                width="1200" height="800"
+                                                loading="${index < 3 ? 'eager' : 'lazy'}"
+                                                decoding="async"
+                                                referrerpolicy="no-referrer">`
+                                        : `<div aria-hidden="true" style="width:100%;height:100%;display:grid;place-items:center;color:#4b5563;font:700 .65rem var(--f-mono);letter-spacing:.2em">NO PREVIEW</div>`
+                                    }
+                                    <div class="project-card-overlay" aria-hidden="true"></div>
+                                    <div class="project-card-info">
+                                        <span class="project-index">PROJECT ${String(index + 1).padStart(2, '0')}</span>
+                                        <div class="project-cat">&gt; ${escHtml(project.Category)}</div>
+                                        <h3 class="project-title">${escHtml(project.Title)}</h3>
+                                        <div class="project-card-meta">
+                                            <span>${escHtml(project.Year)}</span>
+                                            <span>${escHtml(project.Role)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (badge) badge.classList.add('hidden');
+            requestAnimationFrame(observeReveals);
+        } catch (error) {
+            console.error('Portfolio fetch failed:', error);
+            if (badge) {
+                badge.innerHTML = '<span style="color:var(--c-red);font-family:var(--f-mono)">ERR: FETCH_FAILED [OFFLINE MODE]</span>';
+            }
         }
     }
 
-    function cardMove(e, el) {
-        if (rafTicking) return;
-        rafTicking = true;
-        requestAnimationFrame(() => {
-            const r = el.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width  - 0.5;
-            const y = (e.clientY - r.top)  / r.height - 0.5;
-            const inner    = el.querySelector('.card-inner');
-            const glare    = el.querySelector('.card-glare');
-            const specular = el.querySelector('.card-specular');
-            const effect   = el.querySelector('.card-effect');
+    /* ─────────────────────────────────────────────────────────────
+       TRADING CARD INTERACTION
+    ───────────────────────────────────────────────────────────── */
+    function cardMove(event, element) {
+        if (state.rafPending) return;
+        state.rafPending = true;
 
-            inner.style.transform = `rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
+        requestAnimationFrame(() => {
+            const rect = element.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - .5;
+            const y = (event.clientY - rect.top) / rect.height - .5;
+
+            const inner = $('.card-inner', element);
+            const glare = $('.card-glare', element);
+            const specular = $('.card-specular', element);
+            const effect = $('.card-effect', element);
+
+            if (inner) {
+                inner.style.transform =
+                    `rotateX(${y * -16}deg) rotateY(${x * 16}deg) scale(1.035)`;
+            }
+
             if (glare) {
                 glare.style.opacity = '1';
-                glare.style.backgroundPosition = `${(x+.5)*100}% ${(y+.5)*100}%`;
+                glare.style.backgroundPosition =
+                    `${(x + .5) * 100}% ${(y + .5) * 100}%`;
             }
+
             if (specular) {
-                specular.style.setProperty('--mx', `${(x+.5)*100}%`);
-                specular.style.setProperty('--my', `${(y+.5)*100}%`);
-                specular.style.opacity = '.4';
+                specular.style.setProperty('--mx', `${(x + .5) * 100}%`);
+                specular.style.setProperty('--my', `${(y + .5) * 100}%`);
+                specular.style.opacity = '.35';
             }
+
             if (effect) {
-                effect.style.opacity = '.85';
-                effect.style.backgroundPosition = `${(x*1.5+.5)*100}% ${(y*1.5+.5)*100}%`;
+                effect.style.opacity = '.72';
+                effect.style.backgroundPosition =
+                    `${(x * 1.5 + .5) * 100}% ${(y * 1.5 + .5) * 100}%`;
             }
-            rafTicking = false;
+
+            state.rafPending = false;
         });
     }
 
-    function cardLeave(el) {
-        const inner    = el.querySelector('.card-inner');
-        const glare    = el.querySelector('.card-glare');
-        const specular = el.querySelector('.card-specular');
-        const effect   = el.querySelector('.card-effect');
-        inner.style.transform = '';
-        if (glare)    glare.style.opacity    = '0';
+    function cardLeave(element) {
+        const inner = $('.card-inner', element);
+        const glare = $('.card-glare', element);
+        const specular = $('.card-specular', element);
+        const effect = $('.card-effect', element);
+
+        if (inner) inner.style.transform = '';
+        if (glare) glare.style.opacity = '0';
         if (specular) specular.style.opacity = '0';
-        if (effect)   effect.style.opacity   = '0';
+        if (effect) effect.style.opacity = '0';
     }
 
     function attachCardListeners() {
-        document.querySelectorAll('.card-scene').forEach(el => {
-            el.addEventListener('mousemove',  e => cardMove(e, el), { passive: true });
-            el.addEventListener('mouseleave', () => cardLeave(el));
+        $$('.card-scene').forEach(card => {
+            card.addEventListener('pointermove', event => {
+                if (event.pointerType === 'mouse') cardMove(event, card);
+            }, { passive: true });
+
+            card.addEventListener('pointerleave', () => cardLeave(card));
+            card.addEventListener('blur', () => cardLeave(card));
+
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    card.classList.add('is-selected');
+                    setTimeout(() => card.classList.remove('is-selected'), 160);
+                }
+            });
         });
     }
 
+    /* ─────────────────────────────────────────────────────────────
+       MUSIC — explicit user activation only; no forced autoplay
+    ───────────────────────────────────────────────────────────── */
     function initMusic(urls) {
-        const trackList = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
-        if (!trackList.length) return;
+        const tracks = Array.isArray(urls) ? urls.filter(Boolean) : [urls].filter(Boolean);
+        if (!tracks.length) return;
 
-        const audio      = document.getElementById('bg-audio');
-        const player     = document.getElementById('music-player');
-        const panel      = document.getElementById('music-panel');
-        const pill       = document.getElementById('music-pill');
-        const pillStatus = document.getElementById('pill-status');
-        const pillIcon   = document.getElementById('pill-icon');
-        const eq         = document.getElementById('eq-bars');
-        const discRing   = document.getElementById('disc-ring');
-        const mpTitle    = document.getElementById('mp-title');
-        const mpPlay     = document.getElementById('mp-play');
-        const mpPlayIcon = document.getElementById('mp-play-icon');
-        const mpPrev     = document.getElementById('mp-prev');
-        const mpNext     = document.getElementById('mp-next');
-        const progBar    = document.getElementById('mp-progress');
-        const progFill   = document.getElementById('mp-progress-fill');
-        const volSlider  = document.getElementById('vol-slider');
-        const volPct     = document.getElementById('vol-pct');
-        const volIcon    = document.getElementById('vol-icon');
-        const mpMode     = document.getElementById('mp-mode');
-        const mpModeIcon = document.getElementById('mp-mode-icon');
+        const audio = $('#bg-audio');
+        const player = $('#music-player');
+        const panel = $('#music-panel');
+        const pill = $('#music-pill');
+        const pillStatus = $('#pill-status');
+        const pillIcon = $('#pill-icon');
+        const eq = $('#eq-bars');
+        const discRing = $('#disc-ring');
+        const title = $('#mp-title');
+        const playButton = $('#mp-play');
+        const playIcon = $('#mp-play-icon');
+        const prevButton = $('#mp-prev');
+        const nextButton = $('#mp-next');
+        const progress = $('#mp-progress');
+        const progressFill = $('#mp-progress-fill');
+        const volume = $('#vol-slider');
+        const volumePct = $('#vol-pct');
+        const volumeIcon = $('#vol-icon');
+        const modeButton = $('#mp-mode');
+        const modeIcon = $('#mp-mode-icon');
 
-        let trackIdx  = 0;
+        if (!audio || !player || !panel || !pill) return;
+
+        let index = 0;
+        let playing = false;
         let panelOpen = false;
-        let playMode  = 0; 
+        let mode = 0; // 0 all, 1 one, 2 shuffle
 
         const modeIcons = {
             0: '<path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>',
@@ -1547,359 +2029,441 @@
             2: '<path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>'
         };
 
-        const trackName = url => {
+        const getName = url => {
             try {
-                const parts = decodeURIComponent(url).split('/');
-                return parts[parts.length - 1].replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').toUpperCase();
-            } catch { return 'TRACK ' + (trackIdx + 1); }
+                return decodeURIComponent(url.split('/').pop() || 'TRACK')
+                    .replace(/\.[^.]+$/, '')
+                    .replace(/[-_]/g, ' ')
+                    .toUpperCase();
+            } catch {
+                return `TRACK ${index + 1}`;
+            }
         };
 
-        const loadTrack = idx => {
-            trackIdx = ((idx % trackList.length) + trackList.length) % trackList.length;
-            audio.src = trackList[trackIdx];
+        const updateUI = () => {
+            const pausePath = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+            const playPath = '<path d="M8 5v14l11-7z"/>';
+
+            if (playIcon) playIcon.innerHTML = playing ? pausePath : playPath;
+            if (pillIcon) pillIcon.innerHTML = playing ? pausePath : playPath;
+            if (pillStatus) {
+                pillStatus.textContent = playing ? 'ONLINE' : 'STANDBY';
+                pillStatus.classList.toggle('on', playing);
+            }
+            if (eq) eq.classList.toggle('visible', playing);
+            if (discRing) discRing.classList.toggle('spinning', playing);
+        };
+
+        const load = trackIndex => {
+            index = ((trackIndex % tracks.length) + tracks.length) % tracks.length;
+            audio.src = tracks[index];
             audio.load();
-            mpTitle.textContent = trackName(trackList[trackIdx]);
-            progFill.style.width = '0%';
+            if (title) title.textContent = getName(tracks[index]);
+            if (progressFill) progressFill.style.width = '0%';
         };
 
-        const getNextTrackIdx = () => {
-            if (playMode === 1) return trackIdx;
-            if (playMode === 2) {
-                let next = Math.floor(Math.random() * trackList.length);
-                if (next === trackIdx && trackList.length > 1) {
-                    next = (next + 1) % trackList.length;
-                }
+        const nextIndex = () => {
+            if (mode === 1) return index;
+            if (mode === 2 && tracks.length > 1) {
+                let next = index;
+                while (next === index) next = Math.floor(Math.random() * tracks.length);
                 return next;
             }
-            return trackIdx + 1;
+            return index + 1;
         };
 
-        const setPlayingUI = () => {
-            musicPlaying = true;
-            mpPlayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-            pillIcon.innerHTML   = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-            pillStatus.textContent = 'ONLINE';
-            pillStatus.classList.add('on');
-            eq.classList.add('visible');
-            discRing.classList.add('spinning');
-        };
-
-        const setPausedUI = () => {
-            musicPlaying = false;
-            mpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-            pillIcon.innerHTML   = '<path d="M8 5v14l11-7z"/>';
-            pillStatus.textContent = 'OFFLINE';
-            pillStatus.classList.remove('on');
-            eq.classList.remove('visible');
-            discRing.classList.remove('spinning');
-        };
-
-        const play = (forceLoad) => {
-            if (forceLoad) loadTrack(trackIdx);
-            const promise = audio.play();
-            if (promise !== undefined) {
-                promise.then(() => setPlayingUI())
-                       .catch(() => setPausedUI());
+        const play = async () => {
+            try {
+                await audio.play();
+                playing = true;
+                updateUI();
+            } catch (error) {
+                playing = false;
+                updateUI();
+                console.warn('Audio playback unavailable:', error);
             }
         };
 
-        const pause = () => { audio.pause(); setPausedUI(); };
-        const toggle = () => musicPlaying ? pause() : play(false);
-
-        audio.volume = parseFloat(volSlider.value) / 100;
-        const updateVol = () => {
-            const v = parseInt(volSlider.value);
-            audio.volume = v / 100;
-            volPct.textContent = v + '%';
-            volSlider.style.background = `linear-gradient(90deg, var(--c-gold) ${v}%, rgba(201,168,76,.12) ${v}%)`;
-            volIcon.classList.toggle('active', v > 0);
-            volIcon.innerHTML = v === 0 
-                ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>'
-                : v < 50
-                    ? '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>'
-                    : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+        const pause = () => {
+            audio.pause();
+            playing = false;
+            updateUI();
         };
-        volSlider.addEventListener('input', updateVol);
-        updateVol();
 
+        volume?.addEventListener('input', () => {
+            const value = Number(volume.value);
+            audio.volume = value / 100;
+            if (volumePct) volumePct.textContent = `${value}%`;
+            if (volumeIcon) volumeIcon.classList.toggle('active', value > 0);
+        });
+
+        audio.volume = Number(volume?.value || 50) / 100;
+
+        audio.addEventListener('play', () => {
+            playing = true;
+            updateUI();
+        });
+        audio.addEventListener('pause', () => {
+            playing = false;
+            updateUI();
+        });
         audio.addEventListener('timeupdate', () => {
-            if (!audio.duration) return;
-            progFill.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+            if (!audio.duration || !progressFill) return;
+            progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
         });
-
-        progBar.addEventListener('click', e => {
-            const r = progBar.getBoundingClientRect();
-            audio.currentTime = ((e.clientX - r.left) / r.width) * (audio.duration || 0);
-        });
-
-        if (mpMode) {
-            mpMode.addEventListener('click', e => {
-                e.stopPropagation();
-                playMode = (playMode + 1) % 3;
-                mpModeIcon.innerHTML = modeIcons[playMode];
-                mpMode.title = ["Repeat All", "Repeat One", "Shuffle"][playMode];
-            });
-        }
-
         audio.addEventListener('ended', () => {
-            loadTrack(getNextTrackIdx());
-            play(false);
+            load(nextIndex());
+            play();
         });
 
-        mpNext.addEventListener('click', e => {
-            e.stopPropagation();
-            loadTrack(getNextTrackIdx());
-            play(false);
+        progress?.addEventListener('pointerdown', event => {
+            if (!audio.duration) return;
+            const rect = progress.getBoundingClientRect();
+            audio.currentTime =
+                Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)) *
+                audio.duration;
         });
 
-        mpPrev.addEventListener('click', e => {
-            e.stopPropagation();
-            loadTrack(playMode === 2 ? getNextTrackIdx() : trackIdx - 1);
-            play(false);
+        playButton?.addEventListener('click', event => {
+            event.stopPropagation();
+            playing ? pause() : play();
         });
 
-        mpPlay.addEventListener('click', e => { e.stopPropagation(); toggle(); });
+        nextButton?.addEventListener('click', event => {
+            event.stopPropagation();
+            load(nextIndex());
+            play();
+        });
 
-        pill.addEventListener('click', () => {
+        prevButton?.addEventListener('click', event => {
+            event.stopPropagation();
+            load(mode === 2 ? nextIndex() : index - 1);
+            play();
+        });
+
+        modeButton?.addEventListener('click', event => {
+            event.stopPropagation();
+            mode = (mode + 1) % 3;
+            modeIcon.innerHTML = modeIcons[mode];
+            modeButton.title = ['Repeat All', 'Repeat One', 'Shuffle'][mode];
+        });
+
+        pill.addEventListener('click', event => {
+            event.stopPropagation();
             panelOpen = !panelOpen;
             panel.classList.toggle('open', panelOpen);
             pill.setAttribute('aria-expanded', String(panelOpen));
         });
 
-        document.addEventListener('click', e => {
-            if (panelOpen && !player.contains(e.target)) {
+        document.addEventListener('click', event => {
+            if (panelOpen && !player.contains(event.target)) {
                 panelOpen = false;
                 panel.classList.remove('open');
                 pill.setAttribute('aria-expanded', 'false');
             }
         });
 
-        loadTrack(0);
+        load(0);
         player.classList.add('visible');
+        updateUI();
+    }
 
-        const triggerPlayOnGesture = (e) => {
-            if (e.type === 'scroll' || e.type === 'wheel') return;
-            if (!musicPlaying) {
-                const promise = audio.play();
-                if (promise !== undefined) {
-                    promise.then(() => {
-                        setPlayingUI();
-                        removeAutoPlayListeners();
-                    }).catch(() => {});
-                }
-            }
+    /* ─────────────────────────────────────────────────────────────
+       MODAL / GALLERY + FOCUS MANAGEMENT
+    ───────────────────────────────────────────────────────────── */
+    function renderModalGallery() {
+        if (!state.modalImages.length) return;
+
+        const image = $('#modal-img');
+        const counter = $('#modal-img-counter');
+        if (!image) return;
+
+        image.style.opacity = '.35';
+
+        const nextSource = state.modalImages[state.modalImageIndex];
+        const preloader = new Image();
+
+        preloader.onload = () => {
+            image.src = nextSource;
+            image.alt = `${$('#modal-title')?.textContent || 'Project'} — image ${state.modalImageIndex + 1}`;
+            image.style.opacity = '1';
         };
-
-        const removeAutoPlayListeners = () => {
-            ['pointerdown', 'click', 'keydown', 'touchstart'].forEach(evt => 
-                document.removeEventListener(evt, triggerPlayOnGesture)
-            );
+        preloader.onerror = () => {
+            image.style.opacity = '1';
         };
+        preloader.src = nextSource;
 
-        ['pointerdown', 'click', 'keydown', 'touchstart'].forEach(evt => 
-            document.addEventListener(evt, triggerPlayOnGesture, { passive: true })
-        );
-
-        const initialPlay = audio.play();
-        if (initialPlay !== undefined) {
-            initialPlay.then(() => {
-                setPlayingUI();
-                removeAutoPlayListeners();
-            }).catch(() => setPausedUI());
+        if (counter) {
+            counter.textContent =
+                `${state.modalImageIndex + 1} / ${state.modalImages.length}`;
         }
     }
 
-    function renderModalGallery() {
-        if (!currentModalImages.length) return;
-        const imgEl = document.getElementById('modal-img');
-        const counterEl = document.getElementById('modal-img-counter');
-        
-        imgEl.style.opacity = 0.5;
-        setTimeout(() => {
-            imgEl.src = currentModalImages[currentModalImgIndex];
-            imgEl.style.opacity = 1;
-        }, 150);
+    function updateModalNav() {
+        const multiple = state.modalImages.length > 1;
+        const previous = $('#modal-prev-btn');
+        const next = $('#modal-next-btn');
+        const counter = $('#modal-img-counter');
 
-        counterEl.textContent = `${currentModalImgIndex + 1} / ${currentModalImages.length}`;
+        if (previous) previous.style.display = multiple ? 'flex' : 'none';
+        if (next) next.style.display = multiple ? 'flex' : 'none';
+        if (counter) counter.style.display = multiple ? 'block' : 'none';
     }
 
-    window.modalPrevImg = function(e) {
-        if (e) e.stopPropagation();
-        if (currentModalImages.length <= 1) return;
-        currentModalImgIndex = (currentModalImgIndex - 1 + currentModalImages.length) % currentModalImages.length;
-        renderModalGallery();
-    };
+    function openModal(index, trigger = null) {
+        const project = state.projects[index];
+        const modal = $('#project-modal');
+        const box = $('#modal-box');
+        if (!project || !modal || !box) return;
 
-    window.modalNextImg = function(e) {
-        if (e) e.stopPropagation();
-        if (currentModalImages.length <= 1) return;
-        currentModalImgIndex = (currentModalImgIndex + 1) % currentModalImages.length;
-        renderModalGallery();
-    };
+        state.modalTrigger = trigger || document.activeElement;
+        state.modalPreviousFocus = document.activeElement;
+        state.modalImages = parseImageUrls(project.ImageUrl);
+        state.modalImageIndex = 0;
 
-    window.openModal = function(idx) {
-        const p = globalProjects[idx]; if (!p) return;
-        const modal = document.getElementById('project-modal');
-        const box   = document.getElementById('modal-box');
-        const link  = document.getElementById('modal-link');
+        $('#modal-category-text').textContent = project.Category;
+        $('#modal-title').textContent = project.Title;
+        $('#modal-desc').textContent = project.Desc;
+        $('#modal-client').textContent = project.Client;
+        $('#modal-role').textContent = project.Role;
+        $('#modal-year').textContent = project.Year;
+        $('#modal-tech').textContent = project.Tools;
 
-        currentModalImages = parseImageUrls(p.ImageUrl);
-        currentModalImgIndex = 0;
+        const link = $('#modal-link');
+        if (link) {
+            if (project.Link && /^https?:\/\//i.test(project.Link)) {
+                link.href = project.Link;
+                link.style.display = 'flex';
+            } else {
+                link.removeAttribute('href');
+                link.style.display = 'none';
+            }
+        }
 
-        const hasMultiple = currentModalImages.length > 1;
-        document.getElementById('modal-prev-btn').style.display = hasMultiple ? 'flex' : 'none';
-        document.getElementById('modal-next-btn').style.display = hasMultiple ? 'flex' : 'none';
-        document.getElementById('modal-img-counter').style.display = hasMultiple ? 'block' : 'none';
+        updateModalNav();
 
-        renderModalGallery();
-
-        document.getElementById('modal-category-text').textContent = p.Category;
-        document.getElementById('modal-title').textContent         = p.Title;
-        document.getElementById('modal-desc').textContent          = p.Desc;
-        document.getElementById('modal-client').textContent        = p.Client;
-        document.getElementById('modal-role').textContent          = p.Role;
-        document.getElementById('modal-year').textContent          = p.Year;
-        document.getElementById('modal-tech').textContent          = p.Tools;
-
-        if (p.Link) { link.href = p.Link; link.style.display = 'flex'; }
-        else link.style.display = 'none';
+        if (state.modalImages.length) {
+            renderModalGallery();
+        } else {
+            const image = $('#modal-img');
+            if (image) {
+                image.removeAttribute('src');
+                image.alt = 'No project preview available';
+            }
+        }
 
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
+        modal.setAttribute('aria-label', `${project.Title} — project details`);
+
         requestAnimationFrame(() => {
             modal.classList.add('visible');
             box.classList.add('open');
+            $('#modal-close')?.focus();
         });
-    };
+    }
+    window.openModal = openModal;
 
-    window.closeModal = function() {
-        const modal = document.getElementById('project-modal');
-        const box   = document.getElementById('modal-box');
-        modal.classList.remove('visible'); box.classList.remove('open');
+    function closeModal() {
+        const modal = $('#project-modal');
+        const box = $('#modal-box');
+        if (!modal || !box) return;
+
+        modal.classList.remove('visible');
+        box.classList.remove('open');
         document.body.style.overflow = '';
+
         setTimeout(() => modal.classList.remove('open'), 300);
+
+        const focusTarget = state.modalTrigger || state.modalPreviousFocus;
+        if (focusTarget && typeof focusTarget.focus === 'function') {
+            requestAnimationFrame(() => focusTarget.focus());
+        }
+        state.modalTrigger = null;
+        state.modalPreviousFocus = null;
+    }
+    window.closeModal = closeModal;
+
+    window.modalPrevImg = event => {
+        event?.stopPropagation();
+        if (state.modalImages.length < 2) return;
+        state.modalImageIndex =
+            (state.modalImageIndex - 1 + state.modalImages.length) %
+            state.modalImages.length;
+        renderModalGallery();
     };
 
-    window.scrollToSection = function(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
+    window.modalNextImg = event => {
+        event?.stopPropagation();
+        if (state.modalImages.length < 2) return;
+        state.modalImageIndex =
+            (state.modalImageIndex + 1) % state.modalImages.length;
+        renderModalGallery();
     };
 
-    window.toggleMobileNav = function() {
-        const nav = document.getElementById('mobile-nav');
-        const btn = document.getElementById('hamburger');
-        mobileNavOpen = !mobileNavOpen;
-        nav.classList.toggle('open', mobileNavOpen);
-        btn.setAttribute('aria-expanded', String(mobileNavOpen));
-    };
+    function trapModalFocus(event) {
+        const modal = $('#project-modal');
+        if (!modal?.classList.contains('open') || event.key !== 'Tab') return;
 
-    window.toggleCRT = function() {
-        crtEnabled = !crtEnabled;
-        document.getElementById('crt-overlay').style.opacity = crtEnabled ? '0.3' : '0';
-        document.getElementById('crt-dot').classList.toggle('off', !crtEnabled);
-        document.getElementById('crt-toggle-btn').setAttribute('aria-pressed', String(crtEnabled));
-    };
+        const focusable = $$(
+            'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            modal
+        ).filter(el => el.offsetParent !== null);
 
-    function handleContactSubmit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const btn = document.getElementById('submit-btn');
-        const success = document.getElementById('form-success');
-        
-        const name = document.getElementById('field-name').value.trim();
-        const email = document.getElementById('field-email').value.trim();
-        const message = document.getElementById('field-message').value.trim();
+        if (!focusable.length) return;
 
-        const showFormStatus = (msg, color) => {
-            success.style.display = 'block';
-            success.style.color = color;
-            success.textContent = msg;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CRT
+    ───────────────────────────────────────────────────────────── */
+    function toggleCRT() {
+        state.crtEnabled = !state.crtEnabled;
+        const overlay = $('#crt-overlay');
+        const dot = $('#crt-dot');
+        const button = $('#crt-toggle-btn');
+
+        if (overlay) overlay.style.opacity = state.crtEnabled ? '' : '0';
+        if (dot) dot.classList.toggle('off', !state.crtEnabled);
+        button?.setAttribute('aria-pressed', String(state.crtEnabled));
+    }
+    window.toggleCRT = toggleCRT;
+
+    /* ─────────────────────────────────────────────────────────────
+       CONTACT — no-cors cannot verify server acceptance.
+       Report dispatch status honestly instead of fake "SUCCESS".
+    ───────────────────────────────────────────────────────────── */
+    async function handleContactSubmit(event) {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const button = $('#submit-btn');
+        const status = $('#form-success');
+
+        const name = $('#field-name')?.value.trim() || '';
+        const email = $('#field-email')?.value.trim() || '';
+        const message = $('#field-message')?.value.trim() || '';
+
+        const showStatus = (text, type = 'error') => {
+            if (!status) return;
+            status.style.display = 'block';
+            status.style.color = type === 'success' ? 'var(--c-crt)' : 'var(--c-red)';
+            status.textContent = text;
         };
 
         if (!name || !email || !message) {
-            showFormStatus('> SYS.ERR: ALL FIELDS ARE REQUIRED!', 'var(--c-red)');
+            showStatus('> SYS.ERR: ALL FIELDS ARE REQUIRED!');
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showFormStatus('> SYS.ERR: INVALID COMMS LINK (EMAIL)!', 'var(--c-red)');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showStatus('> SYS.ERR: INVALID COMMS LINK (EMAIL)!');
             return;
         }
 
-        const formData = new FormData(form);
-        const data = new URLSearchParams();
-        for (const pair of formData) { data.append(pair[0], pair[1]); }
+        if (button) {
+            button.disabled = true;
+            button.innerHTML = 'TRANSMITTING...';
+        }
+        if (status) status.style.display = 'none';
 
-        btn.disabled = true;
-        btn.textContent = 'TRANSMITTING...';
-        success.style.display = 'none';
+        const data = new URLSearchParams(new FormData(form));
 
-        fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' })
-            .then(() => {
-                showFormStatus('> SYS.MSG: TRANSMISSION SUCCESSFUL [OK]', 'var(--c-crt)');
-                form.reset();
-            })
-            .catch(error => {
-                console.error('Error!', error);
-                showFormStatus('> SYS.ERR: TRANSMISSION FAILED. RETRY LATER.', 'var(--c-red)');
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    success.style.display = 'none';
-                    btn.disabled = false;
-                    btn.innerHTML = 'TRANSMIT DATA <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7-7m7-7H3"/></svg>';
-                }, 4000);
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: data,
+                mode: 'no-cors'
             });
+
+            form.reset();
+            showStatus(
+                '> SYS.MSG: TRANSMISSION DISPATCHED [OK] — SERVER RESPONSE UNVERIFIED',
+                'success'
+            );
+        } catch (error) {
+            console.error('Contact transmission failed:', error);
+            showStatus('> SYS.ERR: TRANSMISSION FAILED. RETRY LATER.');
+        } finally {
+            setTimeout(() => {
+                if (status) status.style.display = 'none';
+                if (button) {
+                    button.disabled = false;
+                    button.innerHTML = `TRANSMIT DATA
+                        <svg width="16" height="16" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M14 5l7 7m0 0l-7-7m7-7H3"/>
+                        </svg>`;
+                }
+            }, 5000);
+        }
     }
 
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    /* ─────────────────────────────────────────────────────────────
+       EVENTS / INIT
+    ───────────────────────────────────────────────────────────── */
+    document.addEventListener('keydown', event => {
+        const modal = $('#project-modal');
+        const modalOpen = modal?.classList.contains('open');
 
-    document.addEventListener('keydown', e => {
-        const isF12 = e.key === 'F12';
-        const isCtrlShift = e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'i', 'j', 'c'].includes(e.key);
-        const isViewSource = e.ctrlKey && (e.key === 'u' || e.key === 'U');
+        if (modalOpen) {
+            trapModalFocus(event);
 
-        if (isF12 || isCtrlShift || isViewSource) {
-            e.preventDefault();
-            return false;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeModal();
+                return;
+            }
+
+            if (state.modalImages.length > 1) {
+                if (event.key === 'ArrowLeft') window.modalPrevImg();
+                if (event.key === 'ArrowRight') window.modalNextImg();
+            }
         }
 
-        const modal = document.getElementById('project-modal');
-        if (e.key === 'Escape') {
-            if (modal?.classList.contains('open')) window.closeModal();
-            if (mobileNavOpen) window.toggleMobileNav();
-        }
-        
-        if (modal?.classList.contains('open') && currentModalImages.length > 1) {
-            if (e.key === 'ArrowLeft') window.modalPrevImg();
-            if (e.key === 'ArrowRight') window.modalNextImg();
+        if (event.key === 'Escape' && state.mobileNavOpen) {
+            toggleMobileNav(false);
         }
     });
 
-    setInterval(() => {
-        const startTime = performance.now();
-        debugger;
-        if (performance.now() - startTime > 100) {
-            window.location.reload();
-        }
-    }, 1000);
+    $('.modal-bg')?.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') closeModal();
+    });
+
+    $('#contact-form')?.addEventListener('submit', handleContactSubmit);
 
     window.addEventListener('scroll', () => {
-        document.getElementById('site-header')?.classList.toggle('scrolled', window.scrollY > 50);
+        $('#site-header')?.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768 && state.mobileNavOpen) toggleMobileNav(false);
     }, { passive: true });
 
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const year = $('#current-year');
+        if (year) year.textContent = new Date().getFullYear();
+
         initLED();
+        initStars();
         observeReveals();
-        document.getElementById('contact-form')?.addEventListener('submit', handleContactSubmit);
-        if (CSV_URL) initPortfolio(); 
+        initPortfolio();
 
-        trackVisitor();
+        // Audio is initialized but never forced to autoplay.
+        const audioConfig = GITHUB_PLAYLIST.filter(Boolean);
+        if (audioConfig.length) initMusic(audioConfig);
     });
-
 })();
 </script>
 </body>
